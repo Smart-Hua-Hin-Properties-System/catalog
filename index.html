@@ -17,7 +17,7 @@
         }
         .header-left { display: flex; align-items: center; gap: 12px; }
         .menu-icon { font-size: 1.4rem; color: var(--primary); cursor: pointer; }
-        .brand-name { font-weight: 600; font-size: 1rem; color: var(--primary); text-transform: uppercase; }
+        .brand-name { font-weight: 600; font-size: 0.9rem; color: var(--primary); text-transform: uppercase; }
         .flag-list { display: flex; gap: 4px; }
         .flag-list img { width: 22px; height: 14px; border-radius: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
 
@@ -28,42 +28,46 @@
         .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1500; }
         .sidebar-overlay.active { display: block; }
 
-        /* 🔍 Professional Filters */
+        /* 🔍 Filter Bar */
         .filter-section { background: var(--white); padding: 15px; margin: 10px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .filter-trigger { 
             width: 100%; padding: 12px; background: #fff; border: 1px solid #ddd; border-radius: 10px; 
-            text-align: left; font-family: 'Kanit'; font-size: 0.95rem; color: var(--primary); display: flex; justify-content: space-between; align-items: center; cursor: pointer;
+            text-align: left; font-family: 'Kanit'; font-size: 0.9rem; color: var(--primary); display: flex; justify-content: space-between; align-items: center; cursor: pointer;
         }
         .filter-sub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-        select { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ddd; font-family: 'Kanit'; color: var(--primary); outline: none; }
+        select { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ddd; font-family: 'Kanit'; color: var(--primary); outline: none; font-size: 0.85rem; }
 
-        /* 🏗️ Custom ID Modal */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 3000; align-items: center; justify-content: center; padding: 20px; }
+        /* 🏗️ ID Selection Modal (Upgraded) */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 3000; align-items: center; justify-content: center; padding: 15px; }
         .modal.active { display: flex; }
-        .modal-content { background: #fff; width: 100%; max-width: 500px; border-radius: 20px; overflow: hidden; max-height: 80vh; display: flex; flex-direction: column; }
+        .modal-content { background: #fff; width: 100%; max-width: 500px; border-radius: 20px; overflow: hidden; max-height: 85vh; display: flex; flex-direction: column; }
         .modal-header { padding: 15px 20px; background: #fff; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-        .modal-body { overflow-y: auto; padding: 10px 0; }
+        .modal-body { overflow-y: auto; padding: 5px 0; }
         .id-row { 
-            display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; border-bottom: 1px solid #f8f9fa; cursor: pointer; transition: 0.2s;
+            display: flex; flex-direction: column; padding: 12px 18px; border-bottom: 1px solid #f8f9fa; cursor: pointer; transition: 0.2s;
         }
         .id-row:active { background: #f0f7ff; }
-        .id-info-main { font-weight: 600; color: var(--primary); font-size: 1rem; flex: 1; }
-        .id-info-sub { font-size: 0.8rem; color: #7f8c8d; text-align: right; flex: 2; line-height: 1.4; }
-        .btn-clear { color: #e74c3c; font-size: 0.85rem; border: none; background: none; cursor: pointer; }
+        .id-row-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+        .id-name { font-weight: 600; color: var(--primary); font-size: 1.05rem; }
+        .id-price { font-weight: 600; color: var(--primary); font-size: 0.95rem; }
+        .id-row-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: #7f8c8d; }
+        .id-details { display: flex; gap: 8px; flex-wrap: wrap; }
+        .status-text { font-weight: 600; }
+        .btn-clear { color: #e74c3c; font-size: 0.85rem; border: none; background: none; cursor: pointer; font-family: 'Kanit'; }
 
         /* 🏠 Cards Grid */
         .property-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 15px; padding: 10px; }
-        .card { background: var(--white); border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.04); transition: 0.3s; }
+        .card { background: var(--white); border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.04); }
         .card-img-box { position: relative; height: 220px; cursor: pointer; }
         .card-img { width: 100%; height: 100%; object-fit: cover; }
         .badge { 
             position: absolute; top: 12px; left: 12px; background: var(--green); color: white;
-            padding: 5px 12px; border-radius: 50px; font-weight: 600; font-size: 0.8rem; box-shadow: 0 4px 10px rgba(0,0,0,0.15); z-index: 5;
+            padding: 5px 12px; border-radius: 50px; font-weight: 600; font-size: 0.75rem; box-shadow: 0 4px 10px rgba(0,0,0,0.15); z-index: 5;
         }
         .card-body { padding: 15px; }
-        .card-price { font-size: 1.5rem; font-weight: 600; color: var(--primary); margin: 5px 0; }
-        .card-meta { display: flex; gap: 12px; font-size: 0.85rem; color: #7f8c8d; margin-top: 10px; }
-        .status-pill { font-size: 0.75rem; background: #e8f5e9; color: var(--green); padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+        .card-price { font-size: 1.4rem; font-weight: 600; color: var(--primary); margin: 5px 0; }
+        .card-meta { display: flex; gap: 10px; font-size: 0.8rem; color: #7f8c8d; margin-top: 10px; }
+        .status-pill { font-size: 0.7rem; background: #e8f5e9; color: var(--green); padding: 2px 8px; border-radius: 4px; font-weight: 600; }
         .btn-detail { display: block; width: 100%; padding: 12px; background: var(--primary); color: white; text-align: center; text-decoration: none; border-radius: 12px; font-weight: 600; margin-top: 15px; }
 
         #loading { text-align: center; padding: 100px; color: var(--primary); }
@@ -107,13 +111,13 @@
 <div class="modal" id="idModal">
     <div class="modal-content">
         <div class="modal-header">
-            <b>เลือกแปลงโครงการ</b>
+            <b style="font-size: 1rem;">เลือกแปลงโครงการ</b>
             <button class="btn-clear" onclick="clearIdFilter()">ล้างค่า</button>
         </div>
         <div class="modal-body" id="idList">
             </div>
         <div style="padding: 15px; text-align: center; border-top: 1px solid #eee;" onclick="toggleModal(false)">
-            <b style="color: var(--primary)">ปิดหน้าต่าง</b>
+            <b style="color: var(--primary); font-size: 0.9rem;">ปิดหน้าต่าง</b>
         </div>
     </div>
 </div>
@@ -156,13 +160,24 @@
         projectData.forEach(it => {
             const row = document.createElement('div');
             row.className = 'id-row';
-            const price = Number(it.Price).toLocaleString();
+            const fPrice = Number(it.Price).toLocaleString();
+            const land = it['Land Area (sq.w)'] || 0;
+            const living = it['Living Area (sq.m)'] || 0;
+            const statusColor = it.Status === 'Sold' ? '#e74c3c' : (it.Status === 'Pending' ? '#f39c12' : '#27ae60');
+
             row.onclick = () => selectId(it.ID);
             row.innerHTML = `
-                <div class="id-info-main">${it.ID}</div>
-                <div class="id-info-sub">
-                    🛌 ${it.Bedrooms || 0} Bed | ฿${price}<br>
-                    <span style="color:var(--green)">${it.Status || 'Available'}</span>
+                <div class="id-row-top">
+                    <span class="id-name">${it.ID}</span>
+                    <span class="id-price">฿${fPrice}</span>
+                </div>
+                <div class="id-row-bottom">
+                    <div class="id-details">
+                        <span><i class="fas fa-bed"></i> ${it.Bedrooms || 0} Bed</span>
+                        <span><i class="fas fa-expand-arrows-alt"></i> ${land} sq.w</span>
+                        <span><i class="fas fa-vector-square"></i> ${living} m²</span>
+                    </div>
+                    <span class="status-text" style="color: ${statusColor}">${it.Status || 'Available'}</span>
                 </div>
             `;
             list.appendChild(row);
@@ -220,8 +235,8 @@
                     <div class="card-price">฿${Number(it.Price).toLocaleString()}</div>
                     <div class="card-meta">
                         <span><i class="fas fa-bed"></i> ${it.Bedrooms || 0}</span>
-                        <span><i class="fas fa-bath"></i> ${it.Bathrooms || 0}</span>
-                        <span><i class="fas fa-ruler-combined"></i> ${it['Living Area (sq.m)'] || 0} m²</span>
+                        <span><i class="fas fa-expand-arrows-alt"></i> ${it['Land Area (sq.w)'] || 0}</span>
+                        <span><i class="fas fa-vector-square"></i> ${it['Living Area (sq.m)'] || 0} m²</span>
                     </div>
                     <a href="${detailUrl}" class="btn-detail">ดูรายละเอียด</a>
                 </div>`;
