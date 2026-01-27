@@ -3,60 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Reality Portal V4.7</title>
+    <title>Master Sovereign Portal V4.8</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --primary: #1a5276; --bg: #f4f7f6; --green: #27ae60; --orange: #e67e22; --red: #e74c3c; }
-        body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; font-weight: 300; }
+        :root { --primary: #1a5276; --bg: #f4f7f6; --white: #ffffff; --green: #27ae60; --orange: #e67e22; --red: #e74c3c; --blue: #3498db; }
+        body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; font-weight: 300; color: #333; }
+        
+        /* Header & Unified Navigation */
         .admin-header { background: var(--primary); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        .nav-tabs { background: #fff; display: flex; border-bottom: 1px solid #eee; position: sticky; top: 58px; z-index: 999; }
+        .nav-tabs { background: #fff; display: flex; border-bottom: 1px solid #eee; position: sticky; top: 58px; z-index: 999; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .tab-item { padding: 15px; color: #7f8c8d; text-decoration: none; font-size: 0.85rem; flex: 1; text-align: center; border-bottom: 3px solid transparent; cursor: pointer; transition: 0.3s; }
         .tab-item.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 400; }
-        .container { padding: 20px; max-width: 1000px; margin: 0 auto; }
+
+        .container { padding: 20px; max-width: 1100px; margin: 0 auto; }
         .card { background: #fff; border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .badge { padding: 4px 10px; border-radius: 50px; font-size: 0.7rem; }
-        .waiting { background: #fff3cd; color: #856404; }
-        .active-st { background: #d4edda; color: #155724; }
-        .blacklist { background: #f8d7da; color: #721c24; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-        th { text-align: left; padding: 12px; border-bottom: 2px solid #eee; color: var(--primary); }
-        td { padding: 12px; border-bottom: 1px solid #f5f5f5; }
-        .btn-approve { background: var(--green); color: white; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-family: 'Kanit'; }
+        
+        /* 🕵️ Reporting Table Styling */
+        .report-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .report-table th { text-align: left; padding: 15px; border-bottom: 2px solid #f0f0f0; color: var(--primary); font-weight: 400; }
+        .report-table td { padding: 15px; border-bottom: 1px solid #f9f9f9; vertical-align: middle; }
+        
+        /* Status Badges */
+        .badge { padding: 5px 15px; border-radius: 50px; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 5px; }
+        .badge-pending { background: #fff3cd; color: #856404; cursor: pointer; }
+        .badge-active { background: #d4edda; color: #155724; }
+        
+        .btn-action { background: none; border: none; cursor: pointer; color: var(--orange); font-size: 1.1rem; padding: 5px; transition: 0.2s; }
+        .btn-action:hover { transform: scale(1.2); }
+        .approver-text { font-size: 0.7rem; color: var(--green); display: block; margin-top: 4px; }
     </style>
 </head>
 <body>
 
 <div class="admin-header">
-    <div style="font-weight:400;">SMART SYSTEM <span id="projectLabel" style="font-size:0.7rem; opacity:0.8;"></span></div>
-    <button onclick="logout()" style="background:var(--red); color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;">LOGOUT</button>
+    <div style="font-weight:400;">SMART SYSTEM <span id="projectLabel" style="font-size:0.75rem; opacity:0.8;"></span></div>
+    <button onclick="logout()" style="background:var(--red); color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; font-family:'Kanit';">LOGOUT</button>
 </div>
 
 <div class="nav-tabs">
-    <div class="tab-item active" onclick="showTab('property', this)"><i class="fas fa-home"></i> ทรัพย์สิน</div>
-    <div class="tab-item" onclick="showTab('agent', this)"><i class="fas fa-users-cog"></i> ทะเบียน Agent</div>
-    <div class="tab-item" onclick="showTab('visit', this)"><i class="fas fa-satellite-dish"></i> GPS Tracking</div>
+    <div class="tab-item active" onclick="showTab('property', this)"><i class="fas fa-home"></i> ข้อมูลบ้าน</div>
+    <div class="tab-item" onclick="showTab('report', this)"><i class="fas fa-clipboard-check"></i> รายงานเช็คอิน</div>
+    <div class="tab-item" onclick="showTab('info', this)"><i class="fas fa-info-circle"></i> ข้อมูลโครงการ</div>
 </div>
 
 <div class="container">
     <div id="propertySection" class="tab-content">
-        <h3 style="font-weight:400; color:var(--primary);">จัดการรายการบ้าน</h3>
+        <button onclick="window.location.href='index.html'" style="background:var(--primary); color:white; border:none; padding:15px; width:100%; border-radius:15px; cursor:pointer; font-family:'Kanit'; margin-bottom:20px;">+ เพิ่มข้อมูลรายการบ้านใหม่เข้าสู่ระบบ</button>
         <div id="propertyList"></div>
     </div>
 
-    <div id="agentSection" class="tab-content" style="display:none;">
-        <div class="card">
-            <h3 style="margin-top:0; font-weight:400;">บัญชีรายชื่อ Agent มหาอำนาจ (15 รายการ)</h3>
-            <table>
-                <thead><tr><th>PIN</th><th>ชื่อ Agent / สังกัด</th><th>คำเตือน</th><th>สถานะ</th></tr></thead>
-                <tbody id="agentBody"></tbody>
+    <div id="reportSection" class="tab-content" style="display:none;">
+        <div class="card" style="padding:0; overflow-x:auto;">
+            <table class="report-table">
+                <thead>
+                    <tr>
+                        <th>วันเวลา / เอเจนต์ (สังกัด)</th>
+                        <th>รหัสทรัพย์</th>
+                        <th>สถานะการเข้าชม</th>
+                        <th>หลักฐานพิกัด</th>
+                    </tr>
+                </thead>
+                <tbody id="reportLogs">
+                    <tr><td colspan="4" style="text-align:center; padding:50px;"><i class="fas fa-sync fa-spin fa-2x"></i></td></tr>
+                </tbody>
             </table>
         </div>
     </div>
 
-    <div id="visitSection" class="tab-content" style="display:none;">
-        <h3 style="font-weight:400; color:var(--primary);">ประวัติเช็คอินและพิกัด GPS จริง</h3>
-        <div id="visitList"></div>
+    <div id="infoSection" class="tab-content" style="display:none;">
+        <div class="card">
+            <h3 id="infoProjectName" style="color:var(--primary); font-weight:400; margin-top:0;">ข้อมูลโครงการ</h3>
+            <div style="background:#f0f7ff; padding:20px; border-radius:15px; border-left:5px solid var(--blue);">
+                <h4 style="margin-top:0; font-weight:400;">ระเบียบและข้อตกลงการทำงานร่วมกัน</h4>
+                <p id="agreementText" style="line-height:1.8; color:#555;">กำลังดึงข้อมูล...</p>
+            </div>
+            <div style="margin-top:20px; font-size:0.85rem; color:#999;"><i class="fas fa-user-shield"></i> ข้อมูลนี้สามารถตรวจสอบได้ร่วมกันระหว่าง Master และโครงการ</div>
+        </div>
     </div>
 </div>
 
@@ -71,49 +94,71 @@
         document.querySelectorAll('.tab-item').forEach(i => i.classList.remove('active'));
         document.getElementById(t + 'Section').style.display = 'block';
         el.classList.add('active');
-        if(t === 'agent') loadAgents();
-        if(t === 'visit') loadVisits();
+        if(t === 'report') loadReports();
+        if(t === 'info') loadProjectInfo();
+        if(t === 'property') loadProperties();
     }
 
-    async function loadAgents() {
-        const r = await fetch(api + "?action=getAllAgents");
-        const data = await r.json();
-        document.getElementById('agentBody').innerHTML = data.map(a => `
-            <tr>
-                <td><b>${a.Agent_PIN}</b></td>
-                <td>${a.Agent_Name}<br><small style="color:#777;">${a.Agency}</small></td>
-                <td><span style="color:${a.Warnings > 1 ? 'var(--red)' : '#333'}">${a.Warnings} ครั้ง</span></td>
-                <td><span class="badge ${a.Status.toLowerCase() === 'active' ? 'active-st' : 'blacklist'}">${a.Status}</span></td>
-            </tr>`).join('');
-    }
-
-    async function loadVisits() {
+    // 📍 โหลดรายงานเช็คอินมหาอำนาจ
+    async function loadReports() {
         const r = await fetch(`${api}?action=getVisitLogs&projectName=${encodeURIComponent(user.projectName)}&role=${user.role}`);
         const data = await r.json();
-        document.getElementById('visitList').innerHTML = data.map(v => `
-            <div class="card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <div style="font-weight:400; color:var(--primary);">${v.Agent_Name}</div>
-                    <div style="font-size:0.8rem; color:#777; margin:4px 0;">
-                        <i class="far fa-clock"></i> ${new Date(v.Timestamp).toLocaleString('th-TH')} | <b>ID:</b> ${v.Marketing_ID}
+        document.getElementById('reportLogs').innerHTML = data.map(v => `
+            <tr>
+                <td>
+                    <b style="color:var(--primary); font-weight:400;">${v.Agent_Name}</b> (${v.Agency || 'อิสระ'})<br>
+                    <small style="color:#999;"><i class="far fa-clock"></i> ${new Date(v.Timestamp).toLocaleString('th-TH')}</small>
+                </td>
+                <td><span style="color:#555;">${v.Marketing_ID}</span></td>
+                <td>
+                    ${v.Status === 'Waiting' ? 
+                        `<span class="badge badge-pending" onclick="approve('${v.Log_ID}')"><i class="fas fa-hourglass-half"></i> Pending (คลิก Approve)</span>` : 
+                        `<div>
+                            <span class="badge badge-active"><i class="fas fa-check-circle"></i> Active</span>
+                            <span class="approver-text">by Admin ${v.Approved_By}</span>
+                        </div>`
+                    }
+                </td>
+                <td>
+                    <div style="display:flex; gap:15px;">
+                        <a href="${v.Evidence_URL}" target="_blank" class="btn-action" title="ดูรูปถ่าย"><i class="fas fa-camera"></i></a>
+                        <a href="http://maps.google.com/maps?q=${v.Lat},${v.Lng}" target="_blank" class="btn-action" title="ดูแผนที่"><i class="fas fa-map-marked-alt" style="color:var(--orange);"></i></a>
                     </div>
-                    <a href="https://www.google.com/maps?q=${v.Lat},${v.Lng}" target="_blank" style="font-size:0.75rem; color:var(--orange); text-decoration:none;"><i class="fas fa-map-marked-alt"></i> พิกัดจริง: ${v.Lat},${v.Lng}</a>
-                </div>
-                <div style="text-align:right;">
-                    <span class="badge ${v.Status === 'Waiting' ? 'waiting' : 'active-st'}">${v.Status === 'Waiting' ? 'รออนุมัติ' : 'อนุมัติแล้ว'}</span>
-                    ${v.Status === 'Waiting' ? `<div style="margin-top:10px;"><button class="btn-approve" onclick="approve('${v.Log_ID}')">Approve</button></div>` : `<div style="font-size:0.65rem; color:var(--green); margin-top:5px;">โดย: ${v.Approved_By}</div>`}
-                </div>
-            </div>`).join('');
+                </td>
+            </tr>
+        `).join('') || '<tr><td colspan="4" style="text-align:center;">ไม่พบข้อมูลการเช็คอิน</td></tr>';
+    }
+
+    // 🏢 โหลดข้อมูลโครงการ (Tab 3)
+    async function loadProjectInfo() {
+        const r = await fetch(`${api}?action=getProjectInfo&projectName=${encodeURIComponent(user.projectName)}`);
+        const data = await r.json();
+        document.getElementById('infoProjectName').innerText = "โครงการ: " + data.name;
+        document.getElementById('agreementText').innerText = data.agreement;
+    }
+
+    async function loadProperties() {
+        const r = await fetch(`${api}?action=adminData&projectName=${encodeURIComponent(user.projectName)}&role=${user.role}`);
+        const data = await r.json();
+        document.getElementById('propertyList').innerHTML = data.map(it => `
+            <div class="card" style="display:flex; justify-content:space-between; align-items:center;">
+                <div><b style="font-weight:400;">${it.HP_ID} - ${it.ID}</b><br><small>฿${Number(it.Price).toLocaleString()} | ${it.Status}</small></div>
+                <i class="fas fa-edit" style="color:var(--primary); cursor:pointer;"></i>
+            </div>
+        `).join('');
     }
 
     async function approve(id) {
-        if(!confirm("ยืนยันการเข้าชมจริงตามพิกัด GPS?")) return;
-        await fetch(api, { method: 'POST', body: JSON.stringify({ action: 'approveVisit', logId: id, approvedBy: user.projectName }) });
-        alert("อนุมัติสำเร็จ!"); loadVisits();
+        // ระบุชื่อผู้อนุมัติว่าเป็น Master หรือ Admin โครงการ
+        const approverName = user.role === "Master" ? "Master Admin" : user.projectName;
+        if(!confirm(`ยืนยันการอนุมัติพิกัดเข้าชมในนาม ${approverName}?`)) return;
+        
+        await fetch(api, { method: 'POST', body: JSON.stringify({ action: 'approveVisit', logId: id, approvedBy: approverName }) });
+        alert("อนุมัติสำเร็จ!"); loadReports();
     }
 
     function logout() { localStorage.removeItem('smartAdmin'); window.location.href = 'login.html'; }
-    showTab('property', document.querySelector('.tab-item'));
+    loadProperties();
 </script>
 </body>
 </html>
