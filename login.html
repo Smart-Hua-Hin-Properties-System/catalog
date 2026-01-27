@@ -3,49 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMART LOGIN - V14.0 Absolute Reset</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>SMART LOGIN V14.1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #1a5276; --bg: #f0f4f7; }
-        body { font-family: 'Kanit', sans-serif; background: var(--bg); display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; font-weight: 300; }
-        .login-card { background: white; padding: 45px; border-radius: 35px; box-shadow: 0 20px 50px rgba(26,82,118,0.15); width: 340px; text-align: center; }
-        .password-container { position: relative; margin-bottom: 25px; }
-        input { width: 100%; padding: 18px; border-radius: 15px; border: 1.5px solid #eee; box-sizing: border-box; font-family: 'Kanit'; font-size: 1.2rem; text-align: center; outline: none; background: #fafafa; }
-        .toggle-eye { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #999; cursor: pointer; }
-        button { width: 100%; padding: 18px; border-radius: 15px; border: none; background: var(--primary); color: white; font-family: 'Kanit'; font-size: 1.1rem; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 20px rgba(26,82,118,0.2); }
-        #msg { color:#e74c3c; font-size:0.85rem; margin-top:15px; display:none; }
+        body { font-family: 'Kanit', sans-serif; background: #f0f4f7; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        .card { background: white; padding: 40px; border-radius: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); width: 320px; text-align: center; }
+        input { width: 100%; padding: 15px; border-radius: 12px; border: 1.5px solid #eee; margin-bottom: 20px; text-align: center; font-family: 'Kanit'; font-size: 1.1rem; }
+        button { width: 100%; padding: 15px; border-radius: 12px; border: none; background: #1a5276; color: white; cursor: pointer; font-family: 'Kanit'; font-size: 1rem; }
     </style>
 </head>
 <body>
-    <div class="login-card">
-        <div style="background:var(--primary); width:70px; height:70px; border-radius:20px; display:flex; align-items:center; justify-content:center; margin:0 auto 20px;"><i class="fas fa-shield-alt" style="color:white; font-size:2rem;"></i></div>
-        <h2 style="color:var(--primary); margin-bottom:5px; font-weight:400;">SMART LOGIN</h2>
-        <p style="font-size:0.8rem; color:#7f8c8d; margin-bottom:30px;">ระบุรหัส PIN เพื่อสถาปนาอำนาจ</p>
-        <div class="password-container">
-            <input type="password" id="pinInput" placeholder="รหัส PIN ของท่าน">
-            <i class="fas fa-eye toggle-eye" onclick="togglePass()"></i>
-        </div>
-        <button onclick="login()" id="btnLogin">เข้าสู่แผงควบคุม</button>
-        <div id="msg">❌ รหัสไม่ถูกต้อง โปรดตรวจสอบใน Sheet ครับ</div>
+    <div class="card">
+        <h2 style="color:#1a5276; font-weight:400;">SMART LOGIN</h2>
+        <input type="password" id="pin" placeholder="ใส่รหัสกุญแจลับ / PIN">
+        <button onclick="login()" id="btn">เข้าสู่ระบบมหาอำนาจ</button>
     </div>
     <script>
         const api = "https://script.google.com/macros/s/AKfycbwRIkEYZj0CKFiHEbhc29mJ19kyqwymEj8_O2p4qThvjjueQ-ug07okMTFn-e0zz_4l/exec";
-        function togglePass() { const p = document.getElementById('pinInput'); p.type = p.type === 'password' ? 'text' : 'password'; }
         async function login() {
-            const pin = document.getElementById('pinInput').value.trim();
-            if(!pin) return;
-            const btn = document.getElementById('btnLogin'); btn.innerText = "...กำลังเชื่อมต่อ..."; btn.disabled = true;
-            document.getElementById('msg').style.display = 'none';
-            try {
-                const r = await fetch(`${api}?action=universalLogin&key=${encodeURIComponent(pin)}`);
-                const d = await r.json();
-                if(d.success) {
-                    localStorage.setItem('agentPin', pin);
-                    localStorage.setItem('smartAdmin', JSON.stringify(d)); // เก็บข้อมูล Admin ไว้ถ้ามี
-                    window.location.href = d.type === 'STAFF' ? 'admin.html' : 'agent-dashboard.html';
-                } else { document.getElementById('msg').style.display = 'block'; btn.innerText = "เข้าสู่แผงควบคุม"; btn.disabled = false; }
-            } catch(e) { alert("เชื่อมต่อฐานข้อมูลไม่ได้ โปรดเช็คสิทธิ์ Anyone ใน New Deployment"); btn.disabled = false; }
+            const k = document.getElementById('pin').value; if(!k) return;
+            document.getElementById('btn').innerText = "...ตรวจสอบสิทธิ์...";
+            const r = await fetch(`${api}?action=universalLogin&key=${k}`);
+            const d = await r.json();
+            if(d.success) {
+                localStorage.setItem('agentPin', k);
+                localStorage.setItem('smartAdmin', JSON.stringify(d));
+                window.location.href = d.type === 'STAFF' ? 'admin.html' : 'agent-dashboard.html';
+            } else { alert("รหัสไม่ถูกต้อง!"); document.getElementById('btn').innerText = "เข้าสู่ระบบ"; }
         }
     </script>
 </body>
