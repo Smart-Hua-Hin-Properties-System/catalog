@@ -3,49 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agent Dashboard V6.5 - Reliable Notifier</title>
+    <title>Agent Dashboard V6.7 - Absolute Identity</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --primary: #1a5276; --bg: #f0f4f7; --white: #ffffff; --orange: #e67e22; --green: #27ae60; }
+        :root { --primary: #1a5276; --bg: #f0f4f7; --white: #ffffff; --green: #27ae60; --orange: #e67e22; }
         body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; font-weight: 300; }
-        
-        .header { background: var(--primary); color: white; padding: 40px 20px; text-align: center; border-radius: 0 0 40px 40px; }
+        .header { background: var(--primary); color: white; padding: 40px 20px; text-align: center; border-radius: 0 0 40px 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .profile-img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid white; object-fit: cover; margin-bottom: 10px; }
-        
         .nav-tabs { background: #fff; display: flex; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .tab-item { padding: 15px 5px; color: #7f8c8d; text-decoration: none; font-size: 0.8rem; flex: 1; text-align: center; border-bottom: 3px solid transparent; cursor: pointer; transition: 0.3s; }
         .tab-item.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 400; }
-
-        .container { padding: 20px; max-width: 800px; margin: 0 auto; padding-bottom: 60px; }
+        .container { padding: 20px; max-width: 850px; margin: 0 auto; padding-bottom: 60px; }
         .card { background: white; border-radius: 25px; padding: 25px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
         label { font-size: 0.75rem; color: #7f8c8d; margin-bottom: 5px; display: block; }
-        input, select, textarea { width: 100%; padding: 14px; border-radius: 12px; border: 1.5px solid #eee; font-family: 'Kanit'; box-sizing: border-box; font-weight: 300; outline: none; font-size: 0.95rem; }
-        input:readonly { background: #f9f9f9; color: var(--primary); font-weight: 400; }
-        
+        input, select, textarea { width: 100%; padding: 14px; border-radius: 12px; border: 1.5px solid #eee; font-family: 'Kanit'; box-sizing: border-box; font-weight: 300; outline: none; font-size: 0.95rem; background: #fafafa; }
+        input:readonly { background: #f0f4f7; color: var(--primary); font-weight: 400; }
         .btn-submit { background: var(--primary); color: white; border: none; padding: 16px; width: 100%; border-radius: 15px; cursor: pointer; font-family: 'Kanit'; font-size: 1rem; font-weight: 400; box-shadow: 0 10px 20px rgba(26,82,118,0.2); }
-        .status-badge { padding: 3px 12px; border-radius: 50px; font-size: 0.65rem; background: #e8f5e9; color: #2e7d32; }
+        .status-badge { padding: 4px 14px; border-radius: 50px; font-size: 0.7rem; background: #d4edda; color: #155724; }
     </style>
 </head>
 <body>
 
 <div class="header">
     <img id="agentPhoto" src="https://via.placeholder.com/90" class="profile-img">
-    <h2 id="agentName" style="margin:0; font-weight:400;">Loading...</h2>
-    <div id="rateBadge" style="font-size:0.75rem; background:rgba(255,255,255,0.15); display:inline-block; padding:4px 15px; border-radius:10px; margin-top:10px;">Commission: - %</div>
+    <h2 id="agentName" style="margin:0; font-weight:400; letter-spacing:1px;">Agent Sovereign</h2>
+    <div id="rateBadge" style="font-size:0.75rem; background:rgba(255,255,255,0.15); display:inline-block; padding:4px 15px; border-radius:10px; margin-top:10px;">Com Rate: - %</div>
 </div>
 
 <div class="nav-tabs">
     <div class="tab-item active" onclick="showTab('reports', this)"><i class="fas fa-file-invoice"></i> รายงาน</div>
-    <div class="tab-item" onclick="showTab('apps', this)"><i class="fas fa-calendar-plus"></i> นัดหมาย</div>
+    <div class="tab-item" onclick="showTab('apps', this)"><i class="fas fa-calendar-alt"></i> นัดหมาย</div>
     <div class="tab-item" onclick="showTab('settings', this)"><i class="fas fa-user-cog"></i> ตั้งค่า</div>
 </div>
 
 <div class="container">
     <div id="reportsSection" class="tab-content">
-        <h4 style="font-weight:400; color:var(--primary);"><i class="fas fa-history"></i> ประวัติงานเช็คอิน</h4>
+        <h4 style="font-weight:400; color:var(--primary); margin-bottom:15px;"><i class="fas fa-history"></i> ประวัติงานเช็คอิน</h4>
         <div id="visitLogs"></div>
     </div>
 
@@ -57,16 +52,16 @@
                 <div><label>เวลาที่สะดวก</label><input type="time" id="appTime"></div>
             </div>
             <label>เลือกรหัสบ้าน (HP_ID)</label>
-            <select id="appHPID" onchange="fetchProjectName()"><option value="">-- กำลังดึงข้อมูล --</option></select>
+            <select id="appHPID" onchange="fetchProjectName()"><option value="">-- กำลังดึงรหัสบ้าน --</option></select>
             <label style="margin-top:15px;">โครงการ</label>
             <input type="text" id="appProject" readonly placeholder="ดึงอัตโนมัติจาก HP_ID">
             <label style="margin-top:15px;">ชื่อลูกค้า</label>
             <input type="text" id="appCustomer" placeholder="ระบุชื่อลูกค้า">
-            <label style="margin-top:15px;">หมายเหตุ / โน้ต</label>
-            <textarea id="appNote" placeholder="รายละเอียดเพิ่มเติมที่ต้องการแจ้ง" rows="3"></textarea>
-            <button class="btn-submit" onclick="saveApp()">ส่งนัดหมายมหาอำนาจ</button>
+            <label style="margin-top:15px;">หมายเหตุ / โน้ตเพิ่มเติม</label>
+            <textarea id="appNote" placeholder="รายละเอียดที่ต้องการแจ้งแอดมิน" rows="3"></textarea>
+            <button class="btn-submit" onclick="saveApp()">ยืนยันนัดหมายและส่ง LINE</button>
         </div>
-        <h4 style="font-weight:400; color:var(--primary);"><i class="fas fa-list-check"></i> ตารางนัดหมายที่ยืนยันแล้ว</h4>
+        <h4 style="font-weight:400; color:var(--primary);"><i class="fas fa-list-check"></i> รายการนัดหมายของท่าน</h4>
         <div id="appList"></div>
     </div>
 
@@ -93,14 +88,13 @@
         if(!d.success) return;
 
         const a = d.agent;
-        agentNameGlobal = a.name; // 🎯 เก็บชื่อไว้ส่ง LINE
+        agentNameGlobal = a.name; // 🎯 เก็บชื่อเพื่อระบุตัวตนใน LINE
         document.getElementById('agentName').innerText = a.name;
         document.getElementById('agentPhoto').src = a.photo || "https://via.placeholder.com/90";
         document.getElementById('rateBadge').innerText = `Commission: ${a.comRate}%`;
         document.getElementById('setName').value = a.name;
         document.getElementById('setPhoto').value = a.photo || "";
 
-        // Render Reports & Apps
         document.getElementById('visitLogs').innerHTML = d.visits.map(v => `<div class="card" style="display:flex; justify-content:space-between; align-items:center;"><div><b>${v.Project}</b><br><small>${new Date(v.Timestamp).toLocaleDateString('th-TH')}</small></div><span class="status-badge">${v.Status}</span></div>`).join('');
         document.getElementById('appList').innerHTML = d.apps.map(ap => `<div class="card">🗓️ <b>${ap.customer}</b><br><small>${ap.project} (${ap.hpId}) | ${new Date(ap.date).toLocaleDateString('th-TH')} [${ap.time}]</small></div>`).join('');
         loadHPIDs();
@@ -124,7 +118,7 @@
         const d = { 
             action: 'addAppointment', 
             pin: agentPin, 
-            agentName: agentNameGlobal, // 🎯 ส่งชื่อไปด้วยเพื่อให้ LINE ระบุได้
+            agentName: agentNameGlobal, // 🎯 ส่งชื่อไปด้วยเพื่อการระบุตัวตน 100%
             date: document.getElementById('appDate').value, 
             time: document.getElementById('appTime').value,
             hpId: document.getElementById('appHPID').value,
@@ -132,20 +126,23 @@
             customer: document.getElementById('appCustomer').value,
             note: document.getElementById('appNote').value
         };
-        if(!d.date || !d.time || !d.hpId || !d.customer) { alert("โปรดกรอกข้อมูลให้ครบทุกช่องครับ"); return; }
+        
+        if(!d.date || !d.time || !d.hpId || !d.customer) { alert("มาสเตอร์ครับ โปรดระบุข้อมูลให้ครบเพื่อความกริบของระบบนัดหมายครับ"); return; }
         
         const btn = document.querySelector('.btn-submit');
-        btn.innerText = "...กำลังบันทึกและส่งแจ้งเตือน LINE..."; btn.disabled = true;
+        btn.innerText = "...กำลังส่งข้อมูลมหาอำนาจ..."; btn.disabled = true;
         
-        await fetch(api, { method: 'POST', body: JSON.stringify(d) });
-        alert("✅ นัดหมายสำเร็จ! LINE แจ้งเตือนหาโครงการและมาสเตอร์แล้ว");
-        location.reload();
+        try {
+            await fetch(api, { method: 'POST', body: JSON.stringify(d) });
+            alert("✅ นัดหมายสำเร็จ! LINE แจ้งเตือนมาสเตอร์แอดมินระบุตัวตนเรียบร้อย");
+            location.reload();
+        } catch(e) { alert("❌ ระบบขัดข้อง"); btn.disabled = false; }
     }
 
     async function saveProfile() {
         const d = { action: 'updateAgentProfile', pin: agentPin, name: document.getElementById('setName').value, photoUrl: document.getElementById('setPhoto').value };
         await fetch(api, { method: 'POST', body: JSON.stringify(d) });
-        alert("บันทึกสำเร็จ!"); location.reload();
+        alert("บันทึกข้อมูลเรียบร้อย!"); location.reload();
     }
 
     function showTab(t, el) {
