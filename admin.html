@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sovereign Absolute Portal V5.2</title>
+    <title>Sovereign Data Portal V5.3</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -18,17 +18,17 @@
         .container { padding: 20px; max-width: 1200px; margin: 0 auto; }
         .card { background: #fff; border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         
-        /* 🕵️ ตารางรายงานเช็คอินมหาอำนาจ V5.2 */
+        /* 🕵️ ตารางรายงานมหาอำนาจ V5.3 */
         .report-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
         .report-table th { text-align: left; padding: 15px; border-bottom: 2px solid #f0f0f0; color: var(--primary); font-weight: 400; }
         .report-table td { padding: 15px; border-bottom: 1px solid #f9f9f9; vertical-align: middle; }
         
         .badge { padding: 5px 15px; border-radius: 50px; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 5px; }
         .badge-pending { background: #fff3cd; color: #856404; cursor: pointer; border: 1px solid #ffeeba; }
-        .badge-active { background: #d4edda; color: #155724; }
+        .badge-active { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
         
         .approver-tag { font-size: 0.65rem; color: var(--green); display: block; margin-top: 5px; font-weight: 400; }
-        .btn-action { background: none; border: none; cursor: pointer; color: var(--primary); font-size: 1.1rem; padding: 8px; display: inline-flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .btn-action { background: none; border: none; cursor: pointer; color: var(--primary); font-size: 1.15rem; padding: 8px; transition: 0.2s; display: inline-flex; align-items: center; }
         .btn-action:hover { transform: scale(1.2); color: var(--orange); }
         .img-stack { display: flex; gap: 10px; align-items: center; }
     </style>
@@ -48,8 +48,8 @@
 
 <div class="container">
     <div id="propertySection" class="tab-content">
-        <button onclick="window.location.href='index.html'" style="background:var(--primary); color:white; border:none; padding:15px; width:100%; border-radius:15px; cursor:pointer; font-family:'Kanit'; margin-bottom:20px;">+ เพิ่มข้อมูลรายการบ้านใหม่</button>
-        <div id="propertyList"><div style="text-align:center; padding:50px;"><i class="fas fa-sync fa-spin"></i></div></div>
+        <button onclick="window.location.href='index.html'" style="background:var(--primary); color:white; border:none; padding:15px; width:100%; border-radius:15px; cursor:pointer; font-family:'Kanit'; margin-bottom:20px;">+ เพิ่มข้อมูลบ้านใหม่</button>
+        <div id="propertyList"></div>
     </div>
 
     <div id="reportSection" class="tab-content" style="display:none;">
@@ -57,14 +57,14 @@
             <table class="report-table">
                 <thead>
                     <tr>
-                        <th>วันเวลา / เอเจนต์ (สังกัด)</th>
+                        <th>วันเวลา / เอเจนต์</th>
                         <th>รหัสทรัพย์</th>
                         <th>สถานะการเข้าชม</th>
                         <th>หลักฐานภาพ / GPS</th>
                     </tr>
                 </thead>
                 <tbody id="reportLogs">
-                    <tr><td colspan="4" style="text-align:center; padding:50px;"><i class="fas fa-sync fa-spin fa-2x"></i><br>กำลังดึงข้อมูลรายงานเช็คอินมหาอำนาจ...</td></tr>
+                    <tr><td colspan="4" style="text-align:center; padding:50px;"><i class="fas fa-sync fa-spin fa-2x"></i><br>กำลังดึงข้อมูลเช็คอิน 15 รายการ...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -74,7 +74,7 @@
         <div class="card">
             <h3 id="infoProjectName" style="color:var(--primary); font-weight:400; margin-top:0;">ข้อมูลโครงการ</h3>
             <div style="background:#f0f7ff; padding:20px; border-radius:15px; border-left:5px solid var(--blue);">
-                <p id="agreementText" style="line-height:1.8; color:#555;">กำลังดึงข้อมูลระเบียบการทำงาน...</p>
+                <p id="agreementText" style="line-height:1.8; color:#555;">กำลังดึงข้อมูลระเบียบการ...</p>
             </div>
         </div>
     </div>
@@ -96,7 +96,7 @@
         if(t === 'property') loadProperties();
     }
 
-    // 🎯 แก้ไขจุดบกพร่องถาวร: ดึงข้อมูลจากฐานข้อมูลสมจริง 15 รายการ
+    // 🎯 แก้ไข: ดึงรายงานแบบ Partial Match ให้แสดงข้อมูล 15 รายการ
     async function loadReports() {
         const body = document.getElementById('reportLogs');
         try {
@@ -104,14 +104,14 @@
             const data = await r.json();
             
             if (!data || data.length === 0) {
-                body.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:50px; color:#999;">ยังไม่มีข้อมูลการเช็คอินในระบบ</td></tr>';
+                body.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:50px; color:#999;">ไม่พบข้อมูลเช็คอินที่ตรงกับชื่อโครงการนี้</td></tr>';
                 return;
             }
 
             body.innerHTML = data.map(v => `
                 <tr>
                     <td>
-                        <b style="color:var(--primary); font-weight:400;">${v.Agent_Name || 'ไม่ระบุชื่อ'}</b> (${v.Agency || 'อิสระ'})<br>
+                        <b style="color:var(--primary); font-weight:400;">${v.Agent_Name || 'ไม่ระบุ'}</b><br>
                         <small style="color:#999;"><i class="far fa-clock"></i> ${new Date(v.Timestamp).toLocaleString('th-TH')}</small>
                     </td>
                     <td><span style="color:#555;">${v.Marketing_ID || '-'}</span></td>
@@ -126,25 +126,24 @@
                     </td>
                     <td>
                         <div class="img-stack">
-                            ${v.Evidence_URL_1 ? `<a href="${v.Evidence_URL_1}" target="_blank" class="btn-action" title="ภาพลูกค้า"><i class="fas fa-image"></i></a>` : '<i class="fas fa-image" style="color:#eee"></i>'}
-                            ${v.Evidence_URL_2 ? `<a href="${v.Evidence_URL_2}" target="_blank" class="btn-action" title="ภาพหน้างาน"><i class="fas fa-camera"></i></a>` : '<i class="fas fa-camera" style="color:#eee"></i>'}
-                            <a href="http://maps.google.com/?q=${v.Lat},${v.Lng}" target="_blank" class="btn-action" title="พิกัด GPS"><i class="fas fa-map-marker-alt" style="color:var(--orange);"></i></a>
+                            ${v.Evidence_URL_1 ? `<a href="${v.Evidence_URL_1}" target="_blank" class="btn-action" title="รูปที่ 1"><i class="fas fa-image"></i></a>` : '<i class="fas fa-image" style="color:#eee"></i>'}
+                            ${v.Evidence_URL_2 ? `<a href="${v.Evidence_URL_2}" target="_blank" class="btn-action" title="รูปที่ 2"><i class="fas fa-camera"></i></a>` : '<i class="fas fa-camera" style="color:#eee"></i>'}
+                            <a href="https://www.google.com/maps?q=${v.Lat},${v.Lng}" target="_blank" class="btn-action" title="GPS"><i class="fas fa-map-marker-alt" style="color:var(--orange);"></i></a>
                         </div>
                     </td>
                 </tr>
             `).join('');
         } catch(e) { 
-            body.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:50px; color:var(--red);">❌ การดึงข้อมูลล้มเหลว โปรดลองใหม่อีกครั้ง</td></tr>';
+            body.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:50px; color:var(--red);">❌ การดึงข้อมูลขัดข้อง</td></tr>';
         }
     }
 
     async function approve(id) {
         const approver = user.role === "Master" ? "Master Admin" : user.projectName;
-        if(!confirm(`ยืนยันการอนุมัติพิกัดจริงในนาม ${approver}?`)) return;
+        if(!confirm(`ยืนยันการอนุมัติในนาม ${approver}?`)) return;
         try {
-            const res = await fetch(api, { method: 'POST', body: JSON.stringify({ action: 'approveVisit', logId: id, approvedBy: approver }) });
-            alert("✅ อนุมัติการเข้าชมเรียบร้อย!"); 
-            loadReports();
+            await fetch(api, { method: 'POST', body: JSON.stringify({ action: 'approveVisit', logId: id, approvedBy: approver }) });
+            alert("✅ อนุมัติสำเร็จ!"); loadReports();
         } catch(e) { alert("❌ อนุมัติขัดข้อง"); }
     }
 
@@ -164,9 +163,8 @@
                 <div class="card" style="display:flex; justify-content:space-between; align-items:center;">
                     <div><b style="font-weight:400;">${it.HP_ID} - ${it.ID}</b><br><small>฿${Number(it.Price).toLocaleString()} | ${it.Status}</small></div>
                     <i class="fas fa-edit" style="color:var(--primary); cursor:pointer;"></i>
-                </div>
-            `).join('') || '<div style="text-align:center;">ยังไม่มีรายการบ้าน</div>';
-        } catch(e) { list.innerHTML = "❌ โหลดข้อมูลบ้านขัดข้อง"; }
+                </div>`).join('') || '<div style="text-align:center;">ไม่มีรายการบ้าน</div>';
+        } catch(e) { list.innerHTML = "❌ โหลดข้อมูลขัดข้อง"; }
     }
 
     function logout() { localStorage.removeItem('smartAdmin'); window.location.href = 'login.html'; }
