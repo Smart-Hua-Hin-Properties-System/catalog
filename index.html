@@ -124,7 +124,7 @@
 
 <script>
     // 🚀 URL มหาอำนาจล่าสุด
-    const api = "https://script.google.com/macros/s/AKfycbzYHpGKmFEpkssCYACh2F4rsRqssiE6bztFEryB2zrmwhj5z9TFkEkXKuHkQSdOqmZs/exec";
+    const api = "https://script.google.com/macros/s/AKfycbwRIkEYZj0CKFiHEbhc29mJ19kyqwymEj8_O2p4qThvjjueQ-ug07okMTFn-e0zz_4l/exec";
     const currentProject = new URLSearchParams(window.location.search).get('project') || "COCO HUA HIN 88 LUXURY HOME";
     
     let allData = [], projectData = [], selectedHPID = null, currentLang = localStorage.getItem('smartLang') || 'th';
@@ -234,89 +234,6 @@
     function openIdModal() { document.getElementById('idModal').style.display = 'flex'; }
     function closeIdModal() { document.getElementById('idModal').style.display = 'none'; }
     init();
-</script>
-</body>
-</html>
-
-
-
-
-===========================================================================
-📝📝📝📝GitHub ส่วนที่ 5: login.html
-===========================================================================
-
-
-
-
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Smart System V1.9</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root { --primary: #1a5276; --bg: #f0f2f5; --white: #ffffff; }
-        body { font-family: 'Kanit', sans-serif; background: var(--bg); display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
-        .login-card { background: var(--white); padding: 45px 30px; border-radius: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
-        .logo-icon { font-size: 3.5rem; color: var(--primary); margin-bottom: 25px; }
-        h2 { color: var(--primary); font-weight: 600; margin-bottom: 8px; }
-        p { color: #7f8c8d; font-size: 0.9rem; margin-bottom: 35px; }
-        .password-container { position: relative; margin-bottom: 25px; }
-        input { width: 100%; padding: 16px 50px 16px 15px; border-radius: 12px; border: 1.5px solid #ddd; box-sizing: border-box; font-size: 1.1rem; outline: none; transition: 0.3s; }
-        input:focus { border-color: var(--primary); }
-        .toggle-eye { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: #7f8c8d; cursor: pointer; font-size: 1.2rem; }
-        button { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 12px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: 0.3s; }
-        button:hover { background: #154360; transform: translateY(-2px); }
-        #error { color: #e74c3c; font-size: 0.85rem; margin-top: 18px; display: none; background: #fdf2f2; padding: 10px; border-radius: 8px; }
-    </style>
-</head>
-<body>
-<div class="login-card">
-    <div class="logo-icon"><i class="fas fa-user-shield"></i></div>
-    <h2>Admin Access</h2>
-    <p>ระบุรหัสกุญแจลับโครงการเพื่อเข้าสู่ระบบ</p>
-    <div class="password-container">
-        <input type="password" id="secretKey" placeholder="ใส่รหัสกุญแจลับ">
-        <i class="fas fa-eye toggle-eye" id="togglePassword"></i>
-    </div>
-    <button id="loginBtn" onclick="handleLogin()">ยืนยันตัวตน</button>
-    <div id="error">❌ รหัสไม่ถูกต้อง หรือสิทธิ์ API ไม่ถูกต้อง</div>
-</div>
-<script>
-    // 🚀 URL มหาอำนาจล่าสุดของมาสเตอร์
-    const api = "https://script.google.com/macros/s/AKfycbwRIkEYZj0CKFiHEbhc29mJ19kyqwymEj8_O2p4qThvjjueQ-ug07okMTFn-e0zz_4l/exec";
-
-    const togglePassword = document.querySelector('#togglePassword');
-    const passwordInput = document.querySelector('#secretKey');
-
-    togglePassword.addEventListener('click', () => {
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-        togglePassword.classList.toggle('fa-eye-slash');
-    });
-
-    async function handleLogin() {
-        const key = passwordInput.value.trim();
-        const btn = document.getElementById('loginBtn');
-        const err = document.getElementById('error');
-        if(!key) return;
-        btn.innerText = "กำลังเข้าสู่ระบบ..."; btn.disabled = true; err.style.display = 'none';
-        try {
-            const res = await fetch(`${api}?key=${encodeURIComponent(key)}&action=login`);
-            const data = await res.json();
-            if(data.success) {
-                localStorage.setItem('smartAdmin', JSON.stringify(data));
-                window.location.href = 'admin.html';
-            } else {
-                err.style.display = 'block'; btn.innerText = "ยืนยันตัวตน"; btn.disabled = false;
-            }
-        } catch(e) {
-            err.innerText = "❌ เชื่อมต่อขัดข้อง: โปรดเช็คสิทธิ์ API";
-            err.style.display = 'block'; btn.innerText = "ยืนยันตัวตน"; btn.disabled = false;
-        }
-    }
 </script>
 </body>
 </html>
