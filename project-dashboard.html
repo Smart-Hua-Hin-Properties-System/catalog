@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Intelligence - Smart System V1.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --primary: #1a5276; --bg: #f8f9fa; --white: #ffffff; --green: #27ae60; --orange: #e67e22; }
+        body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; font-weight: 300; color: #333; }
+        .header { background: var(--primary); color: white; padding: 20px; text-align: center; }
+        .container { padding: 20px; max-width: 1000px; margin: 0 auto; }
+        .log-card { background: white; border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .log-info { display: flex; flex-direction: column; gap: 5px; }
+        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 400; }
+        .waiting { background: #fff3cd; color: #856404; }
+        .active { background: #d4edda; color: #155724; }
+        .btn-approve { background: var(--green); color: white; border: none; padding: 10px 20px; border-radius: 12px; cursor: pointer; transition: 0.3s; font-family: 'Kanit'; }
+        .btn-approve:hover { background: #219150; transform: scale(1.05); }
+        .btn-approve:disabled { background: #ccc; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h2 style="margin:0; font-weight:400;"><i class="fas fa-shield-alt"></i> PROJECT DASHBOARD</h2>
+    <div id="projectName" style="font-size:0.9rem; opacity:0.8; margin-top:5px;">Loading...</div>
+</div>
+
+<div class="container">
+    <button onclick="window.location.href='admin.html'" style="margin-bottom:20px; border:none; background:none; color:var(--primary); cursor:pointer;"><i class="fas fa-arrow-left"></i> กลับแผงควบคุมหลัก</button>
+    <h3 style="font-weight:400; color:var(--primary);"><i class="fas fa-history"></i> ประวัติการเข้าชมของ Agent</h3>
+    <div id="logList"><div style="text-align:center; padding:50px;"><i class="fas fa-spinner fa-spin fa-2x"></i></div></div>
+</div>
+
+<script>
+    const api = "https://script.google.com/macros/s/AKfycbyTokUt_521AumCJ2ek_1w1_CE4NMHswVY2KnwJ2xQfIp8ccP1wOLwcIIMc-bwkwh6v/exec";
+    const user = JSON.parse(localStorage.getItem('smartAdmin'));
+    if(!user) window.location.href = 'login.html';
+    document.getElementById('projectName').innerText = "โครงการ: " + user.projectName;
+
+    async function loadLogs() {
+        try {
+            const r = await fetch(`${api}?action=getVisitLogs&projectName=${encodeURIComponent(user.projectName)}&role=${user.role}`);
+            const data = await r.json();
+            const list = document.getElementById('logList');
+            list.innerHTML = data.map(log => `
+                <div class="log-card">
+                    <div class="log-info">
+                        <div style="font-weight:400; font-size:1.1rem; color:var(--primary);">${log["Agent Name"]}</div>
+                        <div style="font-size:0.85rem; color:#777;">ID: ${log["Marketing ID"]} | ⏰ ${new Date(log.Timestamp).toLocaleString('th-TH')}</div>
+                        <span class="status-badge ${log.Status.toLowerCase()}">${log.Status === "Waiting" ? "🔴 รอการอนุมัติ" : "🟢 อนุมัติแล้ว (Active)"}</span>
+                    </div>
+                    ${log.Status === "Waiting" ? `<button class="btn-approve" onclick="approve('${log.Log_ID}')">อนุมัติ (Active)</button>` : `<div style="font-size:0.75rem; color:#27ae60;">โดย: ${log["Approved By"]}</div>`}
+                </div>
+            `).join('') || '<div style="text-align:center; padding:40px;">ยังไม่มีประวัติการเข้าชม</div>';
+        } catch(e) { document.getElementById('logList').innerText = "❌ การโหลดข้อมูลขัดข้อง"; }
+    }
+
+    async function approve(id) {
+        if(!confirm("ยืนยันการอนุมัติว่า Agent เข้าพื้นที่จริงใช่หรือไม่?")) return;
+        try {
+            const res = await fetch(api, {
+                method: 'POST',
+                body: JSON.stringify({ action: 'approveVisit', logId: id, approvedBy: user.projectName })
+            });
+            alert("✅ อนุมัติสำเร็จ! ระบบได้ส่งแจ้งเตือนหามาสเตอร์แล้ว");
+            loadLogs();
+        } catch(e) { alert("❌ การอนุมัติขัดข้อง"); }
+    }
+
+    loadLogs();
+</script>
+</body>
+</html>
