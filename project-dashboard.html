@@ -3,34 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Intelligence - Smart System V4.4</title>
+    <title>Project Intelligence V4.5</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --primary: #1a5276; --bg: #f4f7f6; --white: #ffffff; --green: #27ae60; --orange: #e67e22; --red: #e74c3c; }
-        body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; font-weight: 300; }
-        .header { background: var(--primary); color: white; padding: 15px; text-align: center; }
+        :root { --primary: #1a5276; --bg: #f4f7f6; --white: #ffffff; --green: #27ae60; --orange: #e67e22; }
+        body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; font-weight: 300; color: #333; }
         .nav-tabs { background: #fff; display: flex; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; }
         .tab-item { padding: 15px; color: #7f8c8d; text-decoration: none; font-size: 0.9rem; flex: 1; text-align: center; border-bottom: 3px solid transparent; }
-        .tab-item.active { color: var(--primary); border-bottom-color: var(--primary); }
+        .tab-item.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 400; }
         .container { padding: 20px; max-width: 1000px; margin: 0 auto; }
-        
-        /* 🎨 Log Card Design: ปฏิรูปใหม่ให้สวยงามและอ่านง่าย */
         .log-card { 
             background: white; border-radius: 20px; padding: 20px; margin-bottom: 15px; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; 
         }
-        .log-left { flex: 1; }
-        .log-right { text-align: right; min-width: 150px; }
-        .agent-name { font-size: 1.15rem; color: var(--primary); font-weight: 400; margin-bottom: 5px; }
-        .timestamp { font-size: 0.8rem; color: #7f8c8d; margin-bottom: 8px; }
-        .evidence-link { color: var(--orange); text-decoration: none; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; }
-        
-        /* Badges & Buttons */
-        .badge { padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 5px; }
-        .badge-pending { background: #fff3cd; color: #856404; }
-        .badge-active { background: #d4edda; color: #155724; }
-        .btn-approve { background: var(--green); color: white; border: none; padding: 8px 18px; border-radius: 10px; cursor: pointer; font-family: 'Kanit'; font-size: 0.85rem; }
+        .agent-name { font-size: 1.2rem; color: var(--primary); font-weight: 400; }
+        .badge { padding: 5px 15px; border-radius: 50px; font-size: 0.7rem; display: flex; align-items: center; gap: 5px; }
+        .pending-bg { background: #fff3cd; color: #856404; }
+        .approved-bg { background: #d4edda; color: #155724; }
+        .btn-approve { background: var(--green); color: white; border: none; padding: 10px 20px; border-radius: 12px; cursor: pointer; font-family: 'Kanit'; }
+        .evidence-btn { color: var(--orange); font-size: 0.8rem; cursor: pointer; text-decoration: none; }
     </style>
 </head>
 <body>
@@ -40,68 +32,52 @@
     <a href="#" class="tab-item active"><i class="fas fa-chart-line"></i> แดชบอร์ดโครงการ</a>
 </div>
 
-<div class="header">
-    <h2 style="margin:0; font-weight:400;">PROJECT INTELLIGENCE</h2>
-    <div id="projectName" style="font-size:0.8rem; opacity:0.8;">-</div>
-</div>
-
 <div class="container">
-    <h3 style="font-weight:400; color:var(--primary);"><i class="fas fa-history"></i> ประวัติและสถานะการเช็คอิน (Agent Logs)</h3>
+    <h3 style="font-weight:400; color:var(--primary);"><i class="fas fa-user-shield"></i> ประวัติการเช็คอินและระบบอนุมัติ</h3>
     <div id="logList"><div style="text-align:center; padding:50px;"><i class="fas fa-sync fa-spin fa-2x"></i></div></div>
 </div>
 
 <script>
     const api = "https://script.google.com/macros/s/AKfycbyTokUt_521AumCJ2ek_1w1_CE4NMHswVY2KnwJ2xQfIp8ccP1wOLwcIIMc-bwkwh6v/exec";
     const user = JSON.parse(localStorage.getItem('smartAdmin'));
-
-    if(!user) {
-        window.location.href = 'login.html';
-    } else {
-        document.getElementById('projectName').innerText = "โครงการ: " + user.projectName;
-    }
+    if(!user) window.location.href = 'login.html';
 
     async function loadLogs() {
         try {
             const r = await fetch(`${api}?action=getVisitLogs&projectName=${encodeURIComponent(user.projectName)}&role=${user.role}`);
             const data = await r.json();
-            
-            // 🎯 แก้ไขชื่อฟิลด์ให้ตรงกับฐานข้อมูลเพื่อแก้ปัญหา undefined
             document.getElementById('logList').innerHTML = data.map(log => `
                 <div class="log-card">
-                    <div class="log-left">
+                    <div>
                         <div class="agent-name">${log.Agent_Name || 'ไม่ระบุชื่อ'}</div>
-                        <div class="timestamp">
-                            <i class="far fa-clock"></i> ${new Date(log.Timestamp).toLocaleString('th-TH')} | 
-                            <b>รหัสทรัพย์:</b> ${log.Marketing_ID || '-'}
+                        <div style="font-size:0.8rem; color:#777; margin:5px 0;">
+                            ⏰ ${new Date(log.Timestamp).toLocaleString('th-TH')} | <b>ID:</b> ${log.Marketing_ID || '-'}
                         </div>
-                        ${log.Evidence_URL ? 
-                            `<a href="${log.Evidence_URL}" target="_blank" class="evidence-link"><i class="fas fa-camera"></i> ดูรูปถ่ายหลักฐานเช็คอิน</a>` : 
-                            `<span style="font-size:0.75rem; color:#ccc;"><i class="fas fa-times-circle"></i> ไม่มีรูปแนบ</span>`
-                        }
+                        ${log.Evidence_URL ? `<a href="${log.Evidence_URL}" target="_blank" class="evidence-btn"><i class="fas fa-camera"></i> ดูรูปหลักฐาน</a>` : '<span style="font-size:0.7rem; color:#ccc;">ไม่มีรูปแนบ</span>'}
                     </div>
-                    <div class="log-right">
+                    <div style="text-align:right;">
                         ${log.Status === "Waiting" ? 
-                            `<div>
-                                <div class="badge badge-pending"><i class="fas fa-hourglass-half"></i> Pending</div>
-                                <div style="margin-top:10px;"><button class="btn-approve" onclick="approve('${log.Log_ID}')">Approve</button></div>
+                            `<div style="display:flex; flex-direction:column; align-items:flex-end; gap:10px;">
+                                <span class="badge pending-bg"><i class="fas fa-clock"></i> Pending</span>
+                                <button class="btn-approve" onclick="approve('${log.Log_ID}')">Approve</button>
                             </div>` : 
-                            `<div>
-                                <div class="badge badge-active"><i class="fas fa-check-circle"></i> Approved</div>
-                                <div style="font-size:0.7rem; color:var(--green); margin-top:5px;">โดย: ${log.Approved_By}</div>
+                            `<div style="text-align:right;">
+                                <span class="badge approved-bg"><i class="fas fa-check-circle"></i> Approved</span>
+                                <div style="font-size:0.75rem; color:var(--green); margin-top:8px;">โดย: ${log.Approved_By}</div>
                             </div>`
                         }
                     </div>
                 </div>
-            `).join('') || '<div style="text-align:center; padding:40px;">ไม่มีข้อมูลประวัติ</div>';
+            `).join('') || '<div style="text-align:center; padding:40px;">ไม่มีข้อมูล</div>';
         } catch(e) { document.getElementById('logList').innerText = "❌ โหลดข้อมูลขัดข้อง"; }
     }
 
     async function approve(id) {
-        const approverName = user.role === "Master" ? "Master Admin" : user.projectName;
-        if(!confirm(`ยืนยันการอนุมัติในนาม ${approverName}?`)) return;
+        const approver = user.role === "Master" ? "Master Admin" : user.projectName;
+        if(!confirm(`ยืนยันการอนุมัติในนาม ${approver}?`)) return;
         try {
-            await fetch(api, { method: 'POST', body: JSON.stringify({ action: 'approveVisit', logId: id, approvedBy: approverName }) });
-            alert("✅ อนุมัติสำเร็จ! ระบบบันทึกผู้อนุมัติและส่งแจ้งเตือนเรียบร้อย");
+            await fetch(api, { method: 'POST', body: JSON.stringify({ action: 'approveVisit', logId: id, approvedBy: approver }) });
+            alert("✅ อนุมัติสำเร็จ! ข้อมูลถูกบันทึกเรียบร้อย");
             loadLogs();
         } catch(e) { alert("❌ อนุมัติขัดข้อง"); }
     }
