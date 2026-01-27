@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Property Details - Smart System Ultimate V3.7</title>
+    <title>Property Details - Smart System Ultimate V4.4</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -20,7 +20,7 @@
         .brand-name { font-size: 0.85rem; color: var(--primary); text-transform: uppercase; margin-left: 5px; }
         .flag-list { display: flex; gap: 4px; }
         .flag-btn { border: none; background: none; padding: 0; cursor: pointer; }
-        .flag-btn img { width: 22px; height: 14px; border-radius: 2px; }
+        .flag-btn img { width: 22px; height: 14px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
 
         /* Sidebar System */
         .sidebar { position: fixed; left: -280px; top: 0; width: 280px; height: 100%; background: #fff; z-index: 2500; transition: 0.4s; padding-top: 60px; box-shadow: 5px 0 25px rgba(0,0,0,0.1); }
@@ -31,15 +31,15 @@
 
         /* Hero Image & Badge */
         .back-nav { padding: 15px; background: #fff; }
-        .back-btn { text-decoration: none; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+        .back-btn { text-decoration: none; color: var(--primary); display: flex; align-items: center; gap: 8px; font-size: 0.9rem; }
         .hero-box { position: relative; width: 100%; height: 400px; background: #ddd; overflow: hidden; }
         .main-img { width: 100%; height: 100%; object-fit: cover; }
         .hero-badge { position: absolute; top: 15px; left: 15px; background: var(--green); color: white; padding: 6px 15px; border-radius: 50px; font-size: 0.85rem; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 
-        /* Layout Containers */
+        /* Content Card */
         .main-container { max-width: 600px; margin: 0 auto; position: relative; z-index: 20; padding-bottom: 120px; }
         .content-card { background: #fff; padding: 25px; border-radius: 30px 30px 0 0; margin: -50px 15px 0 15px; box-shadow: 0 -10px 30px rgba(0,0,0,0.08); }
-        .price-box { font-size: 2rem; color: var(--primary); margin: 10px 0 25px 0; }
+        .price-box { font-size: 2rem; color: var(--primary); margin: 10px 0 20px 0; }
 
         /* 32 Fields Info Grid */
         .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -51,8 +51,9 @@
 
         /* Agent Check-in UI */
         .section-container { background: #fff; margin: 15px; padding: 25px; border-radius: 25px; box-shadow: 0 5px 20px rgba(0,0,0,0.03); }
-        .input-agent { padding: 14px; width: 100%; border-radius: 12px; border: 1px solid #ddd; margin-bottom: 15px; box-sizing: border-box; font-family: 'Kanit'; font-weight: 300; outline: none; }
-        .btn-checkin { display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--orange); color: #fff; padding: 16px; border-radius: 15px; border: none; width: 100%; cursor: pointer; transition: 0.3s; font-size: 1rem; font-family: 'Kanit'; }
+        .input-box { padding: 14px; width: 100%; border-radius: 12px; border: 1px solid #ddd; margin-bottom: 15px; box-sizing: border-box; font-family: 'Kanit'; font-weight: 300; outline: none; transition: 0.3s; }
+        .input-box:focus { border-color: var(--orange); }
+        .btn-checkin { display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--orange); color: #fff; padding: 16px; border-radius: 15px; border: none; width: 100%; cursor: pointer; transition: 0.3s; font-size: 1rem; font-family: 'Kanit'; font-weight: 400; box-shadow: 0 4px 15px rgba(230,126,34,0.3); }
         .btn-checkin:hover { background: #d35400; transform: translateY(-2px); }
 
         /* Share Bar Restoration */
@@ -62,15 +63,9 @@
         .share-btn { width: 50px; height: 50px; border-radius: 50%; border: none; background: #f8f9fa; flex-shrink: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .share-btn img { width: 24px; height: 24px; }
 
-        /* Portfolio / Related Grid */
-        .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .mini-card { background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.05); cursor: pointer; }
-        .mini-img { width: 100%; height: 120px; object-fit: cover; }
-        .mini-info { padding: 12px; font-size: 0.85rem; }
-
-        /* Footer Inquiry Button */
+        /* Footer Inquiry */
         .footer-action { position: fixed; bottom: 0; width: 100%; max-width: 600px; background: #fff; padding: 15px; box-sizing: border-box; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); z-index: 1000; left: 50%; transform: translateX(-50%); border-radius: 25px 25px 0 0; }
-        .btn-line { display: flex; align-items: center; justify-content: center; gap: 10px; background: #00b900; color: #fff; padding: 16px; border-radius: 15px; text-decoration: none; font-size: 1.1rem; }
+        .btn-line { display: flex; align-items: center; justify-content: center; gap: 10px; background: #00b900; color: #fff; padding: 16px; border-radius: 15px; text-decoration: none; font-size: 1.1rem; font-weight: 400; }
     </style>
 </head>
 <body>
@@ -103,15 +98,14 @@
 </div>
 
 <script>
-    // 🚀 URL มหาอำนาจล่าสุดของมาสเตอร์
+    // 🚀 URL มหาอำนาจล่าสุด
     const api = "https://script.google.com/macros/s/AKfycbyTokUt_521AumCJ2ek_1w1_CE4NMHswVY2KnwJ2xQfIp8ccP1wOLwcIIMc-bwkwh6v/exec";
     const pId = new URLSearchParams(window.location.search).get('id');
     let currentLang = localStorage.getItem('smartLang') || 'th', prop = null, all = [];
 
     const i18n = {
-        th: { menu: "เมนู", home: "หน้าหลัก", adminAccess: "ระบบแอดมิน", back: "กลับหน้าหลัก", type: "ประเภท", plot: "เลขแปลง", bed: "ห้องนอน", bath: "ห้องน้ำ", living: "ใช้สอย", landW: "ที่ดิน (ตร.ว.)", landM: "ที่ดิน (ตร.ม.)", pool: "ขนาดสระ", depth: "ความลึกสระ", furniture: "เฟอร์นิเจอร์", parking: "ที่จอดรถ", electric: "ไฟฟ้า", location: "ทำเล", Available: "ว่าง", Pending: "จองแล้ว", Sold: "ขายแล้ว", download: "ดาวน์โหลดมาสเตอร์แพลน", portfolio: "ทรัพย์อื่นๆ ในโครงการ", inquiry: "สอบถามผ่าน LINE", shareTr: "แชร์ทรัพย์นี้", agentTitle: "รายงานตัวเข้าชมพื้นที่ (Agent)", agentPlaceholder: "ระบุชื่อ Agent หรือสังกัด", checkinBtn: "ยืนยันการเช็คอินเข้าชมบ้าน" },
-        en: { menu: "MENU", home: "Home", adminAccess: "Admin Access", back: "Back", type: "Type", plot: "Plot", bed: "Bed", bath: "Bath", living: "Living Area", landW: "Land (sq.w)", landM: "Land (sq.m)", pool: "Pool Size", depth: "Pool Depth", furniture: "Furnishing", parking: "Parking", electric: "Electricity", location: "Location", Available: "Available", Pending: "Pending", Sold: "Sold", download: "Download Plan", portfolio: "Other Units", inquiry: "Inquire via LINE", shareTr: "Share Property", agentTitle: "Agent Check-in", agentPlaceholder: "Agent Name / Agency", checkinBtn: "Confirm Check-in" },
-        // ... (รองรับ CN, RU, DE, FR ครบตามระบบมหาอำนาจ)
+        th: { menu: "เมนู", home: "หน้าหลัก", adminAccess: "ระบบแอดมิน", back: "กลับหน้าหลัก", type: "ประเภท", plot: "เลขแปลง", bed: "ห้องนอน", bath: "ห้องน้ำ", living: "ใช้สอย", landW: "ที่ดิน (ตร.ว.)", landM: "ที่ดิน (ตร.ม.)", pool: "ขนาดสระ", electric: "ไฟฟ้า", location: "ทำเล", Available: "ว่าง", Pending: "จองแล้ว", Sold: "ขายแล้ว", inquiry: "สอบถามผ่าน LINE", shareTr: "แชร์ทรัพย์นี้", agentTitle: "รายงานตัวเข้าชมพื้นที่ (Agent)", agentPlaceholder: "ระบุชื่อ Agent หรือสังกัด", evidencePlaceholder: "แนบลิงก์รูปถ่ายเช็คอิน (ถ้ามี)", checkinBtn: "ยืนยันการเช็คอินเข้าชมบ้าน" },
+        en: { menu: "MENU", home: "Home", adminAccess: "Admin Access", back: "Back", type: "Type", plot: "Plot", bed: "Bed", bath: "Bath", living: "Living", landW: "Land (sq.w)", landM: "Land (sq.m)", pool: "Pool", electric: "Electric", location: "Location", Available: "Available", Pending: "Pending", Sold: "Sold", inquiry: "Inquire via LINE", shareTr: "Share Property", agentTitle: "Agent Check-in", agentPlaceholder: "Agent Name / Agency", evidencePlaceholder: "Evidence Link / Photo URL", checkinBtn: "Confirm Check-in" }
     };
 
     async function load() {
@@ -132,38 +126,32 @@
         document.getElementById('mainContent').innerHTML = `
             <div class="hero-box">
                 <div class="hero-badge">${it.HP_ID} - ${it.ID}</div>
-                <img src="${it.Thumbnail}" class="main-img" onerror="this.src='https://placehold.co/600x400?text=Smart+System'">
+                <img src="${it.Thumbnail}" class="main-img" onerror="this.src='https://placehold.co/600x400?text=Property'">
             </div>
             
             <div class="main-container">
                 <div class="content-card">
                     <div style="display:flex; gap:8px; margin-bottom:15px;">
                         <span style="background:var(--green); color:#fff; padding:4px 12px; border-radius:8px; font-size:0.8rem;">${t[it.Status] || it.Status}</span>
-                        ${it.Badge ? `<span style="background:var(--gold); color:#000; padding:4px 12px; border-radius:8px; font-size:0.8rem;">${it.Badge}</span>` : ''}
                     </div>
                     <h1 style="margin:0; font-size:1.4rem; color:var(--text);">${it.Project_Name}</h1>
                     <div class="price-box">฿${Number(it.Price).toLocaleString()}</div>
                     
                     <div class="info-grid">
                         <div class="info-item"><i class="fas fa-house"></i><div><span class="info-label">${t.type}</span><span class="info-value">${it.Type || '-'}</span></div></div>
-                        <div class="info-item"><i class="fas fa-map-location-dot"></i><div><span class="info-label">${t.plot}</span><span class="info-value">${it.Plot || '-'}</span></div></div>
+                        <div class="info-item"><i class="fas fa-map-marker-alt"></i><div><span class="info-label">${t.plot}</span><span class="info-value">${it.Plot || '-'}</span></div></div>
                         <div class="info-item"><i class="fas fa-bed"></i><div><span class="info-label">${t.bed}</span><span class="info-value">${it.Bedrooms || 0}</span></div></div>
                         <div class="info-item"><i class="fas fa-bath"></i><div><span class="info-label">${t.bath}</span><span class="info-value">${it.Bathrooms || 0}</span></div></div>
                         <div class="info-item"><i class="fas fa-vector-square"></i><div><span class="info-label">${t.living}</span><span class="info-value">${it['Living Area (sq.m)'] || 0} m²</span></div></div>
                         <div class="info-item"><i class="fas fa-maximize"></i><div><span class="info-label">${t.landW}</span><span class="info-value">${it['Land Area (sq.w)'] || 0}</span></div></div>
                         <div class="info-item full-width"><i class="fas fa-location-dot"></i><div><span class="info-label">${t.location}</span><span class="info-value">${it.SubDistrict}, ${it.District}</span></div></div>
-                        <div class="info-item full-width"><i class="fas fa-bolt"></i><div><span class="info-label">${t.electric}</span><span class="info-value">${it.Electricity || '-'}</span></div></div>
-                    </div>
-                    
-                    <div style="margin-top:30px;">
-                        <h3 style="color:var(--primary); margin-bottom:10px;">Description</h3>
-                        <p style="color:#555; font-size:0.95rem;">${it.Description || '-'}</p>
                     </div>
                 </div>
 
                 <div class="section-container">
-                    <div style="color:var(--primary); margin-bottom:12px;"><i class="fas fa-user-check"></i> ${t.agentTitle}</div>
-                    <input type="text" id="agentNameInput" class="input-agent" placeholder="${t.agentPlaceholder}">
+                    <div style="color:var(--primary); margin-bottom:12px; font-weight:400;"><i class="fas fa-user-check"></i> ${t.agentTitle}</div>
+                    <input type="text" id="agentName" class="input-box" placeholder="${t.agentPlaceholder}">
+                    <input type="url" id="evidenceUrl" class="input-box" placeholder="${t.evidencePlaceholder}">
                     <button onclick="agentCheckIn()" id="checkinBtn" class="btn-checkin"><i class="fas fa-map-marker-alt"></i> ${t.checkinBtn}</button>
                 </div>
 
@@ -182,11 +170,11 @@
                 </div>
 
                 <div class="section-container">
-                    <div style="color:var(--primary); margin-bottom:20px;"><i class="fas fa-layer-group"></i> ${t.portfolio}</div>
+                    <div style="color:var(--primary); margin-bottom:20px;"><i class="fas fa-layer-group"></i> ${t.portfolio || 'Other Units'}</div>
                     <div class="related-grid">
                         ${related.map(r => `
                             <div class="mini-card" onclick="window.location.href='details.html?id=${r.HP_ID}'; window.scrollTo(0,0);">
-                                <img src="${r.Thumbnail}" class="mini-img" onerror="this.src='https://placehold.co/200x150?text=Smart+System'">
+                                <img src="${r.Thumbnail}" class="mini-img" onerror="this.src='https://placehold.co/200x150?text=Property'">
                                 <div class="mini-info"><b>฿${Number(r.Price).toLocaleString()}</b><br>${r.ID}</div>
                             </div>
                         `).join('')}
@@ -198,26 +186,39 @@
     }
 
     async function agentCheckIn() {
-        const name = document.getElementById('agentNameInput').value.trim();
+        const name = document.getElementById('agentName').value.trim();
+        const evidence = document.getElementById('evidenceUrl').value.trim();
         const btn = document.getElementById('checkinBtn');
         if (!name) { alert("Please enter Agent Name"); return; }
+        
         btn.innerText = "...Processing..."; btn.disabled = true;
         try {
-            await fetch(api, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify({ action: 'agentCheckIn', agentName: name, projectName: prop.Project_Name, marketingId: prop.ID, hpId: prop.HP_ID })
+            await fetch(api, { 
+                method: 'POST', 
+                body: JSON.stringify({ 
+                    action: 'agentCheckIn', 
+                    agentName: name, 
+                    evidenceUrl: evidence,
+                    projectName: prop.Project_Name, 
+                    marketingId: prop.ID, 
+                    hpId: prop.HP_ID 
+                }) 
             });
             alert("✅ Check-in Successful! Notification sent to Master.");
-            document.getElementById('agentNameInput').value = "";
+            document.getElementById('agentName').value = "";
+            document.getElementById('evidenceUrl').value = "";
         } catch(e) { alert("❌ System Error"); }
-        btn.innerText = i18n[currentLang].checkinBtn; btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-map-marker-alt"></i> ' + i18n[currentLang].checkinBtn; btn.disabled = false;
     }
 
     function share(plat) {
         const msg = `🏡 ${prop.Project_Name} (${prop.ID})\n💰 ฿${Number(prop.Price).toLocaleString()}\n🔗 ${window.location.href}`;
         if(plat === 'copy') { navigator.clipboard.writeText(msg); alert('Link Copied!'); return; }
-        const urls = { line: `https://line.me/R/msg/text/?${encodeURIComponent(msg)}`, fb: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, wa: `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}` };
+        const urls = { 
+            line: `https://line.me/R/msg/text/?${encodeURIComponent(msg)}`, 
+            fb: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, 
+            wa: `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}` 
+        };
         if(urls[plat]) window.open(urls[plat]);
     }
 
