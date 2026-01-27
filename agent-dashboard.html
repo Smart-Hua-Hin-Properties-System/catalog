@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agent Hub V8.4 - Identity Sovereign</title>
+    <title>Agent Hub V8.5 - The Organized Evidence</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -16,19 +16,15 @@
         .tab-item.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 400; }
         .container { padding: 20px; max-width: 850px; margin: 0 auto; padding-bottom: 60px; }
         .card { background: white; border-radius: 25px; padding: 25px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        
-        /* 📸 Minimalist Upload UI */
-        .upload-box { border: 2px dashed #e1e8ed; padding: 25px; border-radius: 20px; text-align: center; cursor: pointer; color: var(--gray); margin-bottom: 15px; background: #fafafa; }
+        .upload-area { border: 2px dashed #e1e8ed; padding: 25px; border-radius: 20px; text-align: center; cursor: pointer; color: var(--gray); margin-bottom: 15px; background: #fafafa; }
         .preview-img { width: 100%; border-radius: 12px; margin-top: 15px; display: none; }
-        
         label { font-size: 0.75rem; color: var(--gray); margin-bottom: 6px; display: block; }
         input, select, textarea { width: 100%; padding: 15px; border-radius: 12px; border: 1.5px solid #eee; font-family: 'Kanit'; box-sizing: border-box; font-weight: 300; outline: none; margin-bottom: 18px; background: #fafafa; font-size: 0.95rem; }
         input:read-only { background: #f0f2f5; color: #95a5a6; }
         .btn-submit { background: var(--primary); color: white; border: none; padding: 18px; width: 100%; border-radius: 15px; cursor: pointer; font-family: 'Kanit'; font-size: 1rem; font-weight: 400; box-shadow: 0 10px 20px rgba(26,82,118,0.2); }
-        
-        .status-badge { padding: 4px 14px; border-radius: 50px; font-size: 0.65rem; }
-        .active-st { background: #d4edda; color: #155724; } /* สีเขียว */
-        .waiting-st { background: #fff3cd; color: #856404; } /* สีส้ม/เหลือง */
+        .status-badge { padding: 4px 14px; border-radius: 50px; font-size: 0.65rem; font-weight: 400; }
+        .active-st { background: #d4edda; color: #155724; }
+        .waiting-st { background: #fff3cd; color: #856404; }
     </style>
 </head>
 <body>
@@ -36,13 +32,14 @@
 <div class="header">
     <img id="agentPhoto" src="https://via.placeholder.com/90" class="profile-img">
     <h2 id="agentName" style="margin:0; font-weight:400; letter-spacing:1px;">...</h2>
-    <div id="agencyBadge" style="font-size:0.8rem; opacity:0.8; margin-top:5px;">...</div>
+    <div id="agencyBadge" style="font-size:0.8rem; opacity:0.8; margin-top:5px;">Loading...</div>
 </div>
 
 <div class="nav-tabs">
     <div class="tab-item active" onclick="showTab('history', this)"><i class="fas fa-history"></i> ประวัติ</div>
     <div class="tab-item" onclick="showTab('appointment', this)"><i class="fas fa-calendar-check"></i> นัดหมาย</div>
-    <div class="tab-item" onclick="showTab('checkin', this)"><i class="fas fa-image"></i> เช็คอิน</div> <div class="tab-item" onclick="showTab('profile', this)"><i class="fas fa-user-circle"></i> โปรไฟล์</div>
+    <div class="tab-item" onclick="showTab('checkin', this)"><i class="fas fa-image"></i> เช็คอิน</div>
+    <div class="tab-item" onclick="showTab('profile', this)"><i class="fas fa-user-circle"></i> โปรไฟล์</div>
 </div>
 
 <div class="container">
@@ -69,25 +66,23 @@
 
     <div id="checkinSection" class="tab-content" style="display:none;">
         <div class="card">
-            <h4 style="margin-top:0; font-weight:400; color:var(--primary);"><i class="fas fa-satellite-dish"></i> รายงานตัวเข้าชมพื้นที่จริง</h4>
-            <label>รหัสบ้านที่เข้าชม (HP_ID)</label>
-            <select id="checkHPID" onchange="fetchProject('check')"><option value="">-- เลือกรหัสบ้าน --</option></select>
-            <label>โครงการ (ดึงข้อมูลอัตโนมัติ)</label><input type="text" id="checkProject" readonly>
-            
-            <label>หมายเหตุ/ข้อมูลเพิ่มเติม [ไกด์: เช่น สนใจดูบ้านเพิ่มเติมหลังที่ 2]</label> <textarea id="checkNote" placeholder="ระบุรายละเอียดเพิ่มเติมเพื่อแจ้งมาสเตอร์" rows="2"></textarea>
+            <h4 style="margin-top:0; font-weight:400; color:var(--primary);"><i class="fas fa-satellite-dish"></i> รายงานตัวหน้างานจริง</h4>
+            <label>รหัสบ้านที่เข้าชม (HP_ID)</label><select id="checkHPID" onchange="fetchProject('check')"><option value="">-- เลือกรหัสบ้าน --</option></select>
+            <label>โครงการ (ดึงอัตโนมัติ)</label><input type="text" id="checkProject" readonly>
+            <label>หมายเหตุ/ข้อมูลเพิ่มเติม</label><textarea id="checkNote" placeholder="ระบุรายละเอียดเพิ่มเติมเพื่อแจ้งมาสเตอร์" rows="2"></textarea>
 
             <label>แนบรูปภาพ 1 (ภาพลูกค้า)</label>
-            <div class="upload-box" onclick="document.getElementById('file1').click()">
+            <div class="upload-area" onclick="document.getElementById('file1').click()">
                 <i class="fas fa-image fa-2x"></i><br>แนบรูปภาพ
                 <input type="file" id="file1" hidden accept="image/*" onchange="handleFile(this, 'prev1')">
                 <img id="prev1" class="preview-img">
             </div>
 
             <label>แนบรูปภาพ 2 (ภาพหน้างาน)</label>
-            <div class="upload-box" onclick="document.getElementById('file2').click()">
+            <div class="upload-area" onclick="document.getElementById('file2').click()">
                 <i class="fas fa-image fa-2x"></i><br>แนบรูปภาพ
                 <input type="file" id="file2" hidden accept="image/*" onchange="handleFile(this, 'prev2')">
-                <img id="prev2" class="preview-img">
+                <img id="prev2" class="preview-box">
             </div>
 
             <div id="gpsStatus" style="font-size:0.7rem; color:var(--orange); margin-bottom:15px; text-align:center;">กำลังล็อคพิกัด GPS...</div>
@@ -98,12 +93,13 @@
     <div id="profileSection" class="tab-content" style="display:none;">
         <div class="card">
             <h4 style="margin-top:0; font-weight:400; color:var(--primary);"><i class="fas fa-user-shield"></i> ข้อมูลขุนพลเอเจนต์</h4>
-            <label>รหัสประจำตัว (PIN) 🔒</label><input type="text" id="profPIN" readonly> <label>ชื่อ-นามสกุล</label><input type="text" id="profName">
+            <label>รหัสประจำตัว (PIN) 🔒</label><input type="text" id="profPIN" readonly>
+            <label>ชื่อ-นามสกุล</label><input type="text" id="profName">
             <label>สังกัด (Agency)</label><input type="text" id="profAgency">
-            <label>บัญชีธนาคาร (โอนค่าคอมฯ)</label><textarea id="profAccount" rows="2"></textarea>
+            <label>บัญชีธนาคาร</label><textarea id="profAccount" rows="2"></textarea>
             <label>ลิงก์รูปโปรไฟล์ (URL)</label><input type="url" id="profPhoto">
             <button class="btn-submit" onclick="saveProfile()">บันทึกโปรไฟล์มหาอำนาจ</button>
-            <button onclick="logout()" style="width:100%; margin-top:25px; border:none; background:none; color:var(--red); cursor:pointer; font-family:Kanit;">ออกจากระบบ (Logout)</button>
+            <button onclick="logout()" style="width:100%; margin-top:25px; border:none; background:none; color:var(--red); cursor:pointer; font-family:Kanit;">ออกจากระบบ</button>
         </div>
     </div>
 </div>
@@ -124,14 +120,12 @@
         document.getElementById('agentPhoto').src = a.photo || "https://via.placeholder.com/90";
         document.getElementById('agencyBadge').innerText = a.agency;
 
-        // 🎯 สถาปนาข้อมูลเข้าสู่หน้าโปรไฟล์
-        document.getElementById('profPIN').value = a.pin;
+        document.getElementById('profPIN').value = a.pin || agentPin;
         document.getElementById('profName').value = a.name;
         document.getElementById('profAgency').value = a.agency;
         document.getElementById('profAccount').value = a.accountInfo || "";
         document.getElementById('profPhoto').value = a.photo || "";
 
-        // Render History พร้อมสีแถบมหาอำนาจ
         document.getElementById('visitLogs').innerHTML = d.visits.map(v => `
             <div class="card"><div style="display:flex; justify-content:space-between; align-items:center;">
                 <div><b>${v.Project || '-'}</b><br><small>${v.Timestamp ? new Date(v.Timestamp).toLocaleDateString('th-TH') : '-'}</small></div>
