@@ -3,56 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMART LOGIN - Absolute Recovery</title>
+    <title>AGENT LOGIN - Sovereign System</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Kanit', sans-serif; background: #f0f4f7; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-        .login-card { background: white; padding: 40px; border-radius: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); width: 320px; text-align: center; }
-        h2 { color: #1a5276; margin-bottom: 5px; font-weight: 400; }
-        p { font-size: 0.8rem; color: #7f8c8d; margin-bottom: 25px; }
-        input { width: 100%; padding: 15px; border-radius: 12px; border: 1.5px solid #eee; box-sizing: border-box; font-family: 'Kanit'; font-size: 1rem; text-align: center; outline: none; margin-bottom: 20px; }
-        button { width: 100%; padding: 15px; border-radius: 12px; border: none; background: #1a5276; color: white; font-family: 'Kanit'; font-size: 1rem; cursor: pointer; transition: 0.3s; }
-        button:hover { background: #154360; }
+        .login-card { background: white; padding: 45px; border-radius: 35px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); width: 320px; text-align: center; }
+        input { width: 100%; padding: 18px; border-radius: 15px; border: 1.5px solid #eee; box-sizing: border-box; font-family: 'Kanit'; font-size: 1.2rem; text-align: center; outline: none; margin-bottom: 25px; }
+        button { width: 100%; padding: 18px; border-radius: 15px; border: none; background: #1a5276; color: white; font-family: 'Kanit'; font-size: 1.1rem; cursor: pointer; transition: 0.3s; }
     </style>
 </head>
 <body>
     <div class="login-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" width="80" style="margin-bottom:15px;">
-        <h2>SMART LOGIN</h2>
-        <p>ระบุรหัสประจำตัวเพื่อเข้าสู่ระบบมหาอำนาจ</p>
-        <input type="password" id="pinInput" placeholder="กรอกรหัส PIN ของท่าน">
-        <button onclick="login()" id="btnLogin">เข้าสู่แผงควบคุม</button>
-        <div id="msg" style="color:red; font-size:0.8rem; margin-top:10px; display:none;">รหัสไม่ถูกต้อง โปรดตรวจสอบอีกครั้ง</div>
+        <h2 style="color:#1a5276; margin-bottom:10px;">SMART LOGIN</h2>
+        <p style="font-size:0.8rem; color:#7f8c8d; margin-bottom:30px;">ระบุรหัสประจำตัวเพื่อเข้าสู่ระบบมหาอำนาจ</p>
+        <input type="password" id="pinInput" placeholder="รหัส PIN ของท่าน">
+        <button onclick="login()" id="btn">เข้าสู่แผงควบคุม</button>
+        <div id="err" style="color:red; font-size:0.8rem; margin-top:15px; display:none;">❌ รหัสไม่ถูกต้อง โปรดตรวจสอบอีกครั้ง</div>
     </div>
-
     <script>
-        // 🎯 สถาปนา URL มาตรฐานที่มาสเตอร์กำหนด
+        // 🎯 URL มาตรฐานตามบัญชา
         const api = "https://script.google.com/macros/s/AKfycbyBYEGI9CJrwtBk9Izgyo60Scoj5tfLOOfJ2g_VvyOZP5ws-DYyY77lg58Gywg6YHH6/exec";
-
         async function login() {
             const pin = document.getElementById('pinInput').value;
             if(!pin) return;
-            document.getElementById('btnLogin').innerText = "...กำลังเข้าสู่ระบบ...";
-            document.getElementById('msg').style.display = 'none';
-
+            document.getElementById('btn').innerText = "...ตรวจสอบสิทธิ์...";
             try {
-                // 🎯 ส่งค่าด้วยพารามิเตอร์ key ตามที่สคริปต์รอรับ
                 const r = await fetch(`${api}?action=universalLogin&key=${pin}`);
                 const d = await r.json();
-
                 if(d.success) {
                     localStorage.setItem('agentPin', pin);
-                    localStorage.setItem('userType', d.type);
-                    // 🎯 แยกทางไประหว่าง Admin และ Agent
-                    window.location.href = (d.type === 'STAFF') ? 'admin.html' : 'agent-dashboard.html';
-                } else {
-                    document.getElementById('msg').style.display = 'block';
-                    document.getElementById('btnLogin').innerText = "เข้าสู่แผงควบคุม";
-                }
-            } catch(e) {
-                alert("การเชื่อมต่อฐานข้อมูลขัดข้อง โปรดเช็ค Deployment");
-                document.getElementById('btnLogin').innerText = "เข้าสู่แผงควบคุม";
-            }
+                    window.location.href = d.type === 'STAFF' ? 'admin.html' : 'agent-dashboard.html';
+                } else { document.getElementById('err').style.display='block'; document.getElementById('btn').innerText="เข้าสู่แผงควบคุม"; }
+            } catch(e) { alert("ระบบขัดข้อง"); }
         }
     </script>
 </body>
