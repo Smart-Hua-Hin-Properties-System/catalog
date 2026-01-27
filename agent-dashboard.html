@@ -3,31 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agent Sovereign Dashboard V6.8</title>
+    <title>Agent Sovereign Dashboard V7.0</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { --primary: #1a5276; --bg: #f0f4f7; --white: #ffffff; --orange: #e67e22; --green: #27ae60; }
         body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; font-weight: 300; color: #333; }
-        
-        /* Header Profile */
         .header { background: var(--primary); color: white; padding: 40px 20px; text-align: center; border-radius: 0 0 40px 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .profile-img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid white; object-fit: cover; margin-bottom: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        
-        /* 🎯 ระบบ 4 แท็บมหาอำนาจ */
         .nav-tabs { background: #fff; display: flex; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .tab-item { padding: 15px 5px; color: #7f8c8d; text-decoration: none; font-size: 0.78rem; flex: 1; text-align: center; border-bottom: 3px solid transparent; cursor: pointer; transition: 0.3s; }
         .tab-item.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 400; }
-
-        .container { padding: 20px; max-width: 800px; margin: 0 auto; padding-bottom: 60px; }
-        .card { background: white; border-radius: 25px; padding: 25px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        
-        /* Form Elements */
+        .container { padding: 20px; max-width: 850px; margin: 0 auto; padding-bottom: 60px; }
+        .card { background: white; border-radius: 25px; padding: 25px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.02); }
         label { font-size: 0.75rem; color: #7f8c8d; margin-bottom: 6px; display: block; }
-        input, select, textarea { width: 100%; padding: 14px; border-radius: 12px; border: 1.5px solid #eee; font-family: 'Kanit'; box-sizing: border-box; font-weight: 300; outline: none; margin-bottom: 15px; background: #fafafa; }
+        input, select, textarea { width: 100%; padding: 14px; border-radius: 12px; border: 1.5px solid #eee; font-family: 'Kanit'; box-sizing: border-box; font-weight: 300; outline: none; margin-bottom: 15px; background: #fafafa; font-size: 0.95rem; }
         input:focus { border-color: var(--primary); background: #fff; }
         .btn-submit { background: var(--primary); color: white; border: none; padding: 16px; width: 100%; border-radius: 15px; cursor: pointer; font-family: 'Kanit'; font-size: 1rem; font-weight: 400; box-shadow: 0 10px 20px rgba(26,82,118,0.2); }
-        
         .status-badge { padding: 4px 12px; border-radius: 50px; font-size: 0.65rem; }
         .active-st { background: #d4edda; color: #155724; }
         .pending { background: #fff3cd; color: #856404; }
@@ -37,7 +29,7 @@
 
 <div class="header">
     <img id="agentPhoto" src="https://via.placeholder.com/90" class="profile-img">
-    <h2 id="agentName" style="margin:0; font-weight:400; letter-spacing:1px;">Loading...</h2>
+    <h2 id="agentName" style="margin:0; font-weight:400; letter-spacing:1px;">Agent Sovereign</h2>
     <div id="agencyBadge" style="font-size:0.8rem; opacity:0.8; margin-top:5px;">...</div>
 </div>
 
@@ -45,7 +37,7 @@
     <div class="tab-item active" onclick="showTab('history', this)"><i class="fas fa-history"></i> ประวัติ</div>
     <div class="tab-item" onclick="showTab('appointment', this)"><i class="fas fa-calendar-check"></i> นัดหมาย</div>
     <div class="tab-item" onclick="showTab('checkin', this)"><i class="fas fa-map-marker-alt"></i> เช็คอิน</div>
-    <div class="tab-item" onclick="showTab('profile', this)"><i class="fas fa-user-circle"></i> โปรไฟล์</div>
+    <div class="tab-item" onclick="showTab('profile', this)"><i class="fas fa-user-cog"></i> โปรไฟล์</div>
 </div>
 
 <div class="container">
@@ -61,7 +53,7 @@
                 <div><label>วันที่นัดหมาย</label><input type="date" id="appDate"></div>
                 <div><label>เวลา</label><input type="time" id="appTime"></div>
             </div>
-            <label>รหัสบ้าน (HP_ID)</label>
+            <label>เลือกรหัสบ้าน (HP_ID)</label>
             <select id="appHPID" onchange="fetchProject('app')"><option value="">-- เลือกรหัสบ้าน --</option></select>
             <label>โครงการ</label><input type="text" id="appProject" readonly placeholder="ดึงอัตโนมัติ">
             <label>ชื่อลูกค้า</label><input type="text" id="appCustomer" placeholder="ระบุชื่อลูกค้า">
@@ -77,9 +69,11 @@
             <label>รหัสบ้านที่เข้าชม (HP_ID)</label>
             <select id="checkHPID" onchange="fetchProject('check')"><option value="">-- เลือกรหัสบ้าน --</option></select>
             <label>โครงการ</label><input type="text" id="checkProject" readonly>
-            <label>รูปหลักฐาน 1 (ภาพลูกค้า)</label><input type="url" id="img1" placeholder="วางลิงก์รูปถ่าย">
-            <label>รูปหลักฐาน 2 (ภาพหน้างาน)</label><input type="url" id="img2" placeholder="วางลิงก์รูปถ่าย">
-            <div id="gpsStatus" style="font-size:0.7rem; color:var(--orange); margin-bottom:10px; text-align:center;">กำลังดึงพิกัด GPS...</div>
+            <label>แนบรูปภาพ 1 (ภาพลูกค้า)</label>
+            <input type="url" id="img1" placeholder="วางลิงก์รูปถ่ายหรือแนบไฟล์">
+            <label>แนบรูปภาพ 2 (ภาพหน้างาน)</label>
+            <input type="url" id="img2" placeholder="วางลิงก์รูปถ่ายหรือแนบไฟล์">
+            <div id="gpsStatus" style="font-size:0.7rem; color:var(--orange); margin-bottom:10px; text-align:center;">กำลังล็อคพิกัด GPS...</div>
             <button class="btn-submit" onclick="doCheckIn()" id="btnCheck"><i class="fas fa-location-arrow"></i> ยืนยันการเช็คอิน (GPS)</button>
         </div>
     </div>
@@ -89,7 +83,7 @@
             <h4 style="margin-top:0; font-weight:400;">แก้ไขโปรไฟล์มหาอำนาจ</h4>
             <label>รูปถ่าย (URL)</label><input type="text" id="setPhoto">
             <label>ชื่อ-นามสกุล</label><input type="text" id="setName">
-            <button onclick="saveProfile()" class="btn-submit">บันทึกข้อมูล</button>
+            <button onclick="saveProfile()" class="btn-submit">บันทึกข้อมูลมหาอำนาจ</button>
             <button onclick="logout()" style="width:100%; margin-top:20px; border:none; background:none; color:red; cursor:pointer; font-family:Kanit;">ออกจากระบบ</button>
         </div>
     </div>
@@ -114,12 +108,19 @@
         document.getElementById('setName').value = a.name;
         document.getElementById('setPhoto').value = a.photo || "";
 
-        // Render Lists
-        document.getElementById('visitLogs').innerHTML = d.visits.map(v => `<div class="card"><div style="display:flex; justify-content:space-between; align-items:center;"><div><b>${v[3]}</b><br><small>${new Date(v[1]).toLocaleDateString('th-TH')}</small></div><span class="status-badge active-st">${v[6]}</span></div></div>`).join('');
-        document.getElementById('appList').innerHTML = d.apps.map(ap => `<div class="card">🗓️ <b>${ap.customer}</b><br><small>${ap.project} | ${new Date(ap.date).toLocaleDateString('th-TH')} (${ap.time})</small></div>`).join('');
+        // 📊 Render History (Header Mapping Fix)
+        document.getElementById('visitLogs').innerHTML = d.visits.map(v => `
+            <div class="card">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div><b>${v.Project || 'ไม่ระบุโครงการ'}</b><br><small style="color:#999;">${new Date(v.Timestamp).toLocaleDateString('th-TH')}</small></div>
+                    <span class="status-badge ${v.Status === 'Waiting' ? 'pending' : 'active-st'}">${v.Status === 'Waiting' ? '🔴 Pending' : '🟢 Active'}</span>
+                </div>
+            </div>`).join('') || '<div style="text-align:center; padding:30px; color:#999;">ไม่พบประวัติการทำงาน</div>';
+
+        document.getElementById('appList').innerHTML = d.apps.map(ap => `<div class="card">🗓️ <b>${ap.Customer || 'ลูกค้าไม่ระบุ'}</b><br><small>${ap.Project || '-'} | ${ap.Date ? new Date(ap.Date).toLocaleDateString('th-TH') : '-'} (${ap.Time || '-'})</small></div>`).join('');
         
         loadHPIDs();
-        navigator.geolocation.getCurrentPosition(p => { lat = p.coords.latitude; lng = p.coords.longitude; document.getElementById('gpsStatus').innerText = `✅ พิกัดล็อคแล้ว: ${lat.toFixed(4)}, ${lng.toFixed(4)}`; });
+        navigator.geolocation.getCurrentPosition(p => { lat = p.coords.latitude; lng = p.coords.longitude; document.getElementById('gpsStatus').innerText = `✅ GPS ล็อคพิกัดแล้ว: ${lat.toFixed(4)}, ${lng.toFixed(4)}`; }, () => { document.getElementById('gpsStatus').innerText = "❌ โปรดอนุญาตสิทธิ์เข้าถึงพิกัด"; });
     }
 
     async function loadHPIDs() {
@@ -139,21 +140,25 @@
 
     async function saveApp() {
         const d = { action: 'addAppointment', pin: agentPin, agentName: agentNameGlobal, date: document.getElementById('appDate').value, time: document.getElementById('appTime').value, hpId: document.getElementById('appHPID').value, project: document.getElementById('appProject').value, customer: document.getElementById('appCustomer').value, note: document.getElementById('appNote').value };
-        if(!d.date || !d.hpId) return alert("โปรดกรอกข้อมูลให้ครบ");
+        if(!d.date || !d.hpId || !d.customer) return alert("โปรดกรอกข้อมูล วันที่, รหัสบ้าน และชื่อลูกค้า ให้ครบถ้วนครับ");
+        const btn = document.querySelector('#appointmentSection .btn-submit');
+        btn.innerText = "...กำลังส่งแจ้งเตือน LINE..."; btn.disabled = true;
         await fetch(api, { method: 'POST', body: JSON.stringify(d) });
-        alert("✅ นัดหมายสำเร็จ! LINE แจ้งเตือนมหาอำนาจแล้ว"); location.reload();
+        alert("✅ นัดหมายสำเร็จ! LINE แจ้งเตือนมหาอำนาจเรียบร้อย"); location.reload();
     }
 
     async function doCheckIn() {
-        if(!lat) return alert("โปรดอนุญาต GPS ก่อนเช็คอิน");
-        const d = { action: 'agentCheckIn', pin: agentPin, agentName: agentNameGlobal, projectName: document.getElementById('checkProject').value, hpId: document.getElementById('checkHPID').value, marketingId: "-", evidenceUrl1: document.getElementById('img1').value, evidenceUrl2: document.getElementById('img2').value, lat: lat, lng: lng };
+        if(!lat) return alert("โปรดอนุญาต GPS ก่อนเช็คอินครับมาสเตอร์");
+        const d = { action: 'agentCheckIn', pin: agentPin, agentName: agentNameGlobal, projectName: document.getElementById('checkProject').value, hpId: document.getElementById('checkHPID').value, evidenceUrl1: document.getElementById('img1').value, evidenceUrl2: document.getElementById('img2').value, lat: lat, lng: lng };
+        const btn = document.getElementById('btnCheck');
+        btn.innerText = "...กำลังส่งแจ้งเตือน LINE..."; btn.disabled = true;
         await fetch(api, { method: 'POST', body: JSON.stringify(d) });
-        alert("✅ เช็คอินสำเร็จ! ระบบส่งแจ้งเตือน LINE เรียบร้อย"); location.reload();
+        alert("✅ เช็คอินสำเร็จ! ระบบส่งแจ้งเตือน LINE แล้ว"); location.reload();
     }
 
     async function saveProfile() {
         await fetch(api, { method: 'POST', body: JSON.stringify({ action: 'updateAgentProfile', pin: agentPin, name: document.getElementById('setName').value, photoUrl: document.getElementById('setPhoto').value }) });
-        alert("บันทึกสำเร็จ!"); location.reload();
+        alert("บันทึกข้อมูลเรียบร้อย!"); location.reload();
     }
 
     function showTab(t, el) {
