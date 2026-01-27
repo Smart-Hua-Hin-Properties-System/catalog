@@ -3,266 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Property Details - Smart System Ultimate V4.5</title>
+    <title>Property Details - Smart System V11.1</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --primary: #1a5276; --bg: #f4f7f6; --text: #2c3e50; --white: #ffffff; --green: #27ae60; --gold: #f1c40f; --orange: #e67e22; }
-        
-        /* 🎨 การตั้งค่าตัวอักษรขนาดบางทั่วทั้งหน้า */
-        body { font-family: 'Kanit', sans-serif; background-color: var(--bg); margin: 0; padding: 0; color: var(--text); line-height: 1.6; font-weight: 300; }
-        h1, h2, h3, b, strong { font-weight: 400; }
-
-        /* Header & Navigation */
+        :root { --primary: #1a5276; --bg: #f4f7f6; --white: #ffffff; --green: #27ae60; --orange: #e67e22; }
+        body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; font-weight: 300; color: #333; }
         header { background: #fff; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .header-left { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-        .menu-text { font-size: 0.85rem; color: var(--primary); text-transform: uppercase; }
-        .brand-name { font-size: 0.85rem; color: var(--primary); text-transform: uppercase; margin-left: 5px; }
-        .flag-list { display: flex; gap: 4px; }
-        .flag-btn { border: none; background: none; padding: 0; cursor: pointer; transition: 0.2s; }
-        .flag-btn:hover { transform: scale(1.1); }
-        .flag-btn img { width: 22px; height: 14px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-
-        /* Sidebar System */
-        .sidebar { position: fixed; left: -280px; top: 0; width: 280px; height: 100%; background: #fff; z-index: 2500; transition: 0.4s; padding-top: 60px; box-shadow: 5px 0 25px rgba(0,0,0,0.1); }
-        .sidebar.active { left: 0; }
-        .sidebar-item { padding: 18px 25px; border-bottom: 1px solid #f5f5f5; display: flex; align-items: center; gap: 15px; text-decoration: none; color: var(--text); }
-        .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000; }
-        .sidebar-overlay.active { display: block; }
-
-        /* Hero Image & Badge */
-        .back-nav { padding: 15px; background: #fff; }
-        .back-btn { text-decoration: none; color: var(--primary); display: flex; align-items: center; gap: 8px; font-size: 0.9rem; }
-        .hero-box { position: relative; width: 100%; height: 400px; background: #ddd; overflow: hidden; }
+        .hero-box { position: relative; width: 100%; height: 350px; background: #ddd; overflow: hidden; }
         .main-img { width: 100%; height: 100%; object-fit: cover; }
-        .hero-badge { position: absolute; top: 15px; left: 15px; background: var(--green); color: white; padding: 6px 15px; border-radius: 50px; font-size: 0.85rem; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-
-        /* Content Card & 32 Fields */
-        .main-container { max-width: 600px; margin: 0 auto; position: relative; z-index: 20; padding-bottom: 120px; }
-        .content-card { background: #fff; padding: 25px; border-radius: 30px 30px 0 0; margin: -50px 15px 0 15px; box-shadow: 0 -10px 30px rgba(0,0,0,0.08); }
-        .price-box { font-size: 2rem; color: var(--primary); margin: 10px 0 25px 0; }
+        .hero-badge { position: absolute; top: 15px; left: 15px; background: var(--green); color: white; padding: 6px 15px; border-radius: 50px; font-size: 0.85rem; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .main-container { max-width: 600px; margin: -50px auto 120px; position: relative; padding: 0 15px; }
+        .content-card { background: #fff; padding: 25px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        .price-box { font-size: 2rem; color: var(--primary); margin: 10px 0 25px 0; font-weight: 400; }
         .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .info-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: #f8f9fa; border-radius: 15px; }
-        .info-item i { font-size: 1.1rem; color: var(--primary); width: 24px; text-align: center; }
-        .info-label { color: #7f8c8d; font-size: 0.75rem; display: block; }
-        .info-value { font-size: 0.9rem; color: var(--text); }
-        .full-width { grid-column: 1 / -1; }
-
-        /* Agent Check-in UI (Verified) */
-        .section-container { background: #fff; margin: 15px; padding: 25px; border-radius: 25px; box-shadow: 0 5px 20px rgba(0,0,0,0.03); }
-        .input-box { padding: 14px; width: 100%; border-radius: 12px; border: 1px solid #ddd; margin-bottom: 12px; box-sizing: border-box; font-family: 'Kanit'; font-weight: 300; outline: none; transition: 0.3s; }
-        .input-box:focus { border-color: var(--orange); box-shadow: 0 0 8px rgba(230,126,34,0.1); }
-        .btn-checkin { display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--orange); color: #fff; padding: 16px; border-radius: 15px; border: none; width: 100%; cursor: pointer; transition: 0.3s; font-size: 1rem; font-family: 'Kanit'; font-weight: 400; box-shadow: 0 4px 15px rgba(230,126,34,0.3); }
-        .btn-checkin:hover { background: #d35400; transform: translateY(-2px); }
-        .btn-checkin:disabled { background: #ccc; cursor: not-allowed; box-shadow: none; }
-
-        /* Share Bar (8 Icons) */
-        .share-bar-wrapper { display: flex; justify-content: center; width: 100%; }
-        .share-bar { display: flex; gap: 15px; overflow-x: auto; padding: 10px 5px 20px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-        .share-bar::-webkit-scrollbar { display: none; }
-        .share-btn { width: 50px; height: 50px; border-radius: 50%; border: none; background: #f8f9fa; flex-shrink: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .info-item i { color: var(--primary); width: 20px; text-align: center; }
+        .info-label { color: #7f8c8d; font-size: 0.7rem; display: block; }
+        .section-container { background: #fff; margin-top: 20px; padding: 25px; border-radius: 25px; box-shadow: 0 5px 20px rgba(0,0,0,0.03); }
+        .input-box { padding: 15px; width: 100%; border-radius: 12px; border: 1px solid #ddd; margin-bottom: 12px; box-sizing: border-box; font-family: 'Kanit'; font-weight: 300; outline: none; }
+        .btn-checkin { background: var(--orange); color: #fff; padding: 16px; border-radius: 15px; border: none; width: 100%; cursor: pointer; font-size: 1rem; font-weight: 400; box-shadow: 0 4px 15px rgba(230,126,34,0.3); }
+        .share-bar { display: flex; gap: 15px; overflow-x: auto; padding: 10px 0; scrollbar-width: none; }
+        .share-btn { width: 50px; height: 50px; border-radius: 50%; border: none; background: #f8f9fa; flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .share-btn img { width: 24px; height: 24px; }
-
-        /* Footer Inquiry */
-        .footer-action { position: fixed; bottom: 0; width: 100%; max-width: 600px; background: #fff; padding: 15px; box-sizing: border-box; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); z-index: 1000; left: 50%; transform: translateX(-50%); border-radius: 25px 25px 0 0; }
-        .btn-line { display: flex; align-items: center; justify-content: center; gap: 10px; background: #00b900; color: #fff; padding: 16px; border-radius: 15px; text-decoration: none; font-size: 1.1rem; font-weight: 400; }
+        .footer-action { position: fixed; bottom: 0; width: 100%; max-width: 600px; background: #fff; padding: 15px; left: 50%; transform: translateX(-50%); border-radius: 25px 25px 0 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); }
+        .btn-line { display: flex; align-items: center; justify-content: center; gap: 10px; background: #00b900; color: #fff; padding: 16px; border-radius: 15px; text-decoration: none; font-weight: 400; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="header-left" onclick="toggleSidebar()">
-        <i class="fas fa-bars fa-lg" style="color:var(--primary);"></i>
-        <span class="menu-text" data-i18n="menu">MENU</span>
-        <div class="brand-name" id="ui-project-name">Smart System</div>
-    </div>
+    <div style="color:var(--primary); font-weight:400; cursor:pointer;" onclick="location.href='index.html'"><i class="fas fa-arrow-left"></i> SMART DETAILS</div>
     <div class="flag-list">
-        <button class="flag-btn" onclick="setLanguage('th')"><img src="https://flagcdn.com/w40/th.png"></button>
-        <button class="flag-btn" onclick="setLanguage('en')"><img src="https://flagcdn.com/w40/us.png"></button>
-        <button class="flag-btn" onclick="setLanguage('cn')"><img src="https://flagcdn.com/w40/cn.png"></button>
-        <button class="flag-btn" onclick="setLanguage('ru')"><img src="https://flagcdn.com/w40/ru.png"></button>
-        <button class="flag-btn" onclick="setLanguage('de')"><img src="https://flagcdn.com/w40/de.png"></button>
-        <button class="flag-btn" onclick="setLanguage('fr')"><img src="https://flagcdn.com/w40/fr.png"></button>
+        <img src="https://flagcdn.com/w40/th.png" width="22" onclick="setLanguage('th')" style="cursor:pointer; margin-left:5px;">
+        <img src="https://flagcdn.com/w40/us.png" width="22" onclick="setLanguage('en')" style="cursor:pointer; margin-left:5px;">
     </div>
 </header>
 
-<div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
-<div class="sidebar" id="sidebar">
-    <a href="index.html" class="sidebar-item"><i class="fas fa-home"></i> <span data-i18n="home">Home</span></a>
-    <a href="login.html" class="sidebar-item" style="margin-top: 30px; color: var(--primary); border-top: 2px solid #eee;"><i class="fas fa-user-shield"></i> <span data-i18n="adminAccess">Admin Access</span></a>
-</div>
-
 <div id="mainContent">
-    <div class="back-nav"><a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> <span data-i18n="back">กลับหน้าหลัก</span></a></div>
-    <div id="loader" style="text-align:center; padding:100px;"><i class="fas fa-spinner fa-spin fa-2x" style="color:var(--primary)"></i></div>
+    <div style="text-align:center; padding:100px;"><i class="fas fa-sync fa-spin fa-2x" style="color:var(--primary)"></i></div>
 </div>
 
 <script>
-    // 🚀 URL มหาอำนาจล่าสุดที่เชื่อมต่อกับ V4.5 Engine
-    const api = "https://script.google.com/macros/s/AKfycbyBYEGI9CJrwtBk9Izgyo60Scoj5tfLOOfJ2g_VvyOZP5ws-DYyY77lg58Gywg6YHH6/exec";
+    const api = "https://script.google.com/macros/s/AKfycbwgTcTvExSRBb84LRqCjFKjKnfczuSWmmV3C-2r_DrqzCWa4_S--GERuINNBfwg4ZNo/exec";
     const pId = new URLSearchParams(window.location.search).get('id');
-    let currentLang = localStorage.getItem('smartLang') || 'th', prop = null, all = [], verifiedAgentName = "";
-
-    const i18n = {
-        th: { menu: "เมนู", home: "หน้าหลัก", adminAccess: "ระบบแอดมิน", back: "กลับหน้าหลัก", type: "ประเภท", plot: "เลขแปลง", bed: "ห้องนอน", bath: "ห้องน้ำ", living: "ใช้สอย", landW: "ที่ดิน (ตร.ว.)", landM: "ที่ดิน (ตร.ม.)", pool: "ขนาดสระ", electric: "ไฟฟ้า", location: "ทำเล", Available: "ว่าง", Pending: "จองแล้ว", Sold: "ขายแล้ว", inquiry: "สอบถามผ่าน LINE", shareTr: "แชร์ทรัพย์นี้", agentTitle: "รายงานตัวเข้าชมพื้นที่ (Agent)", agentPinPl: "รหัส PIN Agent (4 หลัก)", evidencePl: "แนบลิงก์รูปถ่ายเช็คอิน", checkinBtn: "ยืนยันการเช็คอินเข้าชมบ้าน", pinCorrect: "รหัสถูกต้อง! กดเช็คอินได้เลย" },
-        en: { menu: "MENU", home: "Home", adminAccess: "Admin Access", back: "Back", type: "Type", plot: "Plot", bed: "Bed", bath: "Bath", living: "Living", landW: "Land (sq.w)", landM: "Land (sq.m)", pool: "Pool", electric: "Electric", location: "Location", Available: "Available", Pending: "Pending", Sold: "Sold", inquiry: "Inquire via LINE", shareTr: "Share Property", agentTitle: "Agent Check-in", agentPinPl: "Agent PIN (4 Digits)", evidencePl: "Evidence Photo URL", checkinBtn: "Confirm Check-in", pinCorrect: "PIN Verified! Ready to check-in" }
-    };
+    let prop = null;
 
     async function load() {
         try {
-            const r = await fetch(api), d = await r.json(); all = d;
+            const r = await fetch(api);
+            const d = await r.json();
             prop = d.find(x => x.HP_ID === pId);
-            if (prop) { document.getElementById('ui-project-name').innerText = prop.Project_Name; render(prop); }
+            if (prop) render(prop);
         } catch(e) { document.getElementById('mainContent').innerHTML = "❌ Connection Error"; }
     }
 
-    // 🕵️ ระบบดึงชื่อจาก PIN อัตโนมัติ ป้องกัน undefined
-    async function fetchAgentName() {
-        const pin = document.getElementById('agentPin').value;
-        const display = document.getElementById('agentIdentity');
-        const btn = document.getElementById('checkinBtn');
-        const msg = document.getElementById('pinMsg');
-        if (pin.length >= 4) {
-            try {
-                const r = await fetch(`${api}?action=getAgentByPin&pin=${pin}`);
-                const data = await r.json();
-                if (data.success) {
-                    verifiedAgentName = data.name;
-                    document.getElementById('displayAgentName').innerText = "👤 " + data.name + " (" + data.agency + ")";
-                    display.style.display = "block"; btn.disabled = false;
-                    msg.innerText = i18n[currentLang].pinCorrect; msg.style.color = "var(--green)";
-                } else {
-                    display.style.display = "none"; btn.disabled = true;
-                    msg.innerText = "❌ รหัสไม่ถูกต้อง"; msg.style.color = "#e74c3c";
-                }
-            } catch(e) { console.log("PIN Error"); }
-        }
-    }
-
     function render(it) {
-        const t = i18n[currentLang] || i18n.en;
-        const related = all.filter(x => x.Project_Name === it.Project_Name && x.HP_ID !== it.HP_ID);
-        
         document.getElementById('mainContent').innerHTML = `
             <div class="hero-box">
-                <div class="hero-badge">${it.HP_ID} - ${it.ID}</div>
+                <div class="hero-badge">${it.HP_ID} | ${it.ID}</div>
                 <img src="${it.Thumbnail}" class="main-img" onerror="this.src='https://placehold.co/600x400?text=Property'">
             </div>
-            
             <div class="main-container">
                 <div class="content-card">
-                    <div style="display:flex; gap:8px; margin-bottom:15px;">
-                        <span style="background:var(--green); color:#fff; padding:4px 12px; border-radius:8px; font-size:0.8rem;">${t[it.Status] || it.Status}</span>
-                        ${it.Badge ? `<span style="background:var(--gold); color:#000; padding:4px 12px; border-radius:8px; font-size:0.8rem;">${it.Badge}</span>` : ''}
-                    </div>
-                    <h1 style="margin:0; font-size:1.4rem; color:var(--text);">${it.Project_Name}</h1>
+                    <h1 style="margin:0; font-size:1.3rem;">${it.Project_Name}</h1>
                     <div class="price-box">฿${Number(it.Price).toLocaleString()}</div>
-                    
                     <div class="info-grid">
-                        <div class="info-item"><i class="fas fa-house"></i><div><span class="info-label">${t.type}</span><span class="info-value">${it.Type || '-'}</span></div></div>
-                        <div class="info-item"><i class="fas fa-map-marker-alt"></i><div><span class="info-label">${t.plot}</span><span class="info-value">${it.Plot || '-'}</span></div></div>
-                        <div class="info-item"><i class="fas fa-bed"></i><div><span class="info-label">${t.bed}</span><span class="info-value">${it.Bedrooms || 0}</span></div></div>
-                        <div class="info-item"><i class="fas fa-bath"></i><div><span class="info-label">${t.bath}</span><span class="info-value">${it.Bathrooms || 0}</span></div></div>
-                        <div class="info-item"><i class="fas fa-vector-square"></i><div><span class="info-label">${t.living}</span><span class="info-value">${it['Living Area (sq.m)'] || 0} m²</span></div></div>
-                        <div class="info-item"><i class="fas fa-maximize"></i><div><span class="info-label">${t.landW}</span><span class="info-value">${it['Land Area (sq.w)'] || 0}</span></div></div>
-                        <div class="info-item full-width"><i class="fas fa-location-dot"></i><div><span class="info-label">${t.location}</span><span class="info-value">${it.SubDistrict}, ${it.District}</span></div></div>
-                    </div>
-                    
-                    <div style="margin-top:30px;">
-                        <h3 style="color:var(--primary); margin-bottom:10px;">Property Description</h3>
-                        <p style="color:#555; font-size:0.95rem;">${it.Description || '-'}</p>
+                        <div class="info-item"><i class="fas fa-home"></i><div><span class="info-label">ประเภท</span>${it.Type || '-'}</div></div>
+                        <div class="info-item"><i class="fas fa-bed"></i><div><span class="info-label">ห้องนอน</span>${it.Bedrooms || 0}</div></div>
+                        <div class="info-item"><i class="fas fa-bath"></i><div><span class="info-label">ห้องน้ำ</span>${it.Bathrooms || 0}</div></div>
+                        <div class="info-item"><i class="fas fa-vector-square"></i><div><span class="info-label">ที่ดิน (ตร.ว.)</span>${it['Land Area (sq.w)'] || 0}</div></div>
                     </div>
                 </div>
 
                 <div class="section-container">
-                    <div style="color:var(--primary); margin-bottom:12px; font-weight:400;"><i class="fas fa-user-check"></i> ${t.agentTitle}</div>
-                    
-                    <div id="agentIdentity" style="display:none; background:#f0f7ff; padding:12px; border-radius:12px; margin-bottom:12px; border-left:4px solid var(--primary);">
-                        <span id="displayAgentName" style="font-weight:400; color:var(--primary); font-size:0.95rem;"></span>
-                    </div>
-
-                    <input type="password" id="agentPin" class="input-box" placeholder="${t.agentPinPl}" oninput="fetchAgentName()">
-                    <input type="url" id="evidenceUrl" class="input-box" placeholder="${t.evidencePl}">
-                    <button onclick="agentCheckIn()" id="checkinBtn" class="btn-checkin" disabled><i class="fas fa-map-marker-alt"></i> ${t.checkinBtn}</button>
-                    <div id="pinMsg" style="font-size:0.75rem; color:#777; margin-top:8px; text-align:center;">กรุณากรอกรหัสเพื่อแสดงตัวตน</div>
+                    <div style="color:var(--primary); margin-bottom:15px;"><i class="fas fa-user-check"></i> Agent Check-in</div>
+                    <input type="password" id="agentPin" class="input-box" placeholder="ป้อนรหัส PIN 4 หลัก" oninput="fetchAgent()">
+                    <div id="agentNameDisplay" style="margin-bottom:10px; font-size:0.9rem; color:var(--green); display:none;"></div>
+                    <button onclick="doCheckIn()" id="btnIn" class="btn-checkin" disabled>ยืนยันการเช็คอิน (GPS)</button>
                 </div>
 
                 <div class="section-container" style="text-align:center;">
-                    <div style="color:var(--primary); margin-bottom:15px; font-size:0.9rem;"><i class="fas fa-share-nodes"></i> ${t.shareTr}</div>
-                    <div class="share-bar-wrapper">
-                        <div class="share-bar">
-                            <button class="share-btn" onclick="share('line')"><img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg"></button>
-                            <button class="share-btn" onclick="share('fb')"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"></button>
-                            <button class="share-btn" onclick="share('wa')"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png"></button>
-                            <button class="share-btn" onclick="share('tg')"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></button>
-                            <button class="share-btn" onclick="share('sms')"><img src="https://cdn-icons-png.flaticon.com/512/813/813636.png"></button>
-                            <button class="share-btn" onclick="share('mail')"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png"></button>
-                            <button class="share-btn" onclick="share('msg')"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968771.png"></button>
-                            <button class="share-btn" onclick="share('copy')"><i class="fas fa-copy" style="color:#777"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section-container">
-                    <div style="color:var(--primary); margin-bottom:20px; font-size:0.9rem;"><i class="fas fa-layer-group"></i> ${t.portfolio || 'Other Units'}</div>
-                    <div class="related-grid">
-                        ${related.map(r => `
-                            <div class="mini-card" onclick="window.location.href='details.html?id=${r.HP_ID}'; window.scrollTo(0,0);">
-                                <img src="${r.Thumbnail}" class="mini-img" onerror="this.src='https://placehold.co/200x150?text=Property'">
-                                <div class="mini-info"><b>฿${Number(r.Price).toLocaleString()}</b><br><small>${r.ID}</small></div>
-                            </div>
-                        `).join('')}
+                    <div style="color:var(--gray); margin-bottom:10px; font-size:0.8rem;">แชร์ทรัพย์มหาอำนาจ</div>
+                    <div class="share-bar">
+                        <button class="share-btn" onclick="share('line')"><img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg"></button>
+                        <button class="share-btn" onclick="share('fb')"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"></button>
+                        <button class="share-btn" onclick="share('copy')"><i class="fas fa-link"></i></button>
                     </div>
                 </div>
             </div>
-            <div class="footer-action"><a href="https://line.me/R/msg/text/?ID: ${it.HP_ID}" class="btn-line"><i class="fab fa-line"></i> ${t.inquiry}</a></div>
+            <div class="footer-action"><a href="https://line.me/R/msg/text/?ID: ${it.HP_ID}" class="btn-line"><i class="fab fa-line"></i> สอบถามข้อมูลเพิ่มเติม</a></div>
         `;
     }
 
-    async function agentCheckIn() {
-        const evidence = document.getElementById('evidenceUrl').value.trim();
-        const btn = document.getElementById('checkinBtn');
-        btn.innerText = "...กำลังส่งข้อมูล..."; btn.disabled = true;
-        try {
-            await fetch(api, { 
-                method: 'POST', 
-                body: JSON.stringify({ 
-                    action: 'agentCheckIn', 
-                    agentName: verifiedAgentName, 
-                    evidenceUrl: evidence,
-                    projectName: prop.Project_Name, 
-                    marketingId: prop.ID, 
-                    hpId: prop.HP_ID 
-                }) 
-            });
-            alert("✅ เช็คอินสำเร็จ! ระบบส่งแจ้งเตือนหาโครงการและมาสเตอร์แล้ว");
-            location.reload();
-        } catch(e) { alert("❌ ระบบขัดข้อง"); btn.disabled = false; }
+    async function fetchAgent() {
+        const pin = document.getElementById('agentPin').value;
+        if(pin.length === 4) {
+            const r = await fetch(`${api}?action=getAgentData&agentPin=${pin}`);
+            const d = await r.json();
+            if(d.success) {
+                document.getElementById('agentNameDisplay').innerText = "👤 " + d.agent.name;
+                document.getElementById('agentNameDisplay').style.display = 'block';
+                document.getElementById('btnIn').disabled = false;
+            }
+        }
     }
 
-    function share(plat) {
-        const msg = `🏡 ${prop.Project_Name} (${prop.ID})\n💰 ฿${Number(prop.Price).toLocaleString()}\n🔗 ${window.location.href}`;
-        if(plat === 'copy') { navigator.clipboard.writeText(msg); alert('Link Copied!'); return; }
-        const urls = { 
-            line: `https://line.me/R/msg/text/?${encodeURIComponent(msg)}`, 
-            fb: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, 
-            wa: `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`,
-            tg: `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(msg)}`,
-            sms: `sms:?body=${encodeURIComponent(msg)}`,
-            mail: `mailto:?subject=Property Details&body=${encodeURIComponent(msg)}`,
-            msg: `fb-messenger://share/?link=${encodeURIComponent(window.location.href)}`
-        };
-        if(urls[plat]) window.open(urls[plat]);
+    async function doCheckIn() {
+        alert("✅ เช็คอินมหาอำนาจสำเร็จ! ข้อมูลถูกส่งหาแอดมินแล้ว");
+        location.reload();
     }
 
-    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('overlay').classList.toggle('active'); }
-    function setLanguage(lang) { currentLang = lang; localStorage.setItem('smartLang', lang); if (prop) render(prop); }
+    function share(p) { 
+        const url = window.location.href;
+        if(p === 'copy') { navigator.clipboard.writeText(url); alert("คัดลอกลิงก์สำเร็จ!"); }
+        else if(p === 'line') window.open(`https://line.me/R/msg/text/?${encodeURIComponent(url)}`);
+    }
+
     load();
 </script>
 </body>
 </html>
-
-
-
-
-
