@@ -8,215 +8,142 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { 
-            --header-bg: #1a4361; 
-            --master-pill: #5d7a8c;
-            --gold-bg: #fff3cd;
-            --gold-border: #ffeeba;
-            --gold-text: #856404;
-            --gold-btn: #856404;
-            --main-blue: #1a5276;
-            --logout-red: #e74c3c;
-            --body-bg: #f4f7f6;
+            --navy: #1a4361; --gold-light: #fff3cd; --gold-border: #ffeeba;
+            --gold-btn: #856404; --blue-btn: #1a5276; --red-btn: #e74c3c;
         }
-        body { font-family: 'Kanit', sans-serif; background: var(--body-bg); margin: 0; }
+        body { font-family: 'Kanit', sans-serif; background: #f4f7f6; margin: 0; }
         
-        /* 100% Identical Header */
-        header { 
-            background: var(--header-bg); 
-            height: 60px; 
-            padding: 0 30px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            color: white; 
-            position: sticky; 
-            top: 0; 
-            z-index: 1000;
-        }
-        .header-left { display: flex; align-items: center; gap: 10px; }
-        .master-pill { 
-            background: var(--master-pill); 
-            padding: 2px 10px; 
-            border-radius: 50px; 
-            font-size: 0.75rem; 
-            font-weight: 500; 
-        }
-        .logout-btn { 
-            background: var(--logout-red); 
-            color: white; 
-            border: none; 
-            padding: 8px 18px; 
-            border-radius: 6px; 
-            font-family: 'Kanit'; 
-            cursor: pointer; 
-            font-weight: 500; 
-        }
+        /* Header */
+        header { background: var(--navy); padding: 12px 30px; color: white; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .logo-box { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 1.1rem; }
+        .master-badge { background: #5d7a8c; color: white; padding: 2px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 400; }
+        .logout-btn { background: var(--red-btn); color: white; border: none; padding: 7px 18px; border-radius: 6px; cursor: pointer; font-family: 'Kanit'; font-weight: 500; }
 
         .container { max-width: 950px; margin: 40px auto; padding: 0 20px; }
-        h2 { color: var(--header-bg); font-weight: 500; font-size: 1.8rem; margin-bottom: 35px; }
+        h2 { color: var(--navy); font-weight: 500; font-size: 1.8rem; margin-bottom: 35px; }
 
-        /* Executive Section */
-        .executive-box { 
-            background: var(--gold-bg); 
-            border: 1.5px solid var(--gold-border); 
-            border-radius: 15px; 
-            padding: 25px; 
-            margin-bottom: 25px; 
-            text-align: center;
-        }
-        .executive-label { 
-            color: var(--gold-text); 
-            font-weight: 600; 
-            margin-bottom: 15px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 10px; 
-            font-size: 1.1rem;
-        }
-        .btn-gold { 
-            background: var(--gold-btn); 
-            color: white; 
-            border: none; 
-            width: 100%; 
-            padding: 18px; 
-            border-radius: 12px; 
-            font-family: 'Kanit'; 
-            font-size: 1.1rem; 
-            font-weight: 500; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 12px; 
-            transition: 0.3s;
-        }
+        /* Executive Box */
+        .exec-card { background: var(--gold-light); border: 1.5px solid var(--gold-border); border-radius: 15px; padding: 25px; margin-bottom: 25px; }
+        .exec-label { color: #856404; font-weight: 600; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.1rem; }
+        .btn-gold { background: var(--gold-btn); color: white; width: 100%; padding: 18px; border-radius: 12px; border: none; font-family: 'Kanit'; font-size: 1.1rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; box-shadow: 0 4px 10px rgba(133,100,4,0.3); }
 
-        /* Main Add Button */
-        .btn-add { 
-            background: var(--main-blue); 
-            color: white; 
-            border: none; 
-            width: 100%; 
-            padding: 20px; 
-            border-radius: 12px; 
-            font-family: 'Kanit'; 
-            font-size: 1.2rem; 
-            font-weight: 500; 
-            cursor: pointer; 
-            margin-bottom: 30px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 12px; 
-            box-shadow: 0 8px 15px rgba(26, 82, 118, 0.2);
-        }
+        /* Add Button */
+        .btn-blue { background: var(--blue-btn); color: white; width: 100%; padding: 20px; border-radius: 12px; border: none; font-family: 'Kanit'; font-size: 1.2rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 30px; box-shadow: 0 8px 15px rgba(26,82,118,0.2); }
 
-        /* List Container */
-        .data-list-container { 
-            background: white; 
-            border-radius: 25px; 
-            padding: 60px 40px; 
-            text-align: center; 
-            box-shadow: 0 5px 30px rgba(0,0,0,0.05); 
-            border: 1px solid #f0f0f0;
-        }
-        .loading-icon { font-size: 2.5rem; color: var(--header-bg); margin-bottom: 20px; }
-        .loading-text { color: #333; font-weight: 500; font-size: 1.1rem; }
+        /* Main Container */
+        .main-white-box { background: white; border-radius: 25px; padding: 80px 40px; text-align: center; border: 1px solid #eee; box-shadow: 0 5px 25px rgba(0,0,0,0.03); min-height: 300px; }
+        .sync-icon { font-size: 3rem; color: var(--navy); margin-bottom: 25px; }
+        .loading-msg { font-size: 1.15rem; color: #333; font-weight: 500; }
 
         .hidden { display: none !important; }
-        #login-overlay { position: fixed; inset: 0; background: white; z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        #login-ui { position: fixed; inset: 0; background: white; z-index: 2000; display: flex; align-items: center; justify-content: center; }
+        
+        /* Property List Styling */
+        .property-item { text-align: left; padding: 20px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
+        .property-item:last-child { border: none; }
     </style>
 </head>
 <body>
 
-<div id="login-overlay">
-    <div style="text-align:center; max-width:350px; width:100%;">
-        <i class="fas fa-user-lock fa-4x" style="color:var(--header-bg); margin-bottom:20px;"></i>
+<div id="login-ui">
+    <div style="text-align:center; max-width:350px; width:100%; padding:20px;">
+        <i class="fas fa-shield-halved fa-4x" style="color:var(--navy); margin-bottom:20px;"></i>
         <h2 style="margin-bottom:30px;">Admin Login</h2>
-        <input type="password" id="pinInput" placeholder="ENTER ACCESS PIN" style="width:100%; padding:18px; border-radius:12px; border:1px solid #ddd; text-align:center; font-size:1.5rem; outline:none; margin-bottom:20px; box-sizing:border-box;">
-        <button onclick="handleLogin()" style="width:100%; padding:15px; border-radius:12px; background:var(--header-bg); color:white; border:none; font-weight:600; cursor:pointer;">LOGIN</button>
+        <input type="password" id="pinInput" placeholder="ENTER ACCESS PIN" style="width:100%; padding:18px; border-radius:12px; border:1px solid #ddd; text-align:center; font-size:1.5rem; outline:none; margin-bottom:25px; box-sizing:border-box;">
+        <button onclick="handleLogin()" style="width:100%; padding:15px; border-radius:12px; background:var(--navy); color:white; border:none; font-weight:600; cursor:pointer; font-size:1.1rem;">ACCESS DASHBOARD</button>
     </div>
 </div>
 
-<div id="main-ui" class="hidden">
+<div id="dashboard-ui" class="hidden">
     <header>
-        <div class="header-left">
-            <strong>Smart Control</strong>
-            <span class="master-pill">Master</span>
-        </div>
-        <div id="admin-display-name" style="font-weight:400; font-size:0.95rem;">MASTER_ADMIN</div>
+        <div class="logo-box">Smart Control <span class="master-badge">Master</span></div>
+        <div id="user-display" style="font-weight:400; font-size:0.95rem;">MASTER_ADMIN</div>
         <button class="logout-btn" onclick="logout()">ออกจากระบบ</button>
     </header>
 
     <div class="container">
         <h2>จัดการ ทุกโครงการ</h2>
 
-        <div id="exec-box" class="executive-box hidden">
-            <div class="executive-label">
-                <i class="fas fa-crown"></i> สำหรับผู้บริหารสูงสุดเท่านั้น
-            </div>
+        <div id="exec-section" class="exec-card hidden">
+            <div class="exec-label"><i class="fas fa-crown"></i> สำหรับผู้บริหารสูงสุดเท่านั้น</div>
             <button class="btn-gold" onclick="location.href='dashboard.html'">
                 <i class="fas fa-chart-line"></i> เข้าสู่หน้าสรุปยอดบริหาร (Executive Dashboard)
             </button>
         </div>
 
-        <button class="btn-add" onclick="alert('เปิดฟอร์มเพิ่มรายการ...')">
+        <button class="btn-blue" onclick="alert('ฟังก์ชันเพิ่มรายการบ้านจะอยู่ใน Phase ถัดไปครับ')">
             <i class="fas fa-plus-circle"></i> เพิ่มรายการบ้านใหม่เข้าสู่ระบบ
         </button>
 
-        <div class="data-list-container">
-            <div id="loader">
-                <div class="loading-icon"><i class="fas fa-sync fa-spin"></i></div>
-                <div class="loading-text">กำลังดึงข้อมูลมหาอำนาจ...</div>
+        <div class="main-white-box">
+            <div id="loading-state">
+                <div class="sync-icon"><i class="fas fa-sync fa-spin"></i></div>
+                <div class="loading-msg">กำลังดึงข้อมูลมหาอำนาจ...</div>
             </div>
-            <div id="property-items-list" class="hidden">
+            <div id="data-list" class="hidden">
                 </div>
         </div>
     </div>
 </div>
 
 <script>
-    // 🔗 URL Apps Script ของคุณครับ
-    const api = "https://script.google.com/macros/s/AKfycbxUduvVQ2oDjgJT3HJlGDzpbEav1_orj-G2UalilY27QoRtSgNOHPFdw7-NNYPdakA8/exec";
-    let adminUser = null;
+    // 🚀 URL ล่าสุดของคุณครับ
+    const webAppUrl = "https://script.google.com/macros/s/AKfycbxUduvVQ2oDjgJT3HJlGDzpbEav1_orj-G2UalilY27QoRtSgNOHPFdw7-NNYPdakA8/exec";
+    let currentUser = null;
 
     async function handleLogin() {
         const pin = document.getElementById('pinInput').value;
         try {
-            const res = await fetch(`${api}?action=universalLogin&key=${pin}`).then(r => r.json());
-            if (res.success) {
-                adminUser = res;
-                localStorage.setItem('smart_session', JSON.stringify(res));
-                startUI();
-            } else { alert("PIN ผิดพลาด!"); }
-        } catch(e) { alert("เกิดข้อผิดพลาดในการเชื่อมต่อ"); }
+            const response = await fetch(`${webAppUrl}?action=universalLogin&key=${pin}`);
+            const result = await response.json();
+            if (result.success) {
+                currentUser = result;
+                localStorage.setItem('smart_session', JSON.stringify(result));
+                renderUI();
+            } else { alert("รหัสผ่านไม่ถูกต้อง"); }
+        } catch(e) { alert("เชื่อมต่อฐานข้อมูลล้มเหลว"); }
     }
 
-    function startUI() {
-        adminUser = adminUser || JSON.parse(localStorage.getItem('smart_session'));
-        if (!adminUser) return;
+    function renderUI() {
+        currentUser = currentUser || JSON.parse(localStorage.getItem('smart_session'));
+        if (!currentUser) return;
 
-        document.getElementById('login-overlay').classList.add('hidden');
-        document.getElementById('main-ui').classList.remove('hidden');
-        document.getElementById('admin-display-name').innerText = adminUser.name;
+        document.getElementById('login-ui').classList.add('hidden');
+        document.getElementById('dashboard-ui').classList.remove('hidden');
+        document.getElementById('user-display').innerText = currentUser.name;
 
-        // เช็คสิทธิ์ผู้บริหารเพื่อโชว์กล่องทอง
-        if (adminUser.role === 'SUPER_ADMIN') {
-            document.getElementById('exec-box').classList.remove('hidden');
+        if (currentUser.role === 'SUPER_ADMIN') {
+            document.getElementById('exec-section').classList.remove('hidden');
         }
 
-        loadData();
+        loadProperties();
     }
 
-    async function loadData() {
-        // จำลองการโหลดข้อมูล 1.5 วินาทีเพื่อให้เหมือนภาพต้นฉบับ
-        const data = await fetch(`${api}?role=${adminUser.role}&project=${adminUser.project}`).then(r => r.json());
-        // ในก้าวถัดไป เราจะเขียนโค้ด Render รายการบ้านที่นี่ครับ
+    async function loadProperties() {
+        try {
+            const response = await fetch(`${webAppUrl}?role=${currentUser.role}&project=${currentUser.project}`);
+            const data = await response.json();
+            
+            const listDiv = document.getElementById('data-list');
+            document.getElementById('loading-state').classList.add('hidden');
+            listDiv.classList.remove('hidden');
+
+            listDiv.innerHTML = data.map(item => `
+                <div class="property-item">
+                    <div>
+                        <div style="font-weight:600; color:var(--navy); font-size:1.1rem;">${item.HP_ID} | ${item.ID}</div>
+                        <div style="font-size:0.85rem; color:#666;">${item.District} | ${item.Status}</div>
+                    </div>
+                    <div style="color:var(--blue-btn); cursor:pointer;"><i class="fas fa-edit-square fa-2x"></i></div>
+                </div>
+            `).join('');
+        } catch(e) {
+            document.getElementById('loading-state').innerHTML = "เกิดข้อผิดพลาดในการโหลดข้อมูล";
+        }
     }
 
     function logout() { localStorage.clear(); location.reload(); }
-    window.onload = () => { if(localStorage.getItem('smart_session')) startUI(); };
+    window.onload = () => { if(localStorage.getItem('smart_session')) renderUI(); };
 </script>
 </body>
 </html>
