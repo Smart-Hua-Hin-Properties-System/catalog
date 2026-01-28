@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Smart System - Unified V16.5</title>
+    <title>Smart Catalog - Sovereign V16.6</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -11,14 +11,14 @@
         body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; padding: 0; color: var(--text); font-weight: 300; -webkit-tap-highlight-color: transparent; }
         h1, h2, h3, b, strong { font-weight: 400; }
 
-        /* 📱 Header System: Burger + MENU + BRAND */
+        /* 📱 Header System: MENU + BRAND */
         header { background: #fff; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .header-left { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-        .menu-text { font-size: 0.85rem; font-weight: 500; color: var(--primary); text-transform: uppercase; margin-right: 5px; }
+        .header-left { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .menu-text { font-size: 0.85rem; font-weight: 500; color: var(--primary); text-transform: uppercase; }
         .brand-name { font-weight: 500; font-size: 0.85rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; border-left: 1.5px solid #eee; padding-left: 10px; }
         .flag-list { display: flex; gap: 4px; }
         .flag-btn { border: none; background: none; padding: 0; cursor: pointer; transition: 0.2s; }
-        .flag-btn img { width: 22px; height: 14px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+        .flag-btn img { width: 22px; height: 14px; border-radius: 2px; }
 
         /* 🍔 Universal Sidebar */
         .sidebar { position: fixed; left: -280px; top: 0; width: 280px; height: 100%; background: #fff; z-index: 2500; transition: 0.4s; padding-top: 60px; box-shadow: 5px 0 25px rgba(0,0,0,0.1); }
@@ -27,49 +27,45 @@
         .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000; backdrop-filter: blur(2px); }
         .sidebar-overlay.active { display: block; }
 
-        /* 🔍 Mobile-Optimized Filter */
+        /* 🔍 Mobile Filter Area */
         .filter-area { padding: 15px; max-width: 100%; margin: 0 auto; box-sizing: border-box; }
         .id-selector-trigger { width: 100%; padding: 14px 15px; background: #fff; border: 1.5px solid var(--border); border-radius: 15px; color: var(--primary); display: flex; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 10px; box-sizing: border-box; }
-        .filter-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; box-sizing: border-box; }
+        .filter-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .select-box { width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid var(--border); background: #fff; font-family: 'Kanit'; color: var(--primary); outline: none; font-size: 0.85rem; }
 
-        /* 🏠 Property Grid & Cards */
+        /* 🏠 Property Cards */
         .property-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; padding: 0 15px 40px; max-width: 1200px; margin: 0 auto; box-sizing: border-box; }
         .card { background: var(--white); border-radius: 25px; overflow: hidden; position: relative; box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: 0.3s; border: 1px solid rgba(0,0,0,0.02); }
         .badge { position: absolute; top: 12px; left: 12px; background: var(--green); color: white; padding: 5px 15px; border-radius: 50px; font-weight: 400; font-size: 0.7rem; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .card-img { width: 100%; height: 230px; object-fit: cover; background: #eee; }
         .card-body { padding: 20px; text-align: center; }
         
-        /* 🎯 ยุทธศาสตร์แถวข้อมูลเดียวแบบตัวหนา */
-        .unified-info-row { 
-            font-size: 0.85rem; 
-            color: #2c3e50; 
-            margin-bottom: 12px; 
-            font-weight: 600; /* ตัวหนาตามบัญชา */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
+        /* 🎯 ยุทธศาสตร์แถวมหาอำนาจพร้อมไอคอน */
+        .unified-info-row { font-size: 0.85rem; color: #2c3e50; margin-bottom: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+        .unified-info-row i { color: var(--primary); font-size: 0.9rem; }
         
-        .price-text { font-size: 2rem; color: var(--primary); font-weight: 400; margin: 5px 0 18px; letter-spacing: -1px; }
+        .price-text { font-size: 2.1rem; color: var(--primary); font-weight: 400; margin: 5px 0 18px; letter-spacing: -1px; }
         .btn-detail { display: block; width: 75%; margin: 0 auto; padding: 12px; background: var(--primary); color: white; text-align: center; text-decoration: none; border-radius: 50px; font-size: 0.95rem; font-weight: 400; box-shadow: 0 5px 15px rgba(26,82,118,0.2); }
 
-        /* 🛌 Modal Centered Header */
+        /* 🛌 Modal UI */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 3000; align-items: flex-end; }
         .modal-content { background: #fff; border-radius: 30px 30px 0 0; width: 100%; max-height: 85vh; padding: 25px 20px; overflow-y: auto; box-sizing: border-box; }
         .modal-header { display: flex; justify-content: center; align-items: center; position: relative; padding-bottom: 20px; border-bottom: 2px solid #f0f0f0; margin-bottom: 15px; }
         .modal-header b { position: absolute; left: 0; font-weight: 500; font-size: 1.1rem; }
         .centered-close-btn { background: var(--red); color: white; padding: 8px 35px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2); }
 
+        /* 📊 ID List Item - Status on Right */
         .id-item { padding: 18px 10px; border-bottom: 1px solid #f5f5f5; cursor: pointer; }
         .id-row-main { display: flex; justify-content: space-between; align-items: center; }
-        .id-name { font-weight: 500; color: var(--primary); font-size: 1.2rem; }
-        .id-price-full { font-weight: 500; font-size: 1.1rem; }
-        .id-row-sub { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: #666; margin-top: 6px; }
-        .status-tag { padding: 3px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 400; }
-        .available { background: #e8f5e9; color: var(--green); } .pending { background: #fff9e6; color: var(--gold); } .sold { background: #fdeaea; color: var(--red); }
+        .id-name { font-weight: 500; color: var(--primary); font-size: 1.25rem; }
+        .id-price-full { font-weight: 500; font-size: 1.15rem; color: #2c3e50; }
+        
+        .id-row-sub { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+        .id-specs-left { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: #666; }
+        .status-tag { padding: 4px 14px; border-radius: 6px; font-size: 0.72rem; font-weight: 500; text-transform: capitalize; }
+        .available { background: #e8f5e9; color: var(--green); } 
+        .pending { background: #fff9e6; color: var(--gold); } 
+        .sold { background: #fdeaea; color: var(--red); }
     </style>
 </head>
 <body>
@@ -77,7 +73,7 @@
 <header>
     <div class="header-left" onclick="toggleSidebar()">
         <i class="fas fa-bars fa-lg" style="color:var(--primary);"></i>
-        <span class="menu-text" data-i18n="menu">เมนู</span>
+        <span class="menu-text" data-i18n="menu">MENU</span>
         <div class="brand-name" id="ui-brand">Smart System</div>
     </div>
     <div class="flag-list">
@@ -119,7 +115,7 @@
 <div class="modal" id="idModal">
     <div class="modal-content">
         <div class="modal-header">
-            <b data-i18n="modalTitle">เลือกแปลงโครงการ</b>
+            <b data-i18n="modalTitle">Project Plots</b>
             <div onclick="clearIdFilter()" class="centered-close-btn" data-i18n="closeBtn">CLOSE</div>
             <span></span>
         </div>
@@ -128,12 +124,13 @@
 </div>
 
 <script>
+    // 🎯 พิกัดมหาอำนาจตามบัญชามาสเตอร์
     const api = "https://script.google.com/macros/s/AKfycbwUqp_vaFNgUdyARh5WG-S3iRm_x1C4EX0tL8aw12nhKpvYVn3I7SwWmi5s-doiYGYh/exec";
     let allData = [], selectedHPID = null, currentLang = localStorage.getItem('smartLang') || 'th';
 
     const i18n = {
-        th: { menu: "เมนู", home: "หน้าหลัก", admin: "Admin Access", selector: "เลือกแปลง / รหัส...", bedAll: "🛌 ห้องนอนทั้งหมด", priceSort: "💰 เรียงตามราคา", priceLow: "น้อยไปมาก", priceHigh: "มากไปน้อย", modalTitle: "เลือกแปลง", closeBtn: "CLOSE", view: "View Details", bed: "Bed", Available: "ว่าง", Pending: "จองแล้ว", Sold: "ขายแล้ว" },
-        en: { menu: "MENU", home: "Home", admin: "Admin Access", selector: "Select Plot / ID...", bedAll: "🛌 All Bedrooms", priceSort: "💰 Sort Price", priceLow: "Low to High", priceHigh: "High to Low", modalTitle: "Project Plots", closeBtn: "CLOSE", view: "View Details", bed: "Bed", Available: "Available", Pending: "Pending", Sold: "Sold" }
+        th: { menu: "เมนู", home: "หน้าหลัก", admin: "Admin Access", selector: "เลือกแปลง / รหัส...", bedAll: "🛌 ห้องนอนทั้งหมด", priceSort: "💰 เรียงตามราคา", priceLow: "น้อยไปมาก", priceHigh: "มากไปน้อย", modalTitle: "เลือกแปลง", closeBtn: "CLOSE", view: "View Details", bed: "นอน", bath: "น้ำ", Available: "ว่าง", Pending: "จองแล้ว", Sold: "ขายแล้ว" },
+        en: { menu: "MENU", home: "Home", admin: "Admin Access", selector: "Select Plot / ID...", bedAll: "🛌 All Bedrooms", priceSort: "💰 Sort Price", priceLow: "Low to High", priceHigh: "High to Low", modalTitle: "Project Plots", closeBtn: "CLOSE", view: "View Details", bed: "Bed", bath: "Bath", Available: "Available", Pending: "Pending", Sold: "Sold" }
     };
 
     async function init() {
@@ -154,6 +151,7 @@
         renderIdList(); applyFilters();
     }
 
+    // 🛌 🎯 สถาปนารายการเลือก: สเปกชิดซ้าย สเตตัสชิดขวา
     function renderIdList() {
         const list = document.getElementById('idList'), t = i18n[currentLang] || i18n.en;
         list.innerHTML = "";
@@ -167,7 +165,11 @@
                     <div class="id-price-full">฿${Number(it.Price).toLocaleString()}</div>
                 </div>
                 <div class="id-row-sub">
-                    <span>${it.Bedrooms} ${t.bed} | ${it['Living Area (sq.m)']} m²</span>
+                    <div class="id-specs-left">
+                        <span><i class="fas fa-bed"></i> ${it.Bedrooms} ${t.bed}</span>
+                        <span><i class="fas fa-shower"></i> ${it.Bathrooms || 0} ${t.bath}</span>
+                        <span><i class="fas fa-home"></i> ${it['Living Area (sq.m)']} m²</span>
+                    </div>
                     <span class="status-tag ${it.Status.toLowerCase()}">${t[it.Status] || it.Status}</span>
                 </div>
             `;
@@ -186,7 +188,7 @@
         renderGrid(data);
     }
 
-    // 🎯 การสถาปนาข้อมูลแถวเดียว: อำเภอ | ตำบล | ห้องนอน | พื้นที่
+    // 🎯 การสถาปนาข้อมูลแถวเดียวพร้อมไอคอนมหาอำนาจ
     function renderGrid(items) {
         const grid = document.getElementById('grid'), t = i18n[currentLang] || i18n.en;
         document.getElementById('loading').style.display = 'none';
@@ -198,7 +200,10 @@
                 <img src="${it.Thumbnail}" class="card-img" onerror="this.src='https://placehold.co/600x400?text=Sovereign+Asset'">
                 <div class="card-body">
                     <div class="unified-info-row">
-                        ${it.District} | ${it.SubDistrict} | ${it.Bedrooms} ${t.bed} | ${it['Living Area (sq.m)']} m²
+                        <i class="fas fa-map-marker-alt"></i> ${it.District} | 
+                        <i class="fas fa-location-arrow"></i> ${it.SubDistrict} | 
+                        <i class="fas fa-bed"></i> ${it.Bedrooms} ${t.bed} | 
+                        <i class="fas fa-vector-square"></i> ${it['Living Area (sq.m)']} m²
                     </div>
                     <div class="price-text">฿${Number(it.Price).toLocaleString()}</div>
                     <a href="details.html?id=${it.HP_ID}" class="btn-detail">${t.view}</a>
