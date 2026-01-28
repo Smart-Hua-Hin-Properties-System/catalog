@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Smart System - Imperial V16.4</title>
+    <title>Smart System - Unified V16.5</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -29,11 +29,7 @@
 
         /* 🔍 Mobile-Optimized Filter */
         .filter-area { padding: 15px; max-width: 100%; margin: 0 auto; box-sizing: border-box; }
-        .id-selector-trigger { 
-            width: 100%; padding: 14px 15px; background: #fff; border: 1.5px solid var(--border); border-radius: 15px;
-            color: var(--primary); display: flex; justify-content: space-between; align-items: center; cursor: pointer; 
-            margin-bottom: 10px; box-sizing: border-box; /* ป้องกันล้นขอบ */
-        }
+        .id-selector-trigger { width: 100%; padding: 14px 15px; background: #fff; border: 1.5px solid var(--border); border-radius: 15px; color: var(--primary); display: flex; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 10px; box-sizing: border-box; }
         .filter-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; box-sizing: border-box; }
         .select-box { width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid var(--border); background: #fff; font-family: 'Kanit'; color: var(--primary); outline: none; font-size: 0.85rem; }
 
@@ -44,11 +40,20 @@
         .card-img { width: 100%; height: 230px; object-fit: cover; background: #eee; }
         .card-body { padding: 20px; text-align: center; }
         
-        /* 📍 Location & Spec Line */
-        .card-location { font-size: 0.8rem; color: #7f8c8d; margin-bottom: 5px; display: flex; align-items: center; justify-content: center; gap: 5px; }
-        .card-specs { font-size: 0.85rem; color: #2c3e50; margin-bottom: 8px; font-weight: 400; }
+        /* 🎯 ยุทธศาสตร์แถวข้อมูลเดียวแบบตัวหนา */
+        .unified-info-row { 
+            font-size: 0.85rem; 
+            color: #2c3e50; 
+            margin-bottom: 12px; 
+            font-weight: 600; /* ตัวหนาตามบัญชา */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
         
-        .price-text { font-size: 2rem; color: var(--primary); font-weight: 400; margin: 5px 0 15px; letter-spacing: -1px; }
+        .price-text { font-size: 2rem; color: var(--primary); font-weight: 400; margin: 5px 0 18px; letter-spacing: -1px; }
         .btn-detail { display: block; width: 75%; margin: 0 auto; padding: 12px; background: var(--primary); color: white; text-align: center; text-decoration: none; border-radius: 50px; font-size: 0.95rem; font-weight: 400; box-shadow: 0 5px 15px rgba(26,82,118,0.2); }
 
         /* 🛌 Modal Centered Header */
@@ -127,8 +132,8 @@
     let allData = [], selectedHPID = null, currentLang = localStorage.getItem('smartLang') || 'th';
 
     const i18n = {
-        th: { menu: "เมนู", home: "หน้าหลัก", admin: "Admin Access", selector: "เลือกแปลง / รหัส...", bedAll: "🛌 ห้องนอนทั้งหมด", priceSort: "💰 เรียงตามราคา", priceLow: "น้อยไปมาก", priceHigh: "มากไปน้อย", modalTitle: "เลือกแปลง", closeBtn: "CLOSE", view: "View Details", bed: "นอน", bath: "น้ำ", Available: "ว่าง", Pending: "จองแล้ว", Sold: "ขายแล้ว" },
-        en: { menu: "MENU", home: "Home", admin: "Admin Access", selector: "Select Plot / ID...", bedAll: "🛌 All Bedrooms", priceSort: "💰 Sort Price", priceLow: "Low to High", priceHigh: "High to Low", modalTitle: "Project Plots", closeBtn: "CLOSE", view: "View Details", bed: "Bed", bath: "Bath", Available: "Available", Pending: "Pending", Sold: "Sold" }
+        th: { menu: "เมนู", home: "หน้าหลัก", admin: "Admin Access", selector: "เลือกแปลง / รหัส...", bedAll: "🛌 ห้องนอนทั้งหมด", priceSort: "💰 เรียงตามราคา", priceLow: "น้อยไปมาก", priceHigh: "มากไปน้อย", modalTitle: "เลือกแปลง", closeBtn: "CLOSE", view: "View Details", bed: "Bed", Available: "ว่าง", Pending: "จองแล้ว", Sold: "ขายแล้ว" },
+        en: { menu: "MENU", home: "Home", admin: "Admin Access", selector: "Select Plot / ID...", bedAll: "🛌 All Bedrooms", priceSort: "💰 Sort Price", priceLow: "Low to High", priceHigh: "High to Low", modalTitle: "Project Plots", closeBtn: "CLOSE", view: "View Details", bed: "Bed", Available: "Available", Pending: "Pending", Sold: "Sold" }
     };
 
     async function init() {
@@ -162,9 +167,7 @@
                     <div class="id-price-full">฿${Number(it.Price).toLocaleString()}</div>
                 </div>
                 <div class="id-row-sub">
-                    <span>🛌 ${it.Bedrooms} ${t.bed}</span>
-                    <span>🚿 ${it.Bathrooms || 0} ${t.bath}</span>
-                    <span>🏠 ${it['Living Area (sq.m)']} m²</span>
+                    <span>${it.Bedrooms} ${t.bed} | ${it['Living Area (sq.m)']} m²</span>
                     <span class="status-tag ${it.Status.toLowerCase()}">${t[it.Status] || it.Status}</span>
                 </div>
             `;
@@ -183,7 +186,7 @@
         renderGrid(data);
     }
 
-    // 🎯 การสถาปนาข้อมูล อำเภอ ตำบล และสเปคบ้านลงในแบนเนอร์
+    // 🎯 การสถาปนาข้อมูลแถวเดียว: อำเภอ | ตำบล | ห้องนอน | พื้นที่
     function renderGrid(items) {
         const grid = document.getElementById('grid'), t = i18n[currentLang] || i18n.en;
         document.getElementById('loading').style.display = 'none';
@@ -194,11 +197,8 @@
                 <div class="badge">${it.HP_ID} - ${it.ID}</div>
                 <img src="${it.Thumbnail}" class="card-img" onerror="this.src='https://placehold.co/600x400?text=Sovereign+Asset'">
                 <div class="card-body">
-                    <div class="card-specs">
-                        <i class="fas fa-bed"></i> ${it.Bedrooms} ${t.bed} | <i class="fas fa-house-chimney"></i> ${it['Living Area (sq.m)']} m²
-                    </div>
-                    <div class="card-location">
-                        <i class="fas fa-location-dot"></i> ${it.SubDistrict}, ${it.District}
+                    <div class="unified-info-row">
+                        ${it.District} | ${it.SubDistrict} | ${it.Bedrooms} ${t.bed} | ${it['Living Area (sq.m)']} m²
                     </div>
                     <div class="price-text">฿${Number(it.Price).toLocaleString()}</div>
                     <a href="details.html?id=${it.HP_ID}" class="btn-detail">${t.view}</a>
