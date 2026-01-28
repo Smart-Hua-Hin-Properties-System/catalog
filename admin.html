@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Admin System - SMART SYSTEM V28.0</title>
+    <title>Admin System - SMART SYSTEM V29.0</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -32,20 +32,17 @@
         /* 📊 Dashboard */
         #dashboard-section { display: none; padding: 20px 15px 100px; max-width: 800px; margin: 0 auto; }
         .property-item { background: #fff; border-radius: 20px; padding: 15px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #f0f0f0; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
-        .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; }
-        .available { background: var(--green); } .pending { background: var(--gold); } .sold { background: var(--red); }
         .add-new-btn { background: var(--green); color: white; padding: 12px 25px; border-radius: 50px; text-decoration: none; font-size: 0.9rem; font-weight: 600; display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; cursor: pointer; }
 
-        /* 📝 Form Section (Step 3) */
+        /* 📝 Form Section */
         #form-section { display: none; padding: 20px 15px 120px; max-width: 600px; margin: 0 auto; }
         .form-card { background: #fff; border-radius: 30px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         .form-group { margin-bottom: 15px; }
         .label { font-size: 0.75rem; color: #888; margin-bottom: 5px; display: block; font-weight: 600; text-transform: uppercase; }
-        .form-input { width: 100%; padding: 12px 15px; border-radius: 12px; border: 1.5px solid #eee; box-sizing: border-box; font-family: 'Kanit'; outline: none; font-size: 0.95rem; }
+        .form-input { width: 100%; padding: 12px 15px; border-radius: 12px; border: 1.5px solid #eee; box-sizing: border-box; font-family: 'Kanit'; outline: none; font-size: 0.95rem; background: #fff; color: var(--text); }
         .form-input:focus { border-color: var(--primary); }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         
-        /* Footer Action */
         .footer-action { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; padding: 15px 20px 25px; box-shadow: 0 -10px 30px rgba(0,0,0,0.1); display: flex; gap: 10px; z-index: 2000; border-radius: 25px 25px 0 0; max-width: 600px; margin: 0 auto; }
         .btn-save { flex: 2; background: var(--green); color: white; padding: 15px; border-radius: 15px; border: none; font-family: 'Kanit'; font-weight: 600; cursor: pointer; }
         .btn-cancel { flex: 1; background: #eee; color: #666; padding: 15px; border-radius: 15px; border: none; font-family: 'Kanit'; font-weight: 600; cursor: pointer; }
@@ -78,7 +75,6 @@
 <div id="dashboard-section">
     <div style="margin-bottom:20px;">
         <h2 id="agent-welcome" style="margin:0;">ยินดีต้อนรับ</h2>
-        <p style="font-size:0.8rem; color:#aaa;">Manage your properties efficiently.</p>
     </div>
     <div class="add-new-btn" onclick="openEditor(null)">
         <i class="fas fa-plus"></i> ADD NEW PROPERTY
@@ -92,23 +88,21 @@
         <div id="edit-form">
             <div class="form-group">
                 <label class="label">HP_ID (รหัสหลัก)</label>
-                <input type="text" id="HP_ID" class="form-input" placeholder="เช่น HP-0001" readonly style="background:#f9f9f9;">
+                <input type="text" id="HP_ID" class="form-input" readonly style="background:#f9f9f9;">
             </div>
             <div class="form-row">
-                <div class="form-group"><label class="label">Plot/ID (รหัสแปลง)</label><input type="text" id="ID" class="form-input" placeholder="M16"></div>
+                <div class="form-group"><label class="label">Plot/ID (รหัสแปลง)</label><input type="text" id="ID" class="form-input"></div>
                 <div class="form-group">
                     <label class="label">สถานะ</label>
                     <select id="Status" class="form-input">
-                        <option value="Available">Available (ว่าง)</option>
-                        <option value="Pending">Pending (จองแล้ว)</option>
-                        <option value="Sold">Sold (ขายแล้ว)</option>
+                        <option value="Available">Available</option><option value="Pending">Pending</option><option value="Sold">Sold</option>
                     </select>
                 </div>
             </div>
             <div class="form-group"><label class="label">ชื่อโครงการ / หัวข้อ</label><input type="text" id="Project_Name" class="form-input"></div>
             <div class="form-row">
                 <div class="form-group"><label class="label">ราคาขาย (฿)</label><input type="number" id="Price" class="form-input"></div>
-                <div class="form-group"><label class="label">ค่าคอมมิชชัน (%)</label><input type="number" id="Commission_Pct" class="form-input" placeholder="เช่น 3"></div>
+                <div class="form-group"><label class="label">ค่าคอม (%)</label><input type="number" id="Commission_Pct" class="form-input"></div>
             </div>
             <div class="form-row">
                 <div class="form-group"><label class="label">ห้องนอน</label><input type="number" id="Bedrooms" class="form-input"></div>
@@ -118,12 +112,27 @@
                 <div class="form-group"><label class="label">พื้นที่ใช้สอย (ตร.ม.)</label><input type="number" id="LivingArea" class="form-input"></div>
                 <div class="form-group"><label class="label">พื้นที่ดิน (ตร.ม.)</label><input type="number" id="LandArea" class="form-input"></div>
             </div>
+            
             <div class="form-row">
-                <div class="form-group"><label class="label">อำเภอ</label><input type="text" id="District" class="form-input"></div>
-                <div class="form-group"><label class="label">ตำบล</label><input type="text" id="SubDistrict" class="form-input"></div>
+                <div class="form-group">
+                    <label class="label">อำเภอ</label>
+                    <select id="District" class="form-input" onchange="updateSubDistricts()">
+                        <option value="">-- เลือกอำเภอ --</option>
+                        <option value="หัวหิน">หัวหิน</option>
+                        <option value="ปราณบุรี">ปราณบุรี</option>
+                        <option value="ชะอำ">ชะอำ</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="label">ตำบล</label>
+                    <select id="SubDistrict" class="form-input">
+                        <option value="">-- เลือกตำบล --</option>
+                    </select>
+                </div>
             </div>
-            <div class="form-group"><label class="label">URL รูปภาพหน้าปก</label><input type="text" id="Thumbnail" class="form-input" placeholder="https://..."></div>
-            <div class="form-group"><label class="label">รายละเอียดเพิ่มเติม</label><textarea id="Description" class="form-input" rows="4"></textarea></div>
+
+            <div class="form-group"><label class="label">URL รูปภาพ</label><input type="text" id="Thumbnail" class="form-input"></div>
+            <div class="form-group"><label class="label">รายละเอียด</label><textarea id="Description" class="form-input" rows="3"></textarea></div>
         </div>
     </div>
     <div class="footer-action">
@@ -134,14 +143,37 @@
 
 <script>
     const api = "https://script.google.com/macros/s/AKfycbwUqp_vaFNgUdyARh5WG-S3iRm_x1C4EX0tL8aw12nhKpvYVn3I7SwWmi5s-doiYGYh/exec";
+    
+    // ข้อมูลตำบลสำหรับ 3 อำเภอ
+    const locationData = {
+        "หัวหิน": ["หัวหิน", "หนองแก", "หินเหล็กไฟ", "ทับใต้", "ห้วยสัตว์ใหญ่", "บึงนคร", "หนองพลับ"],
+        "ปราณบุรี": ["ปราณบุรี", "เขาน้อย", "ปากน้ำปราณ", "หนองตาแต้ม", "วังก์พง", "เขาจ้าว"],
+        "ชะอำ": ["ชะอำ", "เขาใหญ่", "ดอนขุนห้วย", "นายาง", "บางเก่า", "ไร่ใหม่พัฒนา"]
+    };
+
     let allData = [];
 
     window.onload = () => {
         const token = localStorage.getItem('admin_token');
-        const name = localStorage.getItem('agent_name');
-        if (token && name) { showDashboard(name); }
+        if (token) { showDashboard(localStorage.getItem('agent_name')); }
         setTimeout(() => { document.getElementById('loader-container').style.display = 'none'; }, 800);
     };
+
+    // ฟังก์ชันอัปเดตตำบลตามอำเภอที่เลือก
+    function updateSubDistricts(selectedSub = "") {
+        const dist = document.getElementById('District').value;
+        const subSelect = document.getElementById('SubDistrict');
+        subSelect.innerHTML = '<option value="">-- เลือกตำบล --</option>';
+        
+        if (locationData[dist]) {
+            locationData[dist].forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s; opt.innerText = s;
+                if (s === selectedSub) opt.selected = true;
+                subSelect.appendChild(opt);
+            });
+        }
+    }
 
     async function handleLogin() {
         const key = document.getElementById('accessKey').value;
@@ -150,11 +182,10 @@
             localStorage.setItem('admin_token', key);
             localStorage.setItem('agent_name', result.name);
             showDashboard(result.name);
-        } else { alert("รหัสผ่านไม่ถูกต้อง"); }
+        } else { alert("รหัสไม่ถูกต้อง"); }
     }
 
     async function showDashboard(name) {
-        if (!name) name = localStorage.getItem('agent_name');
         document.getElementById('login-section').style.display = 'none';
         document.getElementById('form-section').style.display = 'none';
         document.getElementById('dashboard-section').style.display = 'block';
@@ -162,20 +193,19 @@
         document.getElementById('agent-welcome').innerText = `คุณ ${name}`;
         
         const list = document.getElementById('property-list');
-        list.innerHTML = "<p style='text-align:center;'>กำลังโหลดข้อมูล...</p>";
+        list.innerHTML = "<p style='text-align:center;'>กำลังโหลด...</p>";
         
         try {
             allData = await fetch(api).then(r => r.json());
             list.innerHTML = "";
             allData.filter(it => it.HP_ID).forEach(it => {
-                const hid = it.HP_ID;
                 const div = document.createElement('div');
                 div.className = 'property-item';
-                div.innerHTML = `<div><div class='prop-id'>${hid} | ${it.ID}</div><div style='font-size:0.8rem;'>${it.Project_Name}</div></div>
-                                 <div class='edit-btn' onclick='openEditor("${hid}")'><i class='fas fa-edit'></i></div>`;
+                div.innerHTML = `<div><div style="font-weight:700;color:var(--primary)">${it.HP_ID} | ${it.ID}</div><div>${it.Project_Name}</div></div>
+                                 <div style="cursor:pointer;color:var(--primary)" onclick='openEditor("${it.HP_ID}")'><i class='fas fa-edit fa-lg'></i></div>`;
                 list.appendChild(div);
             });
-        } catch(e) { list.innerHTML = "โหลดข้อมูลไม่สำเร็จ"; }
+        } catch(e) { list.innerHTML = "เกิดข้อผิดพลาด"; }
     }
 
     function openEditor(hpId) {
@@ -183,23 +213,30 @@
         document.getElementById('form-section').style.display = 'block';
         
         const item = hpId ? allData.find(x => x.HP_ID === hpId) : null;
-        document.getElementById('form-title').innerText = item ? `แก้ไขรหัส ${hpId}` : "เพิ่มทรัพย์ใหม่";
+        document.getElementById('form-title').innerText = item ? `แก้ไข ${hpId}` : "เพิ่มทรัพย์ใหม่";
         
-        // เติมข้อมูลลงฟอร์ม
         document.getElementById('HP_ID').value = item ? item.HP_ID : `HP-${Date.now().toString().slice(-4)}`;
         document.getElementById('ID').value = item ? item.ID : "";
         document.getElementById('Project_Name').value = item ? item.Project_Name : "";
         document.getElementById('Price').value = item ? item.Price : "";
+        document.getElementById('Commission_Pct').value = item ? item['Commission (%)'] : 3;
         document.getElementById('Bedrooms').value = item ? item.Bedrooms : "";
         document.getElementById('Bathrooms').value = item ? item.Bathrooms : "";
         document.getElementById('LivingArea').value = item ? item['Living Area (sq.m)'] : "";
         document.getElementById('LandArea').value = item ? item['Land Area (sq.m)'] : "";
-        document.getElementById('District').value = item ? item.District : "";
-        document.getElementById('SubDistrict').value = item ? item.SubDistrict : "";
         document.getElementById('Status').value = item ? item.Status : "Available";
         document.getElementById('Thumbnail').value = item ? item.Thumbnail : "";
         document.getElementById('Description').value = item ? item.Description : "";
-        document.getElementById('Commission_Pct').value = item ? item['Commission (%)'] : 3;
+
+        // จัดการอำเภอและตำบล
+        const districtSelect = document.getElementById('District');
+        if (item && item.District) {
+            districtSelect.value = item.District;
+            updateSubDistricts(item.SubDistrict);
+        } else {
+            districtSelect.value = "";
+            updateSubDistricts();
+        }
     }
 
     async function processSave() {
@@ -224,17 +261,9 @@
         };
 
         try {
-            // ส่งข้อมูลไปยัง Google Apps Script (doPost)
-            const res = await fetch(api, {
-                method: 'POST',
-                body: JSON.stringify(payload)
-            }).then(r => r.json());
-
-            if (res.success) {
-                alert("บันทึกข้อมูลเรียบร้อยแล้ว! ระบบ Financial IQ ได้คำนวณข้อมูลอัตโนมัติ");
-                showDashboard();
-            }
-        } catch(e) { alert("เกิดข้อผิดพลาดในการบันทึก"); }
+            const res = await fetch(api, { method: 'POST', body: JSON.stringify(payload) }).then(r => r.json());
+            if (res.success) { alert("บันทึกสำเร็จ!"); showDashboard(); }
+        } catch(e) { alert("เกิดข้อผิดพลาด"); }
         btn.disabled = false; btn.innerText = "บันทึกข้อมูล";
     }
 
