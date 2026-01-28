@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { 
-            --navy: #1a4361; --gold-light: #fff3cd; --gold-border: #ffeeba;
+            --navy: #1a4361; --gold-bg: #fff3cd; --gold-border: #ffeeba;
             --gold-btn: #856404; --blue-btn: #1a5276; --red-btn: #e74c3c;
         }
         body { font-family: 'Kanit', sans-serif; background: #f4f7f6; margin: 0; }
@@ -22,25 +22,33 @@
         .container { max-width: 950px; margin: 40px auto; padding: 0 20px; }
         h2 { color: var(--navy); font-weight: 500; font-size: 1.8rem; margin-bottom: 35px; }
 
-        /* Executive Box */
-        .exec-card { background: var(--gold-light); border: 1.5px solid var(--gold-border); border-radius: 15px; padding: 25px; margin-bottom: 25px; }
+        /* Executive Gold Section */
+        .exec-card { background: var(--gold-bg); border: 1.5px solid var(--gold-border); border-radius: 15px; padding: 25px; margin-bottom: 25px; }
         .exec-label { color: #856404; font-weight: 600; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.1rem; }
-        .btn-gold { background: var(--gold-btn); color: white; width: 100%; padding: 18px; border-radius: 12px; border: none; font-family: 'Kanit'; font-size: 1.1rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; box-shadow: 0 4px 10px rgba(133,100,4,0.3); }
+        .btn-gold { background: var(--gold-btn); color: white; width: 100%; padding: 18px; border-radius: 12px; border: none; font-family: 'Kanit'; font-size: 1.1rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; box-shadow: 0 4px 10px rgba(133,100,4,0.3); text-decoration: none; }
 
-        /* Add Button */
-        .btn-blue { background: var(--blue-btn); color: white; width: 100%; padding: 20px; border-radius: 12px; border: none; font-family: 'Kanit'; font-size: 1.2rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 30px; box-shadow: 0 8px 15px rgba(26,82,118,0.2); }
+        /* Add Property Button */
+        .btn-blue { background: var(--blue-btn); color: white; width: 100%; padding: 20px; border-radius: 12px; border: none; font-family: 'Kanit'; font-size: 1.2rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 20px; box-shadow: 0 8px 15px rgba(26,82,118,0.2); }
 
-        /* Main Container */
-        .main-white-box { background: white; border-radius: 25px; padding: 80px 40px; text-align: center; border: 1px solid #eee; box-shadow: 0 5px 25px rgba(0,0,0,0.03); min-height: 300px; }
+        /* 🔍 Search Bar (เพิ่มใหม่ตามคำขอ) */
+        .search-container { background: white; border-radius: 15px; padding: 15px; margin-bottom: 25px; display: flex; align-items: center; border: 1px solid #ddd; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        .search-container i { color: #999; margin-right: 15px; font-size: 1.2rem; }
+        .search-container input { border: none; outline: none; width: 100%; font-family: 'Kanit'; font-size: 1.1rem; color: #333; }
+
+        /* Main Data Box */
+        .main-white-box { background: white; border-radius: 25px; padding: 40px; border: 1px solid #eee; box-shadow: 0 5px 25px rgba(0,0,0,0.03); min-height: 200px; }
         .sync-icon { font-size: 3rem; color: var(--navy); margin-bottom: 25px; }
         .loading-msg { font-size: 1.15rem; color: #333; font-weight: 500; }
 
         .hidden { display: none !important; }
         #login-ui { position: fixed; inset: 0; background: white; z-index: 2000; display: flex; align-items: center; justify-content: center; }
         
-        /* Property List Styling */
-        .property-item { text-align: left; padding: 20px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
+        /* Property Item Styling */
+        .property-item { text-align: left; padding: 20px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
+        .property-item:hover { background: #f9fbff; }
         .property-item:last-child { border: none; }
+        .edit-btn { color: var(--blue-btn); cursor: pointer; transition: 0.2s; }
+        .edit-btn:hover { color: #000; transform: scale(1.1); }
     </style>
 </head>
 <body>
@@ -66,19 +74,26 @@
 
         <div id="exec-section" class="exec-card hidden">
             <div class="exec-label"><i class="fas fa-crown"></i> สำหรับผู้บริหารสูงสุดเท่านั้น</div>
-            <button class="btn-gold" onclick="location.href='dashboard.html'">
+            <a href="dashboard.html" class="btn-gold">
                 <i class="fas fa-chart-line"></i> เข้าสู่หน้าสรุปยอดบริหาร (Executive Dashboard)
-            </button>
+            </a>
         </div>
 
-        <button class="btn-blue" onclick="alert('ฟังก์ชันเพิ่มรายการบ้านจะอยู่ใน Phase ถัดไปครับ')">
+        <button class="btn-blue" onclick="alert('เปิดฟอร์มเพิ่มรายการ...')">
             <i class="fas fa-plus-circle"></i> เพิ่มรายการบ้านใหม่เข้าสู่ระบบ
         </button>
 
+        <div class="search-container">
+            <i class="fas fa-search"></i>
+            <input type="text" id="adminSearch" placeholder="ค้นหาด้วยรหัสทรัพย์ (HP-XXXX) หรือ ชื่อโครงการ..." onkeyup="filterData()">
+        </div>
+
         <div class="main-white-box">
             <div id="loading-state">
-                <div class="sync-icon"><i class="fas fa-sync fa-spin"></i></div>
-                <div class="loading-msg">กำลังดึงข้อมูลมหาอำนาจ...</div>
+                <div style="text-align:center;">
+                    <div class="sync-icon"><i class="fas fa-sync fa-spin"></i></div>
+                    <div class="loading-msg">กำลังดึงข้อมูลมหาอำนาจ...</div>
+                </div>
             </div>
             <div id="data-list" class="hidden">
                 </div>
@@ -87,8 +102,8 @@
 </div>
 
 <script>
-    // 🚀 URL ล่าสุดของคุณครับ
     const webAppUrl = "https://script.google.com/macros/s/AKfycbxUduvVQ2oDjgJT3HJlGDzpbEav1_orj-G2UalilY27QoRtSgNOHPFdw7-NNYPdakA8/exec";
+    let allProperties = [];
     let currentUser = null;
 
     async function handleLogin() {
@@ -121,25 +136,43 @@
 
     async function loadProperties() {
         try {
+            // ดึงข้อมูลผ่าน API โดยใช้พารามิเตอร์ Role เพื่อความรวดเร็ว
             const response = await fetch(`${webAppUrl}?role=${currentUser.role}&project=${currentUser.project}`);
-            const data = await response.json();
+            allProperties = await response.json();
             
             const listDiv = document.getElementById('data-list');
             document.getElementById('loading-state').classList.add('hidden');
             listDiv.classList.remove('hidden');
 
-            listDiv.innerHTML = data.map(item => `
-                <div class="property-item">
-                    <div>
-                        <div style="font-weight:600; color:var(--navy); font-size:1.1rem;">${item.HP_ID} | ${item.ID}</div>
-                        <div style="font-size:0.85rem; color:#666;">${item.District} | ${item.Status}</div>
-                    </div>
-                    <div style="color:var(--blue-btn); cursor:pointer;"><i class="fas fa-edit-square fa-2x"></i></div>
-                </div>
-            `).join('');
+            renderList(allProperties);
         } catch(e) {
             document.getElementById('loading-state').innerHTML = "เกิดข้อผิดพลาดในการโหลดข้อมูล";
         }
+    }
+
+    function renderList(data) {
+        const listDiv = document.getElementById('data-list');
+        listDiv.innerHTML = data.map(item => `
+            <div class="property-item">
+                <div>
+                    <div style="font-weight:600; color:var(--navy); font-size:1.1rem;">${item.HP_ID} | ${item.ID}</div>
+                    <div style="font-size:0.85rem; color:#666;">${item.District} | ${item.Status} | ฿${Number(item.Price).toLocaleString()}</div>
+                </div>
+                <div class="edit-btn" onclick="alert('แก้ไขทรัพย์: ${item.HP_ID}')">
+                    <i class="fas fa-edit-square fa-2x"></i>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function filterData() {
+        const val = document.getElementById('adminSearch').value.toLowerCase();
+        const filtered = allProperties.filter(p => 
+            p.HP_ID.toLowerCase().includes(val) || 
+            p.ID.toLowerCase().includes(val) ||
+            p.District.toLowerCase().includes(val)
+        );
+        renderList(filtered);
     }
 
     function logout() { localStorage.clear(); location.reload(); }
