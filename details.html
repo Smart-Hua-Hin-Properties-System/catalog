@@ -3,112 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Details - SMART SYSTEM</title>
+    <title>Property Details - SMART SYSTEM</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --primary: #1a5276; --bg: #f4f7f6; --white: #ffffff; --green: #27ae60; --loader-bg: #9CBCE3; }
-        body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; padding: 0; }
-        
-        /* 🎨 ส่วนตัวดุ๊กดิ๊ก Detail */
-        #loader-container {
-            position: fixed; inset: 0; background: var(--loader-bg);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 9999; transition: opacity 0.5s ease;
-        }
-        .emoji-group { display: flex; gap: 15px; margin-bottom: 20px; font-size: 50px; }
-        .spin { animation: spin 2s infinite linear; }
-        .bounce { animation: bounce 0.6s infinite alternate; }
-        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-15px); } }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .loader-text { color: white; font-weight: 900; font-size: 1.4rem; letter-spacing: 1px; text-transform: uppercase; }
+        :root { --primary: #1a5276; --bg: #f4f7f6; --white: #ffffff; --green: #27ae60; --text: #2c3e50; --border: #eee; }
+        body { font-family: 'Kanit', sans-serif; background: #fff; margin: 0; padding: 0; color: var(--text); }
 
-        header { background: #fff; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .flag-list { display: flex; gap: 5px; }
+        /* Header (Same as Index) */
+        header { background: #fff; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #f0f0f0; }
+        .header-left { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .brand-name { font-weight: 500; font-size: 0.85rem; color: var(--primary); text-transform: uppercase; border-left: 1.5px solid #eee; padding-left: 10px; }
+        .flag-list { display: flex; gap: 4px; }
         .flag-btn img { width: 22px; height: 14px; border-radius: 2px; }
-        
-        .hero-box { width: 100%; height: 400px; background: #eee; position: relative; }
+
+        /* Hero Image & Floating Badge */
+        .hero-box { position: relative; width: 100%; height: 450px; background: #ddd; overflow: hidden; }
         .main-img { width: 100%; height: 100%; object-fit: cover; }
-        .main-container { max-width: 700px; margin: -50px auto 100px; padding: 0 15px; position: relative; z-index: 10; }
-        .card-detail { background: #fff; border-radius: 30px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .price-tag { font-size: 2.2rem; color: var(--primary); font-weight: 400; margin: 15px 0; }
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-        .info-item { background: #f9f9f9; padding: 15px; border-radius: 15px; border: 1px solid #f0f0f0; }
-        .btn-line { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: #00b900; color: #fff; padding: 18px; border-radius: 50px; text-align: center; text-decoration: none; font-size: 1.2rem; box-shadow: 0 10px 20px rgba(0,185,0,0.3); z-index: 1000; }
+        .hp-badge { position: absolute; top: 15px; left: 15px; background: var(--green); color: white; padding: 6px 15px; border-radius: 8px; font-weight: 500; font-size: 0.8rem; z-index: 10; }
+
+        /* Content Card (The White Box from Screenshot 1) */
+        .main-container { max-width: 650px; margin: 0 auto; padding-bottom: 150px; }
+        .content-card { background: #fff; padding: 30px; border-radius: 35px; margin: -50px 15px 0; position: relative; box-shadow: 0 -15px 40px rgba(0,0,0,0.1); }
+        .title { font-size: 1.6rem; color: #2c3e50; margin: 0; font-weight: 500; }
+        .price { font-size: 2.2rem; color: var(--primary); font-weight: 400; margin: 10px 0 25px; }
+
+        /* Info Grid (Icon Grid from Screenshot 2) */
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .info-item { display: flex; align-items: center; gap: 15px; padding: 15px; background: #f8f9fa; border-radius: 20px; border: 1px solid #f0f0f0; }
+        .info-item i { font-size: 1.2rem; color: var(--primary); width: 25px; text-align: center; }
+        .info-label { color: #888; font-size: 0.75rem; display: block; }
+        .info-value { font-weight: 500; font-size: 1rem; color: var(--text); }
+        .full-width { grid-column: 1 / -1; }
+
+        /* Description & Share (Screenshot 3) */
+        .section-title { font-weight: 500; color: var(--primary); margin: 30px 0 10px; display: flex; align-items: center; gap: 10px; }
+        .share-row { display: flex; justify-content: center; gap: 12px; padding: 20px 0; flex-wrap: wrap; }
+        .share-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.08); border: 1px solid #eee; }
+        .share-btn img { width: 24px; }
+
+        /* Other Units (Screenshot 4) */
+        .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 15px; }
+        .related-card { background: #fff; border-radius: 20px; overflow: hidden; border: 1px solid #eee; }
+        .related-img { width: 100%; height: 130px; object-fit: cover; }
+        .related-info { padding: 12px; text-align: center; }
+
+        /* Footer Sticky Button */
+        .footer-action { position: fixed; bottom: 0; width: 100%; max-width: 650px; background: #fff; padding: 15px 20px 25px; left: 50%; transform: translateX(-50%); border-radius: 30px 30px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.1); z-index: 1000; }
+        .btn-line { display: flex; align-items: center; justify-content: center; gap: 10px; background: #00b900; color: #fff; padding: 18px; border-radius: 20px; text-decoration: none; font-weight: 500; font-size: 1.1rem; }
     </style>
 </head>
 <body>
 
-<div id="loader-container">
-    <div class="emoji-group">
-        <span class="bounce">🏠</span><span class="spin">✨</span><span class="bounce">🌴</span>
-    </div>
-    <div class="loader-text">FETCHING DETAILS...</div>
-</div>
-
 <header>
     <div class="header-left" onclick="location.href='index.html'">
-        <i class="fas fa-chevron-left fa-lg" style="color:var(--primary);"></i>
-        <div style="margin-left:10px; font-weight:500; color:var(--primary);">BACK</div>
+        <i class="fas fa-bars fa-lg" style="color:var(--primary);"></i>
+        <span class="menu-text">MENU</span>
+        <div class="brand-name">SMART SYSTEM</div>
     </div>
     <div class="flag-list">
-        <button onclick="setLang('th')" class="flag-btn" style="border:none;background:none;"><img src="https://flagcdn.com/w40/th.png"></button>
-        <button onclick="setLang('en')" class="flag-btn" style="border:none;background:none;"><img src="https://flagcdn.com/w40/us.png"></button>
-        <button onclick="setLang('cn')" class="flag-btn" style="border:none;background:none;"><img src="https://flagcdn.com/w40/cn.png"></button>
-        <button onclick="setLang('ru')" class="flag-btn" style="border:none;background:none;"><img src="https://flagcdn.com/w40/ru.png"></button>
-        <button onclick="setLang('de')" class="flag-btn" style="border:none;background:none;"><img src="https://flagcdn.com/w40/de.png"></button>
-        <button onclick="setLang('fr')" class="flag-btn" style="border:none;background:none;"><img src="https://flagcdn.com/w40/fr.png"></button>
+        <img src="https://flagcdn.com/w40/th.png"><img src="https://flagcdn.com/w40/us.png"><img src="https://flagcdn.com/w40/cn.png"><img src="https://flagcdn.com/w40/ru.png"><img src="https://flagcdn.com/w40/de.png"><img src="https://flagcdn.com/w40/fr.png">
     </div>
 </header>
 
-<div id="mainContent"></div>
+<div id="mainContent">
+    <div style="text-align:center; padding:100px;"><i class="fas fa-sync fa-spin fa-2x" style="color:var(--primary)"></i></div>
+</div>
 
 <script>
     const api = "https://script.google.com/macros/s/AKfycbwUqp_vaFNgUdyARh5WG-S3iRm_x1C4EX0tL8aw12nhKpvYVn3I7SwWmi5s-doiYGYh/exec";
     const pId = new URLSearchParams(window.location.search).get('id');
-    let currentLang = localStorage.getItem('smartLang') || 'th';
-
-    const i18n = {
-        th: { bed: "ห้องนอน", bath: "ห้องน้ำ", area: "พื้นที่", loc: "ทำเล", contact: "ติดต่อทาง LINE" },
-        en: { bed: "Bedrooms", bath: "Bathrooms", area: "Area", loc: "Location", contact: "Inquire via LINE" },
-        cn: { bed: "卧室", bath: "浴室", area: "面积", loc: "地点", contact: "通过 LINE 联系" },
-        ru: { bed: "Спальни", bath: "Ванные", area: "Площадь", loc: "Локация", contact: "Связаться через LINE" },
-        de: { bed: "Schlafzimmer", bath: "Badezimmer", area: "Fläche", loc: "Standort", contact: "Per LINE anfragen" },
-        fr: { bed: "Chambres", bath: "Salles de bain", area: "Surface", loc: "Emplacement", contact: "Contacter via LINE" }
-    };
 
     async function load() {
-        if (!pId) { window.location.href = "index.html"; return; }
         try {
-            const r = await fetch(api);
-            const d = await r.json();
-            const prop = d.find(x => (x.HP_ID || x.hp_id) == pId);
-            if (prop) { render(prop); hideLoader(); }
-            else { alert("Not Found"); window.location.href="index.html"; }
-        } catch(e) { console.error(e); hideLoader(); }
+            const res = await fetch(api);
+            const data = await res.json();
+            const prop = data.find(x => (x.HP_ID || x.hp_id) == pId);
+            const others = data.filter(x => (x.HP_ID || x.hp_id) != pId).slice(0, 10);
+            if (prop) render(prop, others);
+        } catch(e) { document.getElementById('mainContent').innerHTML = "Error Loading Data"; }
     }
 
-    function setLang(l) { currentLang = l; localStorage.setItem('smartLang', l); load(); }
-    function hideLoader() { const l = document.getElementById('loader-container'); l.style.opacity='0'; setTimeout(()=>l.style.display='none', 500); }
-
-    function render(it) {
-        const t = i18n[currentLang] || i18n.en;
+    function render(it, others) {
         document.getElementById('mainContent').innerHTML = `
-            <div class="hero-box"><img src="${it.Thumbnail}" class="main-img" onerror="this.src='https://placehold.co/800x600?text=No+Image'"></div>
+            <div class="hero-box">
+                <div class="hp-badge">${it.HP_ID} | ${it.ID || ''}</div>
+                <img src="${it.Thumbnail}" class="main-img" onerror="this.src='https://placehold.co/800x600?text=Sovereign'">
+            </div>
             <div class="main-container">
-                <div class="card-detail">
-                    <h1 style="color:var(--primary); margin:0;">${it.Project_Name || it.ID}</h1>
-                    <div class="price-tag">฿${Number(it.Price || 0).toLocaleString()}</div>
+                <div class="content-card">
+                    <h1 class="title">${it.Project_Name || it.ID}</h1>
+                    <div class="price">฿${Number(it.Price || 0).toLocaleString()}</div>
                     <div class="info-grid">
-                        <div class="info-item"><b>🛌 ${t.bed}:</b> ${it.Bedrooms || '-'}</div>
-                        <div class="info-item"><b>🚿 ${t.bath}:</b> ${it.Bathrooms || '-'}</div>
-                        <div class="info-item"><b>🏠 ${t.area}:</b> ${it['Living Area (sq.m)'] || '-'} m²</div>
-                        <div class="info-item"><b>📍 ${t.loc}:</b> ${it.SubDistrict || '-'}</div>
+                        <div class="info-item"><i class="fas fa-map-pin"></i><div><span class="info-label">SubDistrict</span><span class="info-value">${it.SubDistrict || '-'}</span></div></div>
+                        <div class="info-item"><i class="fas fa-city"></i><div><span class="info-label">Project</span><span class="info-value">${it.Project_Name || '-'}</span></div></div>
+                        <div class="info-item"><i class="fas fa-home"></i><div><span class="info-label">Type</span><span class="info-value">${it.Type || '-'}</span></div></div>
+                        <div class="info-item"><i class="fas fa-bed"></i><div><span class="info-label">Bed</span><span class="info-value">${it.Bedrooms || '-'}</span></div></div>
+                        <div class="info-item"><i class="fas fa-bath"></i><div><span class="info-label">Bath</span><span class="info-value">${it.Bathrooms || '-'}</span></div></div>
+                        <div class="info-item"><i class="fas fa-expand"></i><div><span class="info-label">Living</span><span class="info-value">${it['Living Area (sq.m)'] || '-'} m²</span></div></div>
+                        <div class="info-item"><i class="fas fa-vector-square"></i><div><span class="info-label">Land(sq.m)</span><span class="info-value">${it['Land Area (sq.m)'] || '-'}</span></div></div>
+                        <div class="info-item"><i class="fas fa-th-large"></i><div><span class="info-label">Land(sq.w)</span><span class="info-value">${it['Land Area (sq.w)'] || '-'}</span></div></div>
+                        <div class="info-item"><i class="fas fa-swimming-pool"></i><div><span class="info-label">Pool Size</span><span class="info-value">${it['Pool Size'] || '-'}</span></div></div>
+                        <div class="info-item"><i class="fas fa-water"></i><div><span class="info-label">Depth</span><span class="info-value">${it['Pool Depth'] || '-'}</span></div></div>
+                        <div class="info-item"><i class="fas fa-couch"></i><div><span class="info-label">Furnishing</span><span class="info-value">${it.Furnishing || '-'}</span></div></div>
+                        <div class="info-item"><i class="fas fa-car"></i><div><span class="info-label">Parking</span><span class="info-value">${it.Parking || '-'}</span></div></div>
+                        <div class="full-width info-item"><i class="fas fa-bolt"></i><div><span class="info-label">Electric</span><span class="info-value">${it.Electricity || '-'}</span></div></div>
                     </div>
-                    <p style="margin-top:20px; color:#555; line-height:1.8;">${it.Description || '-'}</p>
+                    <div class="section-title"><i class="fas fa-file-alt"></i> Description</div>
+                    <p style="color:#555; line-height:1.8;">${it.Description || '-'}</p>
+                    <div class="share-row">
+                        <div class="share-btn"><img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg"></div>
+                        <div class="share-btn"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"></div>
+                        <div class="share-btn"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968771.png"></div>
+                        <div class="share-btn"><i class="fas fa-link" style="color:#777"></i></div>
+                    </div>
+                </div>
+                <div class="section-title" style="margin: 40px 15px 15px;"><i class="fas fa-th-large"></i> Other Units</div>
+                <div class="related-grid">
+                    ${others.map(r => `
+                        <div class="related-card" onclick="location.href='?id=${r.HP_ID || r.hp_id}'">
+                            <img src="${r.Thumbnail}" class="related-img">
+                            <div class="related-info">
+                                <div style="font-weight:600; color:var(--primary);">${r.ID}</div>
+                                <div style="font-size:0.9rem;">฿${Number(r.Price || 0).toLocaleString()}</div>
+                            </div>
+                        </div>`).join('')}
                 </div>
             </div>
-            <a href="https://line.me/R/msg/text/?สนใจรหัส: ${pId}" class="btn-line"><i class="fab fa-line"></i> ${t.contact}</a>
+            <div class="footer-action">
+                <a href="https://line.me/R/msg/text/?สนใจข้อมูลรหัส: ${pId}" class="btn-line"><i class="fab fa-line"></i> Inquire via LINE</a>
+            </div>
         `;
     }
     load();
