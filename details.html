@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Property Details - SMART SYSTEM V24.0</title>
+    <title>Property Details - SMART SYSTEM V25.0</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -19,75 +19,60 @@
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .loader-text { color: white; font-weight: 900; font-size: 1.4rem; letter-spacing: 1px; text-transform: uppercase; text-align: center; width: 85%; }
 
-        /* 🚩 Header & 6 Flags (แก้ไขให้เหมือน Index) */
+        /* 🚩 Header & 6 Flags (เป๊ะตามหน้า Index) */
         header { background: #fff; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #f0f0f0; }
         .header-left { display: flex; align-items: center; gap: 8px; cursor: pointer; }
         .brand-name { font-weight: 500; font-size: 0.85rem; color: var(--primary); text-transform: uppercase; border-left: 1.5px solid #eee; padding-left: 10px; }
         .flag-list { display: flex; gap: 4px; }
-        /* เพิ่ม style สำหรับ .flag-btn เพื่อให้เหมือน index */
         .flag-btn { border: none; background: none; padding: 0; cursor: pointer; }
         .flag-btn img { width: 22px; height: 14px; border-radius: 2px; }
 
-        /* 🍔 Slender Sidebar (แก้ไขให้เหมือน Index) */
-        .sidebar { 
-            position: fixed; left: -320px; top: 0; width: 280px; height: 100%; 
-            background: #fff; z-index: 3500; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-            padding-top: 30px; box-shadow: 5px 0 35px rgba(0,0,0,0.15); 
-            border-radius: 0 40px 40px 0; 
-        }
+        /* 🍔 Slender Sidebar (280px มนพิเศษ) */
+        .sidebar { position: fixed; left: -320px; top: 0; width: 280px; height: 100%; background: #fff; z-index: 3500; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); padding-top: 30px; box-shadow: 5px 0 35px rgba(0,0,0,0.15); border-radius: 0 40px 40px 0; }
         .sidebar.active { left: 0; }
         .sidebar-header { padding: 0 30px 25px; border-bottom: 1px solid #f8f9fa; margin-bottom: 15px; }
-        .sidebar-item { 
-            padding: 14px 25px; margin: 8px 15px; display: flex; align-items: center; gap: 18px; 
-            text-decoration: none; color: var(--text); font-size: 0.95rem; font-weight: 400;
-            transition: 0.3s; border-radius: 20px;
-        }
+        .sidebar-item { padding: 14px 25px; margin: 8px 15px; display: flex; align-items: center; gap: 18px; text-decoration: none; color: var(--text); font-size: 0.95rem; font-weight: 400; transition: 0.3s; border-radius: 20px; }
         .sidebar-item:hover { background: #eef2f5; color: var(--primary); transform: translateX(5px); }
-        .sidebar-item i { width: 22px; font-size: 1.1rem; color: var(--primary); transition: 0.3s; }
+        .sidebar-item i { width: 22px; font-size: 1.1rem; color: var(--primary); }
         .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(26, 82, 118, 0.2); z-index: 3000; backdrop-filter: blur(4px); transition: 0.3s; }
         .sidebar-overlay.active { display: block; }
 
-
-        /* Hero & Content */
-        .hero-box { position: relative; width: 100%; height: 320px; background: #eee; }
+        /* 🖼️ Hero & Content */
+        .hero-box { position: relative; width: 100%; height: 420px; background: #ddd; overflow: hidden; }
         .main-img { width: 100%; height: 100%; object-fit: cover; }
         .hp-badge { position: absolute; top: 15px; left: 15px; background: var(--green); color: white; padding: 6px 15px; border-radius: 8px; font-weight: 500; font-size: 0.75rem; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .main-container { max-width: 650px; margin: 0 auto; padding-bottom: 120px; }
-        .content-card { background: #fff; padding: 25px 20px; border-radius: 35px; margin: -40px 15px 0; position: relative; box-shadow: 0 -15px 40px rgba(0,0,0,0.1); }
-        .title { font-size: 1.4rem; color: #2c3e50; margin: 0; font-weight: 500; }
-        .price { font-size: 2rem; color: var(--primary); font-weight: 400; margin: 8px 0 20px; }
+        .main-container { max-width: 650px; margin: 0 auto; padding-bottom: 150px; }
+        .content-card { background: #fff; padding: 30px 20px; border-radius: 35px; margin: -60px 15px 0; position: relative; box-shadow: 0 -15px 40px rgba(0,0,0,0.1); }
+        .title { font-size: 1.5rem; color: #2c3e50; margin: 0; font-weight: 500; }
+        .price { font-size: 2.2rem; color: var(--primary); font-weight: 400; margin: 10px 0 25px; }
 
-        /* Info Grid */
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .info-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: #f8f9fa; border-radius: 15px; border: 1px solid #f0f0f0; }
-        .info-item i { font-size: 1rem; color: var(--primary); width: 20px; text-align: center; }
-        .info-label { color: #888; font-size: 0.65rem; display: block; text-transform: uppercase; }
-        .info-value { font-weight: 500; font-size: 0.85rem; color: var(--text); }
+        /* 📊 Info Grid */
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .info-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: #f8f9fa; border-radius: 18px; border: 1px solid #f0f0f0; }
+        .info-item i { font-size: 1.1rem; color: var(--primary); width: 24px; text-align: center; }
+        .info-label { color: #888; font-size: 0.7rem; display: block; text-transform: uppercase; }
+        .info-value { font-weight: 500; font-size: 0.95rem; color: var(--text); }
         .full-width { grid-column: 1 / -1; }
 
-        /* Description & Share */
-        .section-title { font-weight: 500; color: var(--primary); margin: 25px 0 10px; display: flex; align-items: center; gap: 10px; font-size: 1rem; }
-        .share-row { display: flex; justify-content: center; gap: 10px; padding: 15px 0; }
-        .share-btn { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #eee; cursor: pointer; }
-        .share-btn img { width: 22px; }
-
-        /* Other Units */
-        .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 15px; }
-        .related-card { background: #fff; border-radius: 18px; overflow: hidden; border: 1px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
-        .related-img { width: 100%; height: 110px; object-fit: cover; }
-        .related-info { padding: 10px; text-align: center; }
+        /* 🔗 แก้ไขส่วนแชร์ (8 Icons Scrolling) */
+        .share-section { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; }
+        .share-icon-title { font-size: 1.8rem; color: var(--primary); margin-bottom: 20px; cursor: pointer; }
+        .share-bar-wrapper { overflow-x: auto; padding: 10px 0 25px; scrollbar-width: none; -webkit-overflow-scrolling: touch; width: 100%; display: flex; justify-content: flex-start; }
+        .share-bar-wrapper::-webkit-scrollbar { display: none; }
+        .share-bar { display: flex; gap: 15px; padding: 0 25px; min-width: max-content; margin: 0 auto; }
+        .share-btn { width: 54px; height: 54px; border-radius: 50%; border: none; background: #fff; flex-shrink: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: 0.3s; }
+        .share-btn:active { transform: scale(0.9); }
+        .share-btn img { width: 26px; height: 26px; }
 
         /* Footer */
-        .footer-action { position: fixed; bottom: 0; width: 100%; max-width: 650px; background: #fff; padding: 12px 15px 25px; left: 50%; transform: translateX(-50%); border-radius: 25px 25px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.1); z-index: 1000; }
-        .btn-line { display: flex; align-items: center; justify-content: center; gap: 8px; background: #00b900; color: #fff; padding: 15px; border-radius: 20px; text-decoration: none; font-weight: 500; font-size: 1rem; box-shadow: 0 5px 15px rgba(0,185,0,0.2); }
+        .footer-action { position: fixed; bottom: 0; width: 100%; max-width: 650px; background: #fff; padding: 15px 20px 25px; left: 50%; transform: translateX(-50%); border-radius: 30px 30px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.1); z-index: 1000; }
+        .btn-line { display: flex; align-items: center; justify-content: center; gap: 10px; background: #00b900; color: #fff; padding: 18px; border-radius: 20px; text-decoration: none; font-weight: 500; font-size: 1.1rem; box-shadow: 0 8px 20px rgba(0,185,0,0.2); }
     </style>
 </head>
 <body>
 
 <div id="loader-container">
-    <div class="emoji-group" id="loader-emojis">
-        <span class="bounce">🐚</span><span class="bounce">🌊</span><span class="bounce">🌴</span>
-    </div>
+    <div class="emoji-group" id="loader-emojis"><span class="bounce">🐚</span><span class="bounce">🌊</span><span class="bounce">🌴</span></div>
     <div class="loader-text" id="loader-msg">SMART PROPERTIES SYSTEM</div>
 </div>
 
@@ -97,39 +82,27 @@
         <div style="font-weight:900; color:var(--primary); font-size:1.4rem; letter-spacing:-0.5px;">SMART SYSTEM</div>
         <div style="font-size:0.7rem; color:#aaa; text-transform:uppercase; font-weight:500;">Real Estate Solutions</div>
     </div>
-    
-    <a href="index.html" class="sidebar-item">
-        <i class="fas fa-home"></i> <span data-lang="menuHome">หน้าหลัก</span>
-    </a>
-    <a href="index.html" class="sidebar-item">
-        <i class="fas fa-layer-group"></i> <span data-lang="menuAll">ทรัพย์ทั้งหมด</span>
-    </a>
-    <a href="#" class="sidebar-item">
-        <i class="fas fa-paper-plane"></i> <span data-lang="menuContact">ติดต่อเรา</span>
-    </a>
-    <a href="#" class="sidebar-item">
-        <i class="fas fa-crown"></i> <span data-lang="menuAbout">เกี่ยวกับเรา</span>
-    </a>
-    
-    <div style="margin: 25px 30px 10px; font-size: 0.65rem; color: #ddd; text-transform: uppercase; font-weight: 600; letter-spacing: 1px;">Admin Control</div>
-    <a href="admin.html" class="sidebar-item" style="background: #fdf2f2; color: #e74c3c;">
-        <i class="fas fa-user-shield" style="color:#e74c3c;"></i> <span>Admin Access</span>
-    </a>
+    <a href="index.html" class="sidebar-item"><i class="fas fa-home"></i> <span data-lang="menuHome">หน้าหลัก</span></a>
+    <a href="index.html" class="sidebar-item"><i class="fas fa-layer-group"></i> <span data-lang="menuAll">ทรัพย์ทั้งหมด</span></a>
+    <a href="#" class="sidebar-item"><i class="fas fa-paper-plane"></i> <span data-lang="menuContact">ติดต่อเรา</span></a>
+    <a href="#" class="sidebar-item"><i class="fas fa-crown"></i> <span data-lang="menuAbout">เกี่ยวกับเรา</span></a>
+    <div style="margin: 25px 30px 10px; font-size: 0.65rem; color: #ddd; text-transform: uppercase; font-weight: 600;">Admin Control</div>
+    <a href="admin.html" class="sidebar-item" style="background: #fdf2f2; color: #e74c3c;"><i class="fas fa-user-shield"></i> <span>Admin Access</span></a>
 </div>
 
 <header>
     <div class="header-left" onclick="toggleSidebar()">
         <i class="fas fa-bars fa-lg" style="color:var(--primary);"></i>
-        <span style="font-size: 0.85rem; color: var(--primary); font-weight: 500; margin-left: 5px;" data-lang="menu">เมนู</span>
+        <span style="font-size: 0.85rem; color: var(--primary); font-weight: 500; margin-left: 5px;">เมนู</span>
         <div class="brand-name">SMART SYSTEM</div>
     </div>
     <div class="flag-list">
         <button class="flag-btn" onclick="setLang('th')"><img src="https://flagcdn.com/w40/th.png"></button>
         <button class="flag-btn" onclick="setLang('en')"><img src="https://flagcdn.com/w40/us.png"></button>
-        <button class="flag-btn" onclick="setLanguage('cn')"><img src="https://flagcdn.com/w40/cn.png"></button>
-        <button class="flag-btn" onclick="setLanguage('ru')"><img src="https://flagcdn.com/w40/ru.png"></button>
-        <button class="flag-btn" onclick="setLanguage('de')"><img src="https://flagcdn.com/w40/de.png"></button>
-        <button class="flag-btn" onclick="setLanguage('fr')"><img src="https://flagcdn.com/w40/fr.png"></button>
+        <button class="flag-btn" onclick="setLang('cn')"><img src="https://flagcdn.com/w40/cn.png"></button>
+        <button class="flag-btn" onclick="setLang('ru')"><img src="https://flagcdn.com/w40/ru.png"></button>
+        <button class="flag-btn" onclick="setLang('de')"><img src="https://flagcdn.com/w40/de.png"></button>
+        <button class="flag-btn" onclick="setLang('fr')"><img src="https://flagcdn.com/w40/fr.png"></button>
     </div>
 </header>
 
@@ -140,49 +113,31 @@
     const pId = new URLSearchParams(window.location.search).get('id');
     let currentLang = localStorage.getItem('smartLang') || 'th';
 
-    // อัปเดต i18n ให้มีเมนูครบเหมือนหน้า Index
     const i18n = {
-        th: { menu: "เมนู", menuHome: "หน้าหลัก", menuAll: "ทรัพย์ทั้งหมด", menuContact: "ติดต่อเรา", menuAbout: "เกี่ยวกับเรา", bed: "ห้องนอน", bath: "ห้องน้ำ", living: "พื้นที่ใช้สอย", landM: "ที่ดิน (ตร.ม.)", landW: "ที่ดิน (ตร.ว.)", pool: "สระว่ายน้ำ", depth: "ความลึก", furniture: "เฟอร์นิเจอร์", parking: "ที่จอดรถ", electric: "ไฟฟ้า", loc: "ทำเล", other: "หลังอื่นๆ", contact: "สอบถามผ่าน LINE" },
-        en: { menu: "MENU", menuHome: "Home", menuAll: "All Properties", menuContact: "Contact Us", menuAbout: "About Us", bed: "Bedrooms", bath: "Bathrooms", living: "Living Area", landM: "Land (sq.m)", landW: "Land (sq.w)", pool: "Pool Size", depth: "Pool Depth", furniture: "Furnishing", parking: "Parking", electric: "Electricity", loc: "Location", other: "Other Units", contact: "Inquire via LINE" },
-        // (เพิ่มภาษาอื่นๆ ได้ตามต้องการ โดยใช้คีย์เดียวกัน)
+        th: { menuHome: "หน้าหลัก", menuAll: "ทรัพย์ทั้งหมด", menuContact: "ติดต่อเรา", menuAbout: "เกี่ยวกับเรา", bed: "ห้องนอน", bath: "ห้องน้ำ", living: "พื้นที่ใช้สอย", other: "หลังอื่นๆ", contact: "Inquire via LINE" },
+        en: { menuHome: "Home", menuAll: "Properties", menuContact: "Contact", menuAbout: "About", bed: "Bedrooms", bath: "Bathrooms", living: "Living Area", other: "Other Units", contact: "Inquire via LINE" }
     };
 
     async function load() {
         if (!pId) { window.location.href = "index.html"; return; }
-        
         setTimeout(() => {
             document.getElementById('loader-emojis').innerHTML = '<span class="bounce">🏠</span><span class="spin">✨</span><span class="bounce">🌴</span>';
             document.getElementById('loader-msg').innerText = "FETCHING DETAILS...";
-        }, 1500);
+        }, 1200);
 
         try {
             const r = await fetch(api);
             const data = await r.json();
             const prop = data.find(x => (x.HP_ID || x.hp_id) == pId);
-            const others = data.filter(x => (x.HP_ID || x.hp_id) != pId).slice(0, 8);
-            if (prop) {
-                render(prop, others);
-                // อัปเดตภาษาเริ่มต้นให้กับเมนู
-                updateStaticLang(currentLang);
-                setTimeout(hideLoader, 2500);
-            }
+            const others = data.filter(x => (x.HP_ID || x.hp_id) != pId).slice(0, 10);
+            if (prop) { render(prop, others); updateStaticLang(currentLang); hideLoader(); }
         } catch(e) { console.error(e); }
     }
 
-    // ฟังก์ชันเปลี่ยนภาษา (ใช้การ Reload เพื่อความชัวร์ในหน้า Detail)
     function setLang(l) { currentLang = l; localStorage.setItem('smartLang', l); location.reload(); }
-    
-    // ฟังก์ชันอัปเดตข้อความเมนู static (สำหรับตอนโหลดครั้งแรก)
-    function updateStaticLang(lang) {
-        const t = i18n[lang] || i18n.en;
-        document.querySelectorAll('[data-lang]').forEach(el => {
-            const key = el.getAttribute('data-lang');
-            if (t[key]) el.innerText = t[key];
-        });
-    }
-
     function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('sidebarOverlay').classList.toggle('active'); }
     function hideLoader() { const l = document.getElementById('loader-container'); l.style.opacity = '0'; setTimeout(() => l.style.display = 'none', 500); }
+    function updateStaticLang(l) { const t = i18n[l] || i18n.en; document.querySelectorAll('[data-lang]').forEach(el => { const k = el.getAttribute('data-lang'); if (t[k]) el.innerText = t[k]; }); }
 
     function render(it, others) {
         const t = i18n[currentLang] || i18n.en;
@@ -196,45 +151,68 @@
                     <h1 class="title">${it.Project_Name || it.ID}</h1>
                     <div class="price">฿${Number(it.Price || 0).toLocaleString()}</div>
                     <div class="info-grid">
-                        <div class="info-item"><i class="fas fa-map-pin"></i><div><span class="info-label">${t.loc}</span><span class="info-value">${it.SubDistrict || '-'}</span></div></div>
+                        <div class="info-item"><i class="fas fa-map-pin"></i><div><span class="info-label">SUBDISTRICT</span><span class="info-value">${it.SubDistrict || '-'}</span></div></div>
                         <div class="info-item"><i class="fas fa-city"></i><div><span class="info-label">PROJECT</span><span class="info-value">${it.Project_Name || '-'}</span></div></div>
                         <div class="info-item"><i class="fas fa-home"></i><div><span class="info-label">TYPE</span><span class="info-value">${it.Type || '-'}</span></div></div>
                         <div class="info-item"><i class="fas fa-bed"></i><div><span class="info-label">${t.bed}</span><span class="info-value">${it.Bedrooms || '-'}</span></div></div>
                         <div class="info-item"><i class="fas fa-bath"></i><div><span class="info-label">${t.bath}</span><span class="info-value">${it.Bathrooms || '-'}</span></div></div>
                         <div class="info-item"><i class="fas fa-expand"></i><div><span class="info-label">${t.living}</span><span class="info-value">${it['Living Area (sq.m)'] || '-'} m²</span></div></div>
-                        <div class="info-item"><i class="fas fa-vector-square"></i><div><span class="info-label">${t.landM}</span><span class="info-value">${it['Land Area (sq.m)'] || '-'}</span></div></div>
-                        <div class="info-item"><i class="fas fa-th-large"></i><div><span class="info-label">${t.landW}</span><span class="info-value">${it['Land Area (sq.w)'] || '-'}</span></div></div>
-                        <div class="info-item"><i class="fas fa-swimming-pool"></i><div><span class="info-label">${t.pool}</span><span class="info-value">${it['Pool Size'] || '-'}</span></div></div>
-                        <div class="info-item"><i class="fas fa-water"></i><div><span class="info-label">${t.depth}</span><span class="info-value">${it['Pool Depth'] || '-'}</span></div></div>
-                        <div class="info-item"><i class="fas fa-couch"></i><div><span class="info-label">${t.furniture}</span><span class="info-value">${it.Furnishing || '-'}</span></div></div>
-                        <div class="info-item"><i class="fas fa-car"></i><div><span class="info-label">${t.parking}</span><span class="info-value">${it.Parking || '-'}</span></div></div>
-                        <div class="full-width info-item"><i class="fas fa-bolt"></i><div><span class="info-label">${t.electric}</span><span class="info-value">${it.Electricity || '-'}</span></div></div>
+                        <div class="info-item"><i class="fas fa-vector-square"></i><div><span class="info-label">LAND(SQ.M)</span><span class="info-value">${it['Land Area (sq.m)'] || '-'}</span></div></div>
+                        <div class="info-item"><i class="fas fa-th-large"></i><div><span class="info-label">LAND(SQ.W)</span><span class="info-value">${it['Land Area (sq.w)'] || '-'}</span></div></div>
+                        <div class="info-item"><i class="fas fa-swimming-pool"></i><div><span class="info-label">POOL SIZE</span><span class="info-value">${it['Pool Size'] || '-'}</span></div></div>
+                        <div class="info-item"><i class="fas fa-water"></i><div><span class="info-label">DEPTH</span><span class="info-value">${it['Pool Depth'] || '-'}</span></div></div>
+                        <div class="info-item"><i class="fas fa-couch"></i><div><span class="info-label">FURNISHING</span><span class="info-value">${it.Furnishing || '-'}</span></div></div>
+                        <div class="info-item"><i class="fas fa-car"></i><div><span class="info-label">PARKING</span><span class="info-value">${it.Parking || '-'}</span></div></div>
+                        <div class="full-width info-item"><i class="fas fa-bolt"></i><div><span class="info-label">ELECTRIC</span><span class="info-value">${it.Electricity || '-'}</span></div></div>
                     </div>
-                    <div class="section-title"><i class="fas fa-file-alt"></i> Description</div>
-                    <p style="color:#555; font-size:0.9rem; line-height:1.7;">${it.Description || '-'}</p>
-                    <div class="share-row">
-                        <div class="share-btn"><img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg"></div>
-                        <div class="share-btn"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"></div>
-                        <div class="share-btn"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968771.png"></div>
-                        <div class="share-btn"><i class="fas fa-link" style="color:#777"></i></div>
+
+                    <div style="margin-top:30px;"><h3 style="margin-bottom:10px;"><i class="fas fa-file-alt"></i> Description</h3><p style="color:#555; font-size:1rem; line-height:1.8;">${it.Description || '-'}</p></div>
+
+                    <div class="share-section">
+                        <div class="share-icon-title"><i class="fas fa-share-nodes"></i></div>
+                        <div class="share-bar-wrapper">
+                            <div class="share-bar">
+                                <button class="share-btn" onclick="share('line')"><img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg"></button>
+                                <button class="share-btn" onclick="share('fb')"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"></button>
+                                <button class="share-btn" onclick="share('msg')"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968771.png"></button>
+                                <button class="share-btn" onclick="share('wa')"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png"></button>
+                                <button class="share-btn" onclick="share('tg')"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></button>
+                                <button class="share-btn" onclick="share('sms')"><img src="https://cdn-icons-png.flaticon.com/512/813/813636.png"></button>
+                                <button class="share-btn" onclick="share('mail')"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png"></button>
+                                <button class="share-btn" onclick="share('copy')"><i class="fas fa-link" style="color:#777; font-size:1.2rem;"></i></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="section-title" style="margin: 35px 15px 15px;"><i class="fas fa-th-large"></i> ${t.other}</div>
-                <div class="related-grid">
+
+                <div class="section-title" style="margin: 40px 15px 15px;"><i class="fas fa-th-large"></i> ${t.other}</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; padding:0 15px;">
                     ${others.map(r => `
-                        <div class="related-card" onclick="location.href='?id=${r.HP_ID || r.hp_id}'">
-                            <img src="${r.Thumbnail}" class="related-img">
-                            <div class="related-info">
-                                <div style="font-weight:600; color:var(--primary); font-size:0.8rem;">${r.ID}</div>
-                                <div style="font-size:0.8rem;">฿${Number(r.Price || 0).toLocaleString()}</div>
-                            </div>
+                        <div style="background:#fff; border-radius:20px; overflow:hidden; border:1.5px solid #eee;" onclick="location.href='?id=${r.HP_ID || r.hp_id}'">
+                            <img src="${r.Thumbnail}" style="width:100%; height:135px; object-fit:cover;">
+                            <div style="padding:12px; text-align:center;"><div style="font-weight:600; color:var(--primary); font-size:0.85rem;">${r.ID}</div><div style="color:var(--text); font-weight:600;">฿${Number(r.Price).toLocaleString()}</div></div>
                         </div>`).join('')}
                 </div>
             </div>
             <div class="footer-action">
-                <a href="https://line.me/R/msg/text/?สนใจข้อมูลรหัส: ${pId}" class="btn-line"><i class="fab fa-line"></i> ${t.contact}</a>
+                <a href="https://line.me/R/msg/text/?สนใจข้อมูลมหาอำนาจรหัส: ${pId}" class="btn-line"><i class="fab fa-line"></i> ${t.contact}</a>
             </div>
         `;
+    }
+
+    function share(p) {
+        const url = window.location.href;
+        if(p === 'copy') { navigator.clipboard.writeText(url); alert("คัดลอกลิงก์สำเร็จ!"); return; }
+        const links = {
+            line: `https://line.me/R/msg/text/?${encodeURIComponent(url)}`,
+            fb: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+            wa: `https://api.whatsapp.com/send?text=${encodeURIComponent(url)}`,
+            tg: `https://t.me/share/url?url=${encodeURIComponent(url)}`,
+            sms: `sms:?body=${encodeURIComponent(url)}`,
+            mail: `mailto:?subject=Property Details&body=${encodeURIComponent(url)}`,
+            msg: `fb-messenger://share/?link=${encodeURIComponent(url)}`
+        };
+        if(links[p]) window.open(links[p]);
     }
     load();
 </script>
