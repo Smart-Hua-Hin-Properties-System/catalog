@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Property Details - SMART SYSTEM V17.8</title>
+    <title>Property Details - SMART SYSTEM V17.9</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -20,27 +20,30 @@
         .flag-btn { border: none; background: none; padding: 0; cursor: pointer; transition: 0.2s; }
         .flag-btn img { width: 22px; height: 14px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
 
-        /* 🍔 Sidebar */
+        /* 🍔 Universal Sidebar */
         .sidebar { position: fixed; left: -280px; top: 0; width: 280px; height: 100%; background: #fff; z-index: 2500; transition: 0.4s; padding-top: 60px; box-shadow: 5px 0 25px rgba(0,0,0,0.1); }
         .sidebar.active { left: 0; }
         .sidebar-item { padding: 18px 25px; border-bottom: 1px solid #f5f5f5; display: flex; align-items: center; gap: 15px; text-decoration: none; color: var(--text); }
         .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000; backdrop-filter: blur(2px); }
         .sidebar-overlay.active { display: block; }
 
-        /* 🖼️ Hero Image & Sovereign Badge */
+        /* 🖼️ Hero Image & Sovereign Green Badge */
         .hero-box { position: relative; width: 100%; height: 420px; background: #ddd; overflow: hidden; }
         .main-img { width: 100%; height: 100%; object-fit: cover; }
-        .hero-badge { 
-            position: absolute; top: 15px; left: 15px; background: var(--green); color: white; 
-            padding: 6px 18px; border-radius: 50px; font-weight: 400; font-size: 0.75rem; 
-            z-index: 10; box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
-        }
+        .hero-badge { position: absolute; top: 15px; left: 15px; background: var(--green); color: white; padding: 6px 18px; border-radius: 50px; font-weight: 400; font-size: 0.75rem; z-index: 10; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
 
-        /* 🏛️ Content Card & Imperial Info Grid */
+        /* 🏛️ Content Card */
         .main-container { max-width: 650px; margin: 0 auto; position: relative; z-index: 20; padding-bottom: 150px; }
         .content-card { background: #fff; padding: 30px; border-radius: 35px 35px 0 0; margin: -60px 15px 0 15px; box-shadow: 0 -15px 40px rgba(0,0,0,0.1); }
-        .price-box { font-size: 2.2rem; color: var(--primary); margin: 10px 0 25px 0; font-weight: 400; letter-spacing: -1px; }
+        
+        /* 💰 🎯 Price Box with Inline Badge */
+        .price-box { font-size: 2.2rem; color: var(--primary); margin: 10px 0 25px 0; font-weight: 400; letter-spacing: -1px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .price-inline-badge { padding: 4px 15px; border-radius: 8px; font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+        .available { background: #e8f5e9; color: var(--green); } 
+        .pending { background: #fff9e6; color: var(--gold); } 
+        .sold { background: #fdeaea; color: var(--red); }
 
+        /* 📊 Info Grid (13 Fields Restoration) */
         .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .info-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: #f8f9fa; border-radius: 18px; border: 1px solid #f0f0f0; }
         .info-item i { font-size: 1.1rem; color: var(--primary); width: 24px; text-align: center; }
@@ -48,7 +51,7 @@
         .info-value { font-weight: 400; font-size: 0.95rem; color: var(--text); }
         .full-width { grid-column: 1 / -1; }
 
-        /* 🔗 Sovereign Share Bar: Single Row Scroll */
+        /* 🔗 Share Section: Scrolling Row */
         .share-section { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; }
         .share-icon-title { font-size: 1.8rem; color: var(--primary); margin-bottom: 20px; cursor: pointer; }
         .share-bar-wrapper { overflow-x: auto; padding: 10px 0 25px; scrollbar-width: none; -webkit-overflow-scrolling: touch; width: 100%; display: flex; justify-content: flex-start; }
@@ -60,13 +63,12 @@
         /* 🏘️ Portfolio Grid: 2 Columns x 5 Rows */
         .related-title { font-weight: 500; color: var(--primary); margin: 40px 15px 15px; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
         .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 15px; margin-bottom: 50px; }
-        .mini-card { background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.05); cursor: pointer; transition: 0.3s; border: 1.5px solid #eee; }
+        .mini-card { background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.05); cursor: pointer; border: 1.5px solid #eee; }
         .mini-img { width: 100%; height: 135px; object-fit: cover; }
         .mini-info { padding: 12px; text-align: center; }
         .mini-id { font-size: 0.85rem; font-weight: 600; color: var(--primary); }
-        .mini-price { font-size: 0.9rem; color: var(--text); font-weight: 400; }
 
-        /* 🟢 Sticky Footer Action */
+        /* 🟢 Sticky Footer */
         .footer-action { position: fixed; bottom: 0; width: 100%; max-width: 650px; background: #fff; padding: 15px 20px 25px; box-sizing: border-box; box-shadow: 0 -10px 30px rgba(0,0,0,0.1); z-index: 1000; left: 50%; transform: translateX(-50%); border-radius: 30px 30px 0 0; }
         .btn-line { display: flex; align-items: center; justify-content: center; gap: 10px; background: #00b900; color: #fff; padding: 18px; border-radius: 20px; text-decoration: none; font-weight: 400; font-size: 1.1rem; box-shadow: 0 8px 20px rgba(0,185,0,0.2); }
     </style>
@@ -92,7 +94,7 @@
 <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
 <div class="sidebar" id="sidebar">
     <a href="index.html" class="sidebar-item"><i class="fas fa-home"></i> <span data-i18n="home">หน้าหลัก</span></a>
-    <a href="admin.html" class="sidebar-item" style="margin-top:20px; border-top:1px solid #eee; color:var(--primary);"><i class="fas fa-user-shield"></i> <span data-i18n="admin">Admin Access</span></a>
+    <a href="admin.html" class="sidebar-item" style="margin-top:20px; border-top:1px solid #eee; color:var(--primary);"><i class="fas fa-user-shield"></i> <span>Admin Access</span></a>
 </div>
 
 <div id="mainContent">
@@ -106,8 +108,8 @@
     let prop = null, allData = [], currentLang = localStorage.getItem('smartLang') || 'th';
 
     const i18n = {
-        th: { menu: "เมนู", home: "หน้าหลัก", admin: "แอดมิน", type: "ประเภท", plot: "เลขแปลง", bed: "ห้องนอน", bath: "ห้องน้ำ", living: "พื้นที่ใช้สอย", landM: "ที่ดิน (ตร.ม.)", landW: "ที่ดิน (ตร.ว.)", pool: "ขนาดสระ", depth: "ความลึกสระ", furniture: "เฟอร์นิเจอร์", parking: "ที่จอดรถ", electric: "ระบบไฟฟ้า", location: "ทำเล", portfolio: "ป้านแต่ละหลัง (Other Units)", inquiry: "Inquire via LINE" },
-        en: { menu: "MENU", home: "Home", admin: "Admin", type: "Type", plot: "Plot No.", bed: "Bedrooms", bath: "Bathrooms", living: "Living Area", landM: "Land (sq.m)", landW: "Land (sq.w)", pool: "Pool Size", depth: "Pool Depth", furniture: "Furnishing", parking: "Parking", electric: "Electricity", location: "Location", portfolio: "Other Units", inquiry: "Inquire via LINE" }
+        th: { menu: "เมนู", home: "หน้าหลัก", type: "ประเภท", plot: "เลขแปลง", bed: "ห้องนอน", bath: "ห้องน้ำ", living: "พื้นที่ใช้สอย", landM: "ที่ดิน (ตร.ม.)", landW: "ที่ดิน (ตร.ว.)", pool: "ขนาดสระ", depth: "ความลึกสระ", furniture: "เฟอร์นิเจอร์", parking: "ที่จอดรถ", electric: "ระบบไฟฟ้า", location: "ทำเล", portfolio: "ป้านแต่ละหลัง (Other Units)", Available: "ว่าง", Pending: "จองแล้ว", Sold: "ขายแล้ว" },
+        en: { menu: "MENU", home: "Home", type: "Type", plot: "Plot No.", bed: "Bedrooms", bath: "Bathrooms", living: "Living Area", landM: "Land (sq.m)", landW: "Land (sq.w)", pool: "Pool Size", depth: "Pool Depth", furniture: "Furnishing", parking: "Parking", electric: "Electricity", location: "Location", portfolio: "Other Units", Available: "Available", Pending: "Pending", Sold: "Sold" }
     };
 
     async function load() {
@@ -117,7 +119,6 @@
             allData = d.filter(it => it.HP_ID);
             prop = allData.find(x => x.HP_ID === pId);
             if (prop) render(prop);
-            else document.getElementById('mainContent').innerHTML = "❌ ไม่พบข้อมูลทรัพย์";
         } catch(e) { document.getElementById('mainContent').innerHTML = "❌ Connection Error"; }
     }
 
@@ -143,7 +144,11 @@
             <div class="main-container">
                 <div class="content-card">
                     <h1 style="margin:0; font-size:1.6rem; color:var(--primary);">${it.Project_Name}</h1>
-                    <div class="price-box">฿${Number(it.Price).toLocaleString()}</div>
+                    
+                    <div class="price-box">
+                        ฿${Number(it.Price).toLocaleString()}
+                        <span class="price-inline-badge ${it.Status.toLowerCase()}">${t[it.Status] || it.Status}</span>
+                    </div>
 
                     <div class="info-grid">
                         <div class="info-item"><i class="fas fa-home"></i><div><span class="info-label">${t.type}</span><span class="info-value">${it.Type || '-'}</span></div></div>
@@ -184,24 +189,26 @@
                 <div class="related-grid">${related.map(r => `
                     <div class="mini-card" onclick="goToNewProp('${r.HP_ID}')">
                         <img src="${r.Thumbnail}" class="mini-img" onerror="this.src='https://placehold.co/400x300?text=Asset'">
-                        <div class="mini-info"><div class="mini-id">${r.ID}</div><div class="mini-price">฿${Number(r.Price).toLocaleString()}</div></div>
+                        <div class="mini-info"><div class="mini-id">${r.ID}</div><div style="color:var(--primary); font-weight:600; font-size:0.95rem;">฿${Number(r.Price).toLocaleString()}</div></div>
                     </div>`).join('')}
                 </div>
             </div>
 
-            <div class="footer-action"><a href="https://line.me/R/msg/text/?สนใจข้อมูลมหาอำนาจรหัส: ${it.HP_ID}" class="btn-line"><i class="fab fa-line"></i> ${t.inquiry}</a></div>
+            <div class="footer-action">
+                <a href="https://line.me/R/msg/text/?สนใจข้อมูลมหาอำนาจรหัส: ${it.HP_ID}" class="btn-line"><i class="fab fa-line"></i> Inquire via LINE</a>
+            </div>
         `;
     }
 
     function goToNewProp(id) {
         window.history.pushState({}, '', `?id=${id}`);
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // 🎯 Auto-Scroll Support
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         load();
     }
 
     function share(p) {
         const url = window.location.href;
-        if(p === 'copy') { navigator.clipboard.writeText(url); alert("คัดลอกลิงก์มหาอำนาจสำเร็จ!"); return; }
+        if(p === 'copy') { navigator.clipboard.writeText(url); alert("คัดลอกลิงก์สำเร็จ!"); return; }
         const links = {
             line: `https://line.me/R/msg/text/?${encodeURIComponent(url)}`,
             fb: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
