@@ -3,52 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Property Details - SMART SYSTEM</title>
+    <title>Detail - SMART SYSTEM</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --primary: #1a5276; --bg: #f4f7f6; --text: #2c3e50; --white: #ffffff; --green: #27ae60; --gold: #f1c40f; --red: #e74c3c; --border: #ddd; --loader-bg: #9CBCE3; }
-        body { font-family: 'Kanit', sans-serif; background-color: var(--bg); margin: 0; padding: 0; color: var(--text); line-height: 1.6; font-weight: 300; }
+        :root { --primary: #1a5276; --bg: #f4f7f6; --text: #2c3e50; --white: #ffffff; --green: #27ae60; --border: #ddd; --loader-bg: #9CBCE3; }
+        body { font-family: 'Kanit', sans-serif; background-color: var(--bg); margin: 0; padding: 0; color: var(--text); }
         
-        /* 🎨 โค้ดส่วนตัวดุ๊กดิ๊ก (Loading Overlay) */
+        /* 🎨 ส่วนตัวดุ๊กดิ๊ก (Loading Overlay) */
         #loader-container {
             position: fixed; inset: 0; background: var(--loader-bg);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             z-index: 9999; transition: opacity 0.5s ease;
         }
         .emoji-group { display: flex; gap: 15px; margin-bottom: 20px; font-size: 50px; }
-        .spin { animation: spin 2s infinite linear; }
         .bounce { animation: bounce 0.6s infinite alternate; }
+        .spin { animation: spin 2s infinite linear; }
         @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-15px); } }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .loader-text { color: white; font-weight: 900; font-size: 1.4rem; letter-spacing: 1px; text-transform: uppercase; }
 
-        header { background: #fff; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .header-left { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-        .menu-text { font-size: 0.85rem; font-weight: 500; color: var(--primary); text-transform: uppercase; }
-        .brand-name { font-weight: 500; font-size: 0.85rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; border-left: 1.5px solid #eee; padding-left: 10px; }
-        .flag-list { display: flex; gap: 4px; }
-        .flag-btn { border: none; background: none; padding: 0; cursor: pointer; }
-        .flag-btn img { width: 22px; height: 14px; border-radius: 2px; }
-
-        .sidebar { position: fixed; left: -280px; top: 0; width: 280px; height: 100%; background: #fff; z-index: 2500; transition: 0.4s; padding-top: 60px; box-shadow: 5px 0 25px rgba(0,0,0,0.1); }
-        .sidebar.active { left: 0; }
-        .sidebar-item { padding: 18px 25px; border-bottom: 1px solid #f5f5f5; display: flex; align-items: center; gap: 15px; text-decoration: none; color: var(--text); }
-        .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000; backdrop-filter: blur(2px); }
-        .sidebar-overlay.active { display: block; }
-
-        .hero-box { position: relative; width: 100%; height: 420px; background: #ddd; overflow: hidden; }
+        .hero-box { position: relative; width: 100%; height: 400px; background: #eee; }
         .main-img { width: 100%; height: 100%; object-fit: cover; }
-        .hero-badge { position: absolute; top: 15px; left: 15px; background: var(--green); color: white; padding: 6px 18px; border-radius: 50px; font-weight: 400; font-size: 0.75rem; z-index: 10; }
-        .main-container { max-width: 650px; margin: 0 auto; position: relative; z-index: 20; padding-bottom: 150px; }
-        .content-card { background: #fff; padding: 30px; border-radius: 35px 35px 0 0; margin: -60px 15px 0 15px; box-shadow: 0 -15px 40px rgba(0,0,0,0.1); }
-        .price-box { font-size: 2.2rem; color: var(--primary); margin: 10px 0 25px 0; font-weight: 400; display: flex; align-items: center; gap: 12px; }
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .info-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: #f8f9fa; border-radius: 18px; border: 1px solid #f0f0f0; }
-        .info-item i { font-size: 1.1rem; color: var(--primary); width: 24px; text-align: center; }
-        .info-label { color: #7f8c8d; font-size: 0.7rem; display: block; }
-        .footer-action { position: fixed; bottom: 0; width: 100%; max-width: 650px; background: #fff; padding: 15px 20px 25px; box-sizing: border-box; z-index: 1000; left: 50%; transform: translateX(-50%); border-radius: 30px 30px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.1); }
-        .btn-line { display: flex; align-items: center; justify-content: center; gap: 10px; background: #00b900; color: #fff; padding: 18px; border-radius: 20px; text-decoration: none; font-weight: 400; }
+        .main-container { max-width: 700px; margin: -50px auto 100px; padding: 0 15px; position: relative; z-index: 10; }
+        .card-detail { background: #fff; border-radius: 30px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .price-tag { font-size: 2.2rem; color: var(--primary); font-weight: 400; margin: 15px 0; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .info-item { background: #f9f9f9; padding: 15px; border-radius: 15px; border: 1px solid #f0f0f0; }
+        .btn-line { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: #00b900; color: #fff; padding: 18px; border-radius: 50px; text-align: center; text-decoration: none; font-size: 1.2rem; box-shadow: 0 10px 20px rgba(0,185,0,0.3); z-index: 1000; }
     </style>
 </head>
 <body>
@@ -59,24 +41,7 @@
         <span class="spin">✨</span>
         <span class="bounce">🌴</span>
     </div>
-    <div class="loader-text">SMART PROPERTIES SYSTEM</div>
-</div>
-
-<header>
-    <div class="header-left" onclick="toggleSidebar()">
-        <i class="fas fa-bars fa-lg" style="color:var(--primary);"></i>
-        <span class="menu-text" data-i18n="menu">เมนู</span>
-        <div class="brand-name">SMART SYSTEM</div>
-    </div>
-    <div class="flag-list">
-        <button class="flag-btn" onclick="setLanguage('th')"><img src="https://flagcdn.com/w40/th.png"></button>
-        <button class="flag-btn" onclick="setLanguage('en')"><img src="https://flagcdn.com/w40/us.png"></button>
-    </div>
-</header>
-
-<div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
-<div class="sidebar" id="sidebar">
-    <a href="index.html" class="sidebar-item"><i class="fas fa-home"></i> <span data-i18n="home">หน้าหลัก</span></a>
+    <div class="loader-text">FETCHING DETAILS...</div>
 </div>
 
 <div id="mainContent"></div>
@@ -84,59 +49,52 @@
 <script>
     const api = "https://script.google.com/macros/s/AKfycbwUqp_vaFNgUdyARh5WG-S3iRm_x1C4EX0tL8aw12nhKpvYVn3I7SwWmi5s-doiYGYh/exec";
     const pId = new URLSearchParams(window.location.search).get('id');
-    let prop = null, allData = [], currentLang = localStorage.getItem('smartLang') || 'th';
-
-    const i18n = {
-        th: { menu: "เมนู", home: "หน้าหลัก", type: "ประเภท", bed: "ห้องนอน", bath: "ห้องน้ำ", living: "พื้นที่ใช้สอย", location: "ทำเล", Available: "ว่าง", Pending: "จองแล้ว", Sold: "ขายแล้ว" },
-        en: { menu: "MENU", home: "Home", type: "Type", bed: "Bedrooms", bath: "Bathrooms", living: "Living Area", location: "Location", Available: "Available", Pending: "Pending", Sold: "Sold" }
-    };
 
     async function load() {
+        if (!pId) { window.location.href = "index.html"; return; }
         try {
             const r = await fetch(api);
             const d = await r.json();
-            allData = d.filter(it => it.HP_ID);
-            prop = allData.find(x => x.HP_ID === pId);
+            const prop = d.find(x => (x.HP_ID || x.hp_id) == pId);
             
             if (prop) {
                 render(prop);
-                // ซ่อนตัวดุ๊กดิ๊กเมื่อข้อมูลพร้อม
-                setTimeout(() => {
-                    const loader = document.getElementById('loader-container');
-                    loader.style.opacity = '0';
-                    setTimeout(() => loader.style.display = 'none', 500);
-                }, 800);
+                hideLoader();
+            } else {
+                alert("ไม่พบข้อมูลทรัพย์ชิ้นนี้"); window.location.href = "index.html";
             }
-        } catch(e) { console.error(e); }
+        } catch(e) {
+            console.error(e); hideLoader();
+        }
+    }
+
+    function hideLoader() {
+        const loader = document.getElementById('loader-container');
+        loader.style.opacity = '0';
+        setTimeout(() => loader.style.display = 'none', 500);
     }
 
     function render(it) {
-        const t = i18n[currentLang] || i18n.en;
         document.getElementById('mainContent').innerHTML = `
-            <div class="hero-box">
-                <div class="hero-badge">${it.HP_ID} - ${it.ID}</div>
-                <img src="${it.Thumbnail}" class="main-img" onerror="this.src='https://placehold.co/800x600?text=Asset'">
-            </div>
+            <div class="hero-box"><img src="${it.Thumbnail}" class="main-img" onerror="this.src='https://placehold.co/800x600?text=No+Image'"></div>
             <div class="main-container">
-                <div class="content-card">
-                    <h1 style="margin:0; font-size:1.6rem; color:var(--primary);">${it.Project_Name}</h1>
-                    <div class="price-box">฿${Number(it.Price).toLocaleString()}</div>
+                <div class="card-detail">
+                    <h1 style="color:var(--primary); margin:0;">${it.Project_Name || it.ID}</h1>
+                    <div class="price-tag">฿${Number(it.Price || 0).toLocaleString()}</div>
                     <div class="info-grid">
-                        <div class="info-item"><i class="fas fa-home"></i><div><span class="info-label">${t.type}</span><span>${it.Type || '-'}</span></div></div>
-                        <div class="info-item"><i class="fas fa-bed"></i><div><span class="info-label">${t.bed}</span><span>${it.Bedrooms}</span></div></div>
-                        <div class="info-item"><i class="fas fa-vector-square"></i><div><span class="info-label">${t.living}</span><span>${it['Living Area (sq.m)']} m²</span></div></div>
-                        <div class="info-item"><i class="fas fa-map-marker-alt"></i><div><span class="info-label">${t.location}</span><span>${it.SubDistrict}</span></div></div>
+                        <div class="info-item"><b>🛌 ห้องนอน:</b> ${it.Bedrooms || '-'}</div>
+                        <div class="info-item"><b>🚿 ห้องน้ำ:</b> ${it.Bathrooms || '-'}</div>
+                        <div class="info-item"><b>🏠 พื้นที่:</b> ${it['Living Area (sq.m)'] || '-'} m²</div>
+                        <div class="info-item"><b>📍 ทำเล:</b> ${it.SubDistrict || '-'}</div>
                     </div>
-                    <div style="margin-top:30px;"><p>${it.Description || '-'}</p></div>
+                    <hr style="margin:30px 0; border:0; border-top:1px solid #eee;">
+                    <h3>รายละเอียดเพิ่มเติม</h3>
+                    <p style="color:#555; line-height:1.8;">${it.Description || 'ไม่มีข้อมูลเพิ่มเติม'}</p>
                 </div>
             </div>
-            <div class="footer-action">
-                <a href="https://line.me/R/msg/text/?สนใจรหัส: ${it.HP_ID}" class="btn-line"><i class="fab fa-line"></i> Inquire via LINE</a>
-            </div>
+            <a href="https://line.me/R/msg/text/?สนใจข้อมูลรหัส: ${it.HP_ID || it.hp_id}" class="btn-line"><i class="fab fa-line"></i> ติดต่อสอบถามทาง LINE</a>
         `;
     }
-
-    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('overlay').classList.toggle('active'); }
     load();
 </script>
 </body>
