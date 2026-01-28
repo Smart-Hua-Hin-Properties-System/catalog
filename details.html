@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Property Details - Ultimate V17.0</title>
+    <title>Property Details - Smart System V17.1</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { --primary: #1a5276; --bg: #f4f7f6; --text: #2c3e50; --white: #ffffff; --green: #27ae60; --gold: #f1c40f; }
         body { font-family: 'Kanit', sans-serif; background-color: var(--bg); margin: 0; padding: 0; color: var(--text); line-height: 1.6; font-weight: 300; }
 
-        /* 📱 Header System: Burger + MENU + FLAGS */
+        /* 📱 Header System: 🎯 ล็อคชื่อแบรนด์กลาง "SMART SYSTEM" */
         header { background: #fff; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .header-left { display: flex; align-items: center; gap: 8px; cursor: pointer; }
         .menu-text { font-size: 0.85rem; font-weight: 500; color: var(--primary); text-transform: uppercase; }
-        .brand-name { font-weight: 500; font-size: 0.85rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; border-left: 1.5px solid #eee; padding-left: 10px; }
+        .brand-name { font-weight: 600; font-size: 0.85rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; border-left: 1.5px solid #eee; padding-left: 10px; }
         .flag-list { display: flex; gap: 4px; }
         .flag-btn { border: none; background: none; padding: 0; cursor: pointer; transition: 0.2s; }
         .flag-btn img { width: 22px; height: 14px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
@@ -26,7 +26,7 @@
         .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000; backdrop-filter: blur(2px); }
         .sidebar-overlay.active { display: block; }
 
-        /* 🖼️ Hero & Identity */
+        /* 🖼️ Hero Section */
         .hero-box { position: relative; width: 100%; height: 400px; background: #ddd; overflow: hidden; }
         .main-img { width: 100%; height: 100%; object-fit: cover; }
         .hero-badge { position: absolute; top: 15px; left: 15px; background: var(--green); color: white; padding: 6px 18px; border-radius: 50px; font-weight: 400; font-size: 0.85rem; z-index: 10; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
@@ -36,7 +36,7 @@
         .content-card { background: #fff; padding: 30px; border-radius: 35px 35px 0 0; margin: -60px 15px 0 15px; box-shadow: 0 -15px 40px rgba(0,0,0,0.1); }
         .price-box { font-size: 2.2rem; color: var(--primary); margin: 10px 0 25px 0; font-weight: 400; letter-spacing: -1px; }
 
-        /* 📊 Full Data Mapping Grid (13 Fields) */
+        /* 📊 Comprehensive Data Mapping (13 Fields) */
         .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .info-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: #f8f9fa; border-radius: 18px; border: 1px solid #f0f0f0; }
         .info-item i { font-size: 1.1rem; color: var(--primary); width: 24px; text-align: center; }
@@ -44,7 +44,7 @@
         .info-value { font-weight: 400; font-size: 0.88rem; color: var(--text); }
         .full-width { grid-column: 1 / -1; }
 
-        /* 🔗 Strategic Share Bar (8 Icons) */
+        /* 🔗 Strategic Share Bar (8 Icons Scrollable) */
         .share-section { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; }
         .share-icon-title { font-size: 1.6rem; color: var(--primary); margin-bottom: 15px; }
         .share-bar { display: flex; gap: 15px; overflow-x: auto; padding: 10px 5px 25px; scrollbar-width: none; -webkit-overflow-scrolling: touch; justify-content: center; }
@@ -52,14 +52,14 @@
         .share-btn { width: 50px; height: 50px; border-radius: 50%; border: none; background: #fff; flex-shrink: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: 0.3s; }
         .share-btn img { width: 24px; height: 24px; }
 
-        /* 🏘️ Portfolio Grid (2x5) */
+        /* 🏘️ Portfolio Grid (2x5 Full-Scale Price) */
         .related-title { font-weight: 500; color: var(--primary); margin: 40px 15px 15px; font-size: 1.15rem; display: flex; align-items: center; gap: 10px; }
         .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 15px; margin-bottom: 60px; }
         .mini-card { background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.05); cursor: pointer; transition: 0.3s; border: 1.5px solid #eee; text-align: center; }
         .mini-img { width: 100%; height: 130px; object-fit: cover; }
         .mini-info { padding: 12px; }
-        .mini-id { font-size: 0.85rem; font-weight: 600; color: var(--primary); }
-        .mini-price { font-size: 0.9rem; color: #555; }
+        .mini-id { font-size: 0.85rem; font-weight: 600; color: var(--primary); margin-bottom: 3px; }
+        .mini-price { font-size: 0.9rem; color: #555; font-weight: 400; }
 
         /* 🟢 Sticky Footer */
         .footer-action { position: fixed; bottom: 0; width: 100%; max-width: 650px; background: #fff; padding: 15px 20px 25px; box-sizing: border-box; box-shadow: 0 -10px 30px rgba(0,0,0,0.1); z-index: 1000; left: 50%; transform: translateX(-50%); border-radius: 30px 30px 0 0; }
@@ -72,7 +72,7 @@
     <div class="header-left" onclick="toggleSidebar()">
         <i class="fas fa-bars fa-lg" style="color:var(--primary);"></i>
         <span class="menu-text">MENU</span>
-        <div class="brand-name" id="ui-project">Smart System</div>
+        <div class="brand-name">SMART SYSTEM</div>
     </div>
     <div class="flag-list">
         <button class="flag-btn" onclick="setLanguage('th')"><img src="https://flagcdn.com/w40/th.png"></button>
@@ -95,8 +95,8 @@
 </div>
 
 <script>
-    // 🎯 พิกัดมหาอำนาจ
-    const api = "https://script.google.com/macros/s/AKfycbwUqp_vaFNgUdyARh5WG-S3iRm_x1C4EX0tL8aw12nhKpvYVn3I7SwWmi5s-doiYGYh/exec";
+    // 🎯 ท่อส่งข้อมูลมหาอำนาจ
+    const api = "hhttps://script.google.com/macros/s/AKfycbwUqp_vaFNgUdyARh5WG-S3iRm_x1C4EX0tL8aw12nhKpvYVn3I7SwWmi5s-doiYGYh/exec";
     const pId = new URLSearchParams(window.location.search).get('id');
     let currentLang = localStorage.getItem('smartLang') || 'th', prop = null, allData = [];
 
@@ -119,13 +119,13 @@
 
     function render(it) {
         const t = i18n[currentLang] || i18n.en;
-        document.getElementById('ui-project').innerText = it.Project_Name;
+        // กรองทรัพย์อื่นมาโชว์ในกริด 2x5
         const related = allData.filter(x => x.Project_Name === it.Project_Name && x.HP_ID !== it.HP_ID).slice(0, 10);
 
         document.getElementById('mainContent').innerHTML = `
             <div class="hero-box">
                 <div class="hero-badge">${it.HP_ID} | ${it.ID}</div>
-                <img src="${it.Thumbnail}" class="main-img" onerror="this.src='https://placehold.co/800x600?text=Asset'">
+                <img src="${it.Thumbnail}" class="main-img" onerror="this.src='https://placehold.co/800x600?text=Sovereign+Asset'">
             </div>
 
             <div class="main-container">
@@ -177,7 +177,7 @@
                             <img src="${r.Thumbnail}" class="mini-img" onerror="this.src='https://placehold.co/400x300?text=Asset'">
                             <div class="mini-info">
                                 <div class="mini-id">${r.ID}</div>
-                                <div class="mini-price">฿${(Number(r.Price)/1000000).toFixed(1)}M</div>
+                                <div class="mini-price">฿${Number(r.Price).toLocaleString()}</div>
                             </div>
                         </div>
                     `).join('')}
