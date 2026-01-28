@@ -1,0 +1,26 @@
+<script>
+    const api = "https://script.google.com/macros/s/AKfycbwUqp_vaFNgUdyARh5WG-S3iRm_x1C4EX0tL8aw12nhKpvYVn3I7SwWmi5s-doiYGYh/exec";
+
+    async function saveData() {
+        const btn = document.getElementById('saveBtn');
+        btn.innerText = "...กำลังคำนวณและบันทึก..."; btn.disabled = true;
+        
+        // 🎯 ดึงข้อมูลจากฟอร์มให้ตรงกับ 32 คอลัมน์มหาอำนาจ
+        const formData = new FormData(document.getElementById('propertyForm'));
+        const data = Object.fromEntries(formData.entries());
+        
+        try {
+            const response = await fetch(api, {
+                method: 'POST',
+                mode: 'no-cors', // สถาปนาความเสถียรผ่าน no-cors
+                body: JSON.stringify(data)
+            });
+            
+            alert("✅ สถาปนาการคำนวณและบันทึกสำเร็จ!");
+            location.reload();
+        } catch(e) {
+            alert("❌ ขัดข้อง: " + e.message);
+            btn.disabled = false;
+        }
+    }
+</script>
