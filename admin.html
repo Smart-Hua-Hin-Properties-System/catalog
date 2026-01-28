@@ -7,128 +7,59 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --master-bg: #1a4361; --gold: #a67c00; --gold-light: #fff3cd; --white: #ffffff; --blue-btn: #1a5276; }
-        body { font-family: 'Kanit', sans-serif; background: #f0f2f5; margin: 0; }
+        :root { --master-bg: #1a4361; --gold-btn: #856404; --blue-btn: #1a5276; --red-btn: #e74c3c; }
+        body { font-family: 'Kanit', sans-serif; background: #f4f7f6; margin: 0; }
         
-        /* Header แบบดั้งเดิม */
-        header { background: var(--master-bg); padding: 15px 20px; color: white; display: flex; justify-content: space-between; align-items: center; }
-        .logout-btn { background: #e74c3c; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; font-weight: 500; }
+        /* Nav Header */
+        header { background: var(--master-bg); padding: 12px 20px; color: white; display: flex; justify-content: space-between; align-items: center; }
+        .logo-text { font-weight: 600; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
+        .master-pill { background: #fff; color: var(--master-bg); padding: 2px 10px; border-radius: 50px; font-size: 0.7rem; font-weight: 600; }
+        .logout-btn { background: var(--red-btn); color: white; border: none; padding: 6px 15px; border-radius: 5px; cursor: pointer; font-family: 'Kanit'; }
 
-        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        h2 { color: var(--master-bg); font-weight: 500; margin-bottom: 30px; }
 
-        /* Master Admin Special Section */
-        .master-box { background: var(--gold-light); border: 1px solid #ffeeba; border-radius: 12px; padding: 25px; margin-bottom: 20px; text-align: center; }
-        .gold-btn { background: var(--gold); color: white; padding: 15px; border-radius: 10px; border: none; width: 100%; font-size: 1.1rem; font-weight: 500; cursor: pointer; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        /* Buttons Section */
+        .gold-card { background: #fff3cd; border: 1px solid #ffeeba; border-radius: 12px; padding: 25px; margin-bottom: 20px; }
+        .btn-action { width: 100%; border-radius: 10px; border: none; padding: 20px; font-size: 1.1rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; transition: 0.3s; color: white; font-family: 'Kanit'; }
         
-        .add-btn { background: var(--blue-btn); color: white; padding: 18px; border-radius: 10px; border: none; width: 100%; font-size: 1.2rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .btn-gold { background: var(--gold-btn); }
+        .btn-gold:hover { background: #6e5303; }
+        
+        .btn-blue { background: var(--blue-btn); margin-bottom: 25px; }
+        .btn-blue:hover { background: #133e5a; }
 
-        /* Property List Section */
-        .list-section { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 2px 15px rgba(0,0,0,0.05); }
-        .property-card { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #eee; }
-        .property-card:last-child { border: none; }
-        .edit-icon { color: var(--blue-btn); cursor: pointer; font-size: 1.2rem; }
-
-        .hidden { display: none !important; }
-        #login-overlay { position: fixed; inset: 0; background: white; display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+        /* Status Loader */
+        .loader-box { background: white; border-radius: 15px; padding: 60px; text-align: center; border: 1px solid #eee; color: #666; }
+        .fa-spin { font-size: 2.5rem; color: var(--master-bg); margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
-<div id="login-overlay">
-    <div style="text-align:center; width:100%; max-width:350px;">
-        <i class="fas fa-unlock-alt fa-3x" style="color:var(--master-bg); margin-bottom:20px;"></i>
-        <h2>Smart Admin Login</h2>
-        <input type="password" id="pinInput" placeholder="Enter Access PIN" style="width:100%; padding:15px; border-radius:10px; border:1px solid #ddd; text-align:center; font-size:1.3rem; outline:none; margin-bottom:20px; box-sizing:border-box;">
-        <button onclick="handleLogin()" style="width:100%; padding:15px; border-radius:10px; background:var(--master-bg); color:white; border:none; font-weight:600; cursor:pointer;">ACCESS SYSTEM</button>
-    </div>
-</div>
+<header>
+    <div class="logo-text">Smart Control <span class="master-pill">Master</span></div>
+    <div style="font-weight: 400; font-size: 0.95rem;">MASTER_ADMIN</div>
+    <button class="logout-btn" onclick="location.href='index.html'">ออกจากระบบ</button>
+</header>
 
-<div id="dashboard-content" class="hidden">
-    <header>
-        <div>Smart Control <span style="background:#fff; color:var(--master-bg); padding:2px 8px; border-radius:50px; font-size:0.7rem; margin-left:5px;">Master</span></div>
-        <div id="user-info" style="font-weight:500;">MASTER_ADMIN</div>
-        <div class="logout-btn" onclick="logout()">ออกจากระบบ</div>
-    </header>
+<div class="container">
+    <h2>จัดการ ทุกโครงการ</h2>
 
-    <div class="container">
-        <h2 style="color:var(--master-bg); margin-bottom:25px;">จัดการ ทุกโครงการ</h2>
-
-        <div id="master-exclusive" class="master-box hidden">
-            <div style="font-weight:600; font-size:1.1rem; color:#856404;"><i class="fas fa-crown"></i> สำหรับผู้บริหารสูงสุดเท่านั้น</div>
-            <button class="gold-btn" onclick="location.href='dashboard.html'">
-                <i class="fas fa-chart-line"></i> เข้าสู่หน้าสรุปยอดบริหาร (Executive Dashboard)
-            </button>
-        </div>
-
-        <button class="add-btn" onclick="alert('เปิดฟอร์มเพิ่มรายการ...')">
-            <i class="fas fa-plus-circle"></i> เพิ่มรายการบ้านใหม่เข้าสู่ระบบ
+    <div class="gold-card">
+        <button class="btn-action btn-gold" onclick="location.href='dashboard.html'">
+            <i class="fas fa-chart-line"></i> เข้าสู่หน้าสรุปยอดบริหาร (Executive Dashboard)
         </button>
+    </div>
 
-        <div class="list-section" style="margin-top:25px;">
-            <div id="loading-text" style="text-align:center; padding:20px; color:#999;">
-                <i class="fas fa-sync fa-spin"></i> กำลังดึงข้อมูลมหาอำนาจ...
-            </div>
-            <div id="property-list"></div>
-        </div>
+    <button class="btn-action btn-blue" onclick="alert('เปิดฟอร์มเพิ่มบ้าน...')">
+        <i class="fas fa-plus-circle"></i> เพิ่มรายการบ้านใหม่เข้าสู่ระบบ
+    </button>
+
+    <div class="loader-box">
+        <i class="fas fa-sync fa-spin"></i><br>
+        กำลังดึงข้อมูลมหาอำนาจ...
     </div>
 </div>
 
-<script>
-    const api = "https://script.google.com/macros/s/AKfycbxUduvVQ2oDjgJT3HJlGDzpbEav1_orj-G2UalilY27QoRtSgNOHPFdw7-NNYPdakA8/exec";
-    let currentUser = null;
-
-    async function handleLogin() {
-        const pin = document.getElementById('pinInput').value;
-        try {
-            const res = await fetch(`${api}?action=universalLogin&key=${pin}`).then(r => r.json());
-            if (res.success) {
-                currentUser = res;
-                localStorage.setItem('smart_admin_session', JSON.stringify(res));
-                renderDashboard();
-            } else { alert("PIN ไม่ถูกต้อง"); }
-        } catch(e) { alert("เชื่อมต่อฐานข้อมูลล้มเหลว"); }
-    }
-
-    function renderDashboard() {
-        currentUser = currentUser || JSON.parse(localStorage.getItem('smart_admin_session'));
-        if (!currentUser) return;
-
-        document.getElementById('login-overlay').classList.add('hidden');
-        document.getElementById('dashboard-content').classList.remove('hidden');
-        document.getElementById('user-info').innerText = currentUser.name;
-
-        // แสดงส่วน Master Admin เฉพาะผู้ที่มีสิทธิ์
-        if (currentUser.role === 'SUPER_ADMIN') {
-            document.getElementById('master-exclusive').classList.remove('hidden');
-        }
-
-        fetchData();
-    }
-
-    async function fetchData() {
-        const listDiv = document.getElementById('property-list');
-        const data = await fetch(`${api}?role=${currentUser.role}&project=${currentUser.project}`).then(r => r.json());
-        
-        document.getElementById('loading-text').classList.add('hidden');
-        listDiv.innerHTML = "";
-        data.forEach(item => {
-            const card = document.createElement('div');
-            card.className = 'property-card';
-            card.innerHTML = `
-                <div>
-                    <div style="font-weight:600; color:var(--master-bg);">${item.HP_ID} | ${item.ID}</div>
-                    <div style="font-size:0.85rem; color:#777;">โครงการ: ${item.Project_Name || item.Project_Code}</div>
-                </div>
-                <div class="edit-icon" onclick="alert('แก้ไขทรัพย์: ${item.HP_ID}')">
-                    <i class="fas fa-edit"></i>
-                </div>
-            `;
-            listDiv.appendChild(card);
-        });
-    }
-
-    function logout() { localStorage.clear(); location.reload(); }
-    window.onload = () => { if(localStorage.getItem('smart_admin_session')) renderDashboard(); };
-</script>
 </body>
 </html>
