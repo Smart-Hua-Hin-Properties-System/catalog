@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Property Details - Imperium V17.3</title>
+    <title>Property Details - Imperial V16.9</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --primary: #1a5276; --bg: #f4f7f6; --text: #2c3e50; --white: #ffffff; --green: #27ae60; --red: #e74c3c; }
+        :root { --primary: #1a5276; --bg: #f4f7f6; --text: #2c3e50; --white: #ffffff; --green: #27ae60; --gold: #f1c40f; --red: #e74c3c; }
         body { font-family: 'Kanit', sans-serif; background-color: var(--bg); margin: 0; padding: 0; color: var(--text); line-height: 1.6; font-weight: 300; }
 
         /* 📱 Header System */
         header { background: #fff; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .header-left { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-        .menu-text { font-size: 0.85rem; font-weight: 500; color: var(--primary); text-transform: uppercase; }
-        .brand-name { font-weight: 500; font-size: 0.85rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; border-left: 1.5px solid #eee; padding-left: 10px; }
+        .brand-name { font-weight: 500; font-size: 0.85rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; }
 
-        /* 🖼️ Hero Identity */
-        .hero-box { position: relative; width: 100%; height: 420px; background: #ddd; overflow: hidden; }
+        /* 🖼️ Hero & Identity */
+        .hero-box { position: relative; width: 100%; height: 400px; background: #ddd; overflow: hidden; }
         .main-img { width: 100%; height: 100%; object-fit: cover; }
         .hero-badge { position: absolute; top: 15px; left: 15px; background: var(--green); color: white; padding: 6px 18px; border-radius: 50px; font-weight: 400; font-size: 0.85rem; z-index: 10; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
 
@@ -26,43 +25,43 @@
         .content-card { background: #fff; padding: 30px; border-radius: 35px 35px 0 0; margin: -60px 15px 0 15px; box-shadow: 0 -15px 40px rgba(0,0,0,0.1); }
         .price-box { font-size: 2.2rem; color: var(--primary); margin: 10px 0 25px 0; font-weight: 400; letter-spacing: -1px; }
 
+        /* 📊 Info Grid */
         .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .info-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: #f8f9fa; border-radius: 18px; border: 1px solid #f0f0f0; }
         .info-item i { font-size: 1.1rem; color: var(--primary); width: 24px; text-align: center; }
         .info-label { color: #7f8c8d; font-size: 0.7rem; display: block; }
-        .info-value { font-weight: 400; font-size: 0.95rem; color: var(--text); }
+        .info-value { font-weight: 400; font-size: 0.9rem; color: var(--text); }
         .full-width { grid-column: 1 / -1; }
 
-        /* 🔗 🎯 Sovereign Share Bar: Single Row Scrollable */
+        /* 🔗 Iconic Share Section */
         .share-section { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; }
-        .share-icon-title { font-size: 1.8rem; color: var(--primary); margin-bottom: 20px; }
-        .share-bar-wrapper { overflow-x: auto; padding: 10px 0 20px; scrollbar-width: none; -webkit-overflow-scrolling: touch; width: 100%; display: flex; justify-content: flex-start; }
-        .share-bar-wrapper::-webkit-scrollbar { display: none; }
-        .share-bar { display: flex; gap: 15px; padding: 0 25px; min-width: max-content; margin: 0 auto; }
-        .share-btn { width: 54px; height: 54px; border-radius: 50%; border: none; background: #fff; flex-shrink: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: 0.3s; }
-        .share-btn img { width: 26px; height: 26px; }
+        .share-icon-title { font-size: 1.5rem; color: var(--primary); margin-bottom: 15px; cursor: pointer; }
+        .share-bar { display: flex; gap: 15px; overflow-x: auto; padding: 10px 5px 25px; scrollbar-width: none; -webkit-overflow-scrolling: touch; justify-content: center; }
+        .share-bar::-webkit-scrollbar { display: none; }
+        .share-btn { width: 50px; height: 50px; border-radius: 50%; border: none; background: #fff; flex-shrink: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: 0.3s; }
+        .share-btn img { width: 24px; height: 24px; }
 
-        /* 🏘️ 🎯 Portfolio Grid: 2 Columns x 5 Rows */
+        /* 🏘️ Imperial Portfolio Grid (2 Columns, 5 Rows) */
         .related-title { font-weight: 500; color: var(--primary); margin: 40px 15px 15px; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
         .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 15px; margin-bottom: 50px; }
         .mini-card { background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.05); cursor: pointer; transition: 0.3s; border: 1.5px solid #eee; }
-        .mini-img { width: 100%; height: 135px; object-fit: cover; }
+        .mini-card:active { transform: scale(0.95); }
+        .mini-img { width: 100%; height: 130px; object-fit: cover; }
         .mini-info { padding: 12px; text-align: center; }
-        .mini-id { font-size: 0.85rem; font-weight: 600; color: var(--primary); }
-        .mini-price { font-size: 0.95rem; color: var(--text); }
+        .mini-id { font-size: 0.85rem; font-weight: 600; color: var(--primary); margin-bottom: 2px; }
+        .mini-price { font-size: 0.95rem; font-weight: 400; color: var(--text); }
 
-        /* 🟢 Sticky Footer Action */
+        /* 🟢 Sticky Footer */
         .footer-action { position: fixed; bottom: 0; width: 100%; max-width: 650px; background: #fff; padding: 15px 20px 25px; box-sizing: border-box; box-shadow: 0 -10px 30px rgba(0,0,0,0.1); z-index: 1000; left: 50%; transform: translateX(-50%); border-radius: 30px 30px 0 0; }
-        .btn-line { display: flex; align-items: center; justify-content: center; gap: 10px; background: #00b900; color: #fff; padding: 18px; border-radius: 20px; text-decoration: none; font-weight: 400; font-size: 1.1rem; box-shadow: 0 8px 20px rgba(0,185,0,0.2); }
+        .btn-line { display: flex; align-items: center; justify-content: center; gap: 10px; background: #00b900; color: #fff; padding: 18px; border-radius: 20px; text-decoration: none; font-weight: 400; font-size: 1.1rem; }
     </style>
 </head>
 <body>
 
 <header>
     <div class="header-left" onclick="location.href='index.html'">
-        <i class="fas fa-bars fa-lg" style="color:var(--primary);"></i>
-        <span class="menu-text">MENU</span>
-        <div class="brand-name" id="ui-brand">SMART SYSTEM</div>
+        <i class="fas fa-chevron-left fa-lg" style="color:var(--primary);"></i>
+        <div class="brand-name" id="ui-brand">Property Details</div>
     </div>
 </header>
 
@@ -80,7 +79,7 @@
         try {
             const r = await fetch(api);
             const d = await r.json();
-            allData = d.filter(it => it.HP_ID);
+            allData = d;
             prop = d.find(x => x.HP_ID === pId);
             if (prop) render(prop);
         } catch(e) { document.getElementById('mainContent').innerHTML = "❌ Connection Error"; }
@@ -88,7 +87,7 @@
 
     function render(it) {
         document.getElementById('ui-brand').innerText = it.Project_Name;
-        // 🎯 สถาปนากลุ่มทรัพย์ 2x5 (10 รายการ)
+        // กรองทรัพย์อื่นมาโชว์ในกริด (เอาแค่ 10 รายการ: 2 คอลัมน์ 5 แถว)
         const related = allData.filter(x => x.HP_ID !== it.HP_ID).slice(0, 10);
 
         document.getElementById('mainContent').innerHTML = `
@@ -114,34 +113,34 @@
                         <div class="info-item full-width"><i class="fas fa-map-marker-alt"></i><div><span class="info-label">ทำเล</span><span class="info-value">${it.SubDistrict}, ${it.District}</span></div></div>
                     </div>
 
-                    <div style="margin-top:30px;"><h3 style="margin-bottom:10px;"><i class="fas fa-file-alt"></i> Description</h3><p style="color:#555; font-size:1rem; line-height:1.8;">${it.Description || '-'}</p></div>
+                    <div style="margin-top:30px;">
+                        <h3 style="margin-bottom:10px;"><i class="fas fa-file-alt"></i> Description</h3>
+                        <p style="color:#555; font-size:1rem; line-height:1.8;">${it.Description || '-'}</p>
+                    </div>
 
                     <div class="share-section">
-                        <div class="share-icon-title"><i class="fas fa-share-nodes"></i></div>
-                        <div class="share-bar-wrapper">
-                            <div class="share-bar">
-                                <button class="share-btn" onclick="share('line')"><img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg"></button>
-                                <button class="share-btn" onclick="share('fb')"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"></button>
-                                <button class="share-btn" onclick="share('msg')"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968771.png"></button>
-                                <button class="share-btn" onclick="share('wa')"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png"></button>
-                                <button class="share-btn" onclick="share('tg')"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></button>
-                                <button class="share-btn" onclick="share('sms')"><img src="https://cdn-icons-png.flaticon.com/512/813/813636.png"></button>
-                                <button class="share-btn" onclick="share('mail')"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png"></button>
-                                <button class="share-btn" onclick="share('copy')"><i class="fas fa-link" style="color:#777; font-size:1.2rem;"></i></button>
-                            </div>
+                        <div class="share-icon-title" onclick="share('copy')"><i class="fas fa-share-nodes"></i></div>
+                        <div class="share-bar">
+                            <button class="share-btn" onclick="share('line')"><img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg"></button>
+                            <button class="share-btn" onclick="share('fb')"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"></button>
+                            <button class="share-btn" onclick="share('wa')"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png"></button>
+                            <button class="share-btn" onclick="share('mail')"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png"></button>
+                            <button class="share-btn" onclick="share('copy')"><i class="fas fa-link"></i></button>
                         </div>
                     </div>
                 </div>
 
-                <div class="related-title"><i class="fas fa-layer-group"></i> Units in Project</div>
-                <div class="related-grid">${related.map(r => `
-                    <div class="mini-card" onclick="goToNewProp('${r.HP_ID}')">
-                        <img src="${r.Thumbnail}" class="mini-img" onerror="this.src='https://placehold.co/400x300?text=Asset'">
-                        <div class="mini-info">
-                            <div class="mini-id">${r.ID}</div>
-                            <div class="mini-price" style="color:var(--primary); font-weight:600;">฿${Number(r.Price).toLocaleString()}</div>
+                <div class="related-title"><i class="fas fa-layer-group"></i> ยูนิตอื่นๆ ในโครงการ</div>
+                <div class="related-grid">
+                    ${related.map(r => `
+                        <div class="mini-card" onclick="window.location.href='details.html?id=${r.HP_ID}'; window.scrollTo(0,0);">
+                            <img src="${r.Thumbnail}" class="mini-img" onerror="this.src='https://placehold.co/400x300?text=Asset'">
+                            <div class="mini-info">
+                                <div class="mini-id">${r.ID}</div>
+                                <div class="mini-price">฿${(Number(r.Price)/1000000).toFixed(1)}M</div>
+                            </div>
                         </div>
-                    </div>`).join('')}
+                    `).join('')}
                 </div>
             </div>
 
@@ -151,24 +150,13 @@
         `;
     }
 
-    // 🎯 🎯 Auto-Scroll Support
-    function goToNewProp(id) {
-        window.history.pushState({}, '', `?id=${id}`);
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // เลื่อนขึ้นบนสุดอย่างนุ่มนวล
-        load();
-    }
-
     function share(p) {
-        const url = window.location.href;
-        if(p === 'copy') { navigator.clipboard.writeText(url); alert("คัดลอกลิงก์สำเร็จ!"); return; }
+        const msg = `🏡 ${prop.Project_Name} (${prop.ID})\n💰 ฿${Number(prop.Price).toLocaleString()}\n🔗 ${window.location.href}`;
+        if(p === 'copy') { navigator.clipboard.writeText(msg); alert("คัดลอกลิงก์มหาอำนาจสำเร็จ!"); return; }
         const links = {
-            line: `https://line.me/R/msg/text/?${encodeURIComponent(url)}`,
-            fb: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
-            wa: `https://api.whatsapp.com/send?text=${encodeURIComponent(url)}`,
-            tg: `https://t.me/share/url?url=${encodeURIComponent(url)}`,
-            sms: `sms:?body=${encodeURIComponent(url)}`,
-            mail: `mailto:?subject=Property Details&body=${encodeURIComponent(url)}`,
-            msg: `fb-messenger://share/?link=${encodeURIComponent(url)}`
+            line: `https://line.me/R/msg/text/?${encodeURIComponent(msg)}`,
+            fb: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`,
+            wa: `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`
         };
         if(links[p]) window.open(links[p]);
     }
