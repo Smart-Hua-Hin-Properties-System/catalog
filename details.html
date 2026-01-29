@@ -2,61 +2,59 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Property Details | SMART SYSTEM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Details | SMART SYSTEM</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Kanit', sans-serif; background: #9CBCE3; margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; }
-        #loader { text-align: center; color: white; }
-        .detail-box { background: white; width: 90%; max-width: 800px; border-radius: 40px; padding: 30px; display: none; }
+        body { font-family: 'Kanit', sans-serif; background: #9CBCE3; margin: 0; overflow-x: hidden; width: 100%; }
+        #loader { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; }
+        .detail-card { background: white; width: 92%; max-width: 600px; margin: 20px auto; border-radius: 40px; padding: 25px; display: none; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
     </style>
 </head>
 <body>
 
 <div id="loader">
-    <div style="font-size: 50px;">🏠 ✨ 🌴</div>
+    <div style="font-size: 60px;">🏠 ✨ 🌴</div>
     <h2 id="msg">FETCHING DETAILS...</h2>
 </div>
 
-<div id="detail-ui" class="detail-box">
-    <button onclick="history.back()" style="background:#1a5276; color:white; border:none; padding:10px 20px; border-radius:20px; cursor:pointer;">⬅️ BACK</button>
-    <h1 id="d_ID" style="color:#1a5276; margin-top:20px;"></h1>
-    <img id="d_Img" style="width:100%; border-radius:20px; margin-bottom:20px;">
-    <div id="d_Content" style="font-size:1.1rem; line-height:1.6;"></div>
+<div id="ui" class="detail-card">
+    <button onclick="history.back()" style="background:#1a5276; color:white; border:none; padding:10px 25px; border-radius:50px; cursor:pointer; margin-bottom:20px;">⬅️ กลับหน้าหลัก</button>
+    <div id="content"></div>
 </div>
 
 <script>
     const api = "https://script.google.com/macros/s/AKfycbzkweiEgczmmU_4FiqRffJ4exvgZl3RwGPIBWXssLgkUpdMArif9-eUEv6yP2Kvtzh1/exec";
-    const lang = localStorage.getItem('smartLang') || 'th';
-
-    async function loadDetail() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const id = urlParams.get('id'); // ดึง HP_ID จาก URL [cite: 2026-01-27]
-
-        if (!id) { document.getElementById('msg').innerText = "ID NOT FOUND"; return; }
+    
+    async function load() {
+        const id = new URLSearchParams(window.location.search).get('id');
+        if (!id) { document.getElementById('msg').innerText = "รหัสบ้านไม่ถูกต้อง"; return; }
 
         try {
             const res = await fetch(`${api}?role=PUBLIC`);
             const data = await res.json();
-            const item = data.find(it => it.HP_ID === id);
+            const item = data.find(it => it.HP_ID === id); // ดึงจาก HP_ID ให้ตรงกับลิงก์ [cite: 2026-01-27]
 
             if (item) {
                 document.getElementById('loader').style.display = 'none';
-                document.getElementById('detail-ui').style.display = 'block';
-                document.getElementById('d_ID').innerText = "CODE: " + item.ID;
-                document.getElementById('d_Img').src = item.Thumbnail.replace('id=', 'export=view&id=');
-                document.getElementById('d_Content').innerHTML = `
-                    <p><b>โครงการ:</b> ${item.Project_Name}</p>
-                    <p><b>ราคา:</b> ฿${Number(item.Price).toLocaleString()}</p>
-                    <p><b>ห้องนอน:</b> ${item.Bedrooms}</p>
-                    <p><b>พื้นที่:</b> ${item.District} / ${item.SubDistrict}</p>
+                const ui = document.getElementById('ui'); ui.style.display = 'block';
+                document.getElementById('content').innerHTML = `
+                    <h2 style="color:#1a5276; margin:0;">CODE: ${item.ID}</h2>
+                    <p style="color:#888;">${item.Project_Name}</p>
+                    <img src="${item.Thumbnail.replace('id=', 'export=view&id=')}" style="width:100%; border-radius:20px; margin:15px 0;">
+                    <div style="font-size:1.1rem; line-height:1.8;">
+                        <p>💰 <b>ราคา:</b> ฿${Number(item.Price).toLocaleString()}</p>
+                        <p>🛌 <b>ห้องนอน:</b> ${item.Bedrooms}</p>
+                        <p>🛁 <b>ห้องน้ำ:</b> ${item.Bathrooms || '-'}</p>
+                        <p>📍 <b>ที่ตั้ง:</b> ${item.District} / ${item.SubDistrict}</p>
+                    </div>
                 `;
             } else {
-                document.getElementById('msg').innerText = "PROPERTY NOT FOUND";
+                document.getElementById('msg').innerText = "PROPERTY NOT FOUND"; // แก้ไขอาการหาไม่เจอ
             }
         } catch (e) { document.getElementById('msg').innerText = "ERROR LOADING DATA"; }
     }
-    window.onload = loadDetail;
+    window.onload = load;
 </script>
 </body>
 </html>
