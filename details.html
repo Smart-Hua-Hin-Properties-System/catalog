@@ -25,33 +25,27 @@
 
 <script>
     const api = "https://script.google.com/macros/s/AKfycbzkweiEgczmmU_4FiqRffJ4exvgZl3RwGPIBWXssLgkUpdMArif9-eUEv6yP2Kvtzh1/exec";
-    
+    const lang = localStorage.getItem('smartLang') || 'th';
+
     async function load() {
         const id = new URLSearchParams(window.location.search).get('id');
-        if (!id) { document.getElementById('msg').innerText = "รหัสบ้านไม่ถูกต้อง"; return; }
-
+        if (!id) { document.getElementById('msg').innerText = "รหัสไม่ถูกต้อง"; return; }
         try {
             const res = await fetch(`${api}?role=PUBLIC`);
             const data = await res.json();
-            const item = data.find(it => it.HP_ID === id); // ดึงจาก HP_ID ให้ตรงกับลิงก์ [cite: 2026-01-27]
-
+            const item = data.find(it => it.HP_ID === id); // ค้นหาด้วยรหัสระบบที่ส่งมา [cite: 2026-01-27]
             if (item) {
                 document.getElementById('loader').style.display = 'none';
-                const ui = document.getElementById('ui'); ui.style.display = 'block';
+                document.getElementById('ui').style.display = 'block';
                 document.getElementById('content').innerHTML = `
                     <h2 style="color:#1a5276; margin:0;">CODE: ${item.ID}</h2>
-                    <p style="color:#888;">${item.Project_Name}</p>
                     <img src="${item.Thumbnail.replace('id=', 'export=view&id=')}" style="width:100%; border-radius:20px; margin:15px 0;">
                     <div style="font-size:1.1rem; line-height:1.8;">
                         <p>💰 <b>ราคา:</b> ฿${Number(item.Price).toLocaleString()}</p>
+                        <p>📍 <b>ทำเล:</b> ${item.District} / ${item.SubDistrict}</p>
                         <p>🛌 <b>ห้องนอน:</b> ${item.Bedrooms}</p>
-                        <p>🛁 <b>ห้องน้ำ:</b> ${item.Bathrooms || '-'}</p>
-                        <p>📍 <b>ที่ตั้ง:</b> ${item.District} / ${item.SubDistrict}</p>
-                    </div>
-                `;
-            } else {
-                document.getElementById('msg').innerText = "PROPERTY NOT FOUND"; // แก้ไขอาการหาไม่เจอ
-            }
+                    </div>`;
+            } else { document.getElementById('msg').innerText = "PROPERTY NOT FOUND"; }
         } catch (e) { document.getElementById('msg').innerText = "ERROR LOADING DATA"; }
     }
     window.onload = load;
