@@ -3,80 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Property Catalog | สาธารณะ</title>
+    <title>Smart Property Hua Hin | คัดสรรบ้านคุณภาพเพื่อคุณ</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --navy: #1a4361; --gold: #856404; --green: #27ae60; }
-        body { font-family: 'Kanit', sans-serif; background: #f4f7f6; margin: 0; padding-bottom: 50px; }
-        header { background: var(--navy); padding: 20px; color: white; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
+        :root { --navy: #1a4361; --gold: #856404; --green: #27ae60; --light-bg: #f8fafc; }
+        body { font-family: 'Kanit', sans-serif; background: var(--light-bg); margin: 0; padding-bottom: 50px; color: #334155; }
         
-        .search-box { background: white; border-radius: 15px; padding: 15px 20px; display: flex; align-items: center; border: 1.5px solid #eee; margin-bottom: 25px; width: 100%; box-sizing: border-box; }
-        .search-box input { border: none; outline: none; width: 100%; font-family: 'Kanit'; font-size: 1rem; margin-left: 12px; }
+        /* Header & Hero Section */
+        header { background: var(--navy); padding: 30px 20px; color: white; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+        header h1 { margin: 0; font-size: 1.8rem; font-weight: 600; letter-spacing: 1px; }
+        header p { margin: 8px 0 0 0; font-size: 0.9rem; opacity: 0.9; font-weight: 300; }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .card { background: white; border-radius: 25px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.05); transition: 0.3s; position: relative; border: 1px solid #f0f0f0; }
-        .card:hover { transform: translateY(-5px); }
-        .card-img { width: 100%; height: 220px; object-fit: cover; background: #eee; }
-        .card-body { padding: 20px; }
-        .card-project { color: var(--gold); font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
-        .card-title { font-size: 1.4rem; font-weight: 600; color: var(--navy); margin: 5px 0; }
-        .card-price { font-size: 1.25rem; font-weight: 600; color: var(--green); margin-top: 10px; }
-        .status-tag { position: absolute; top: 15px; right: 15px; padding: 6px 15px; border-radius: 50px; font-size: 0.75rem; font-weight: 600; color: white; }
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+
+        /* 🔍 Search Bar - ดีไซน์ใหม่เต็มความกว้าง */
+        .search-container { width: 100%; margin-bottom: 35px; }
+        .search-box { 
+            background: white; border-radius: 20px; padding: 18px 25px; 
+            display: flex; align-items: center; border: 1px solid #e2e8f0; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03); transition: 0.3s;
+        }
+        .search-box:focus-within { border-color: var(--navy); box-shadow: 0 4px 20px rgba(26, 67, 97, 0.1); }
+        .search-box input { border: none; outline: none; width: 100%; font-family: 'Kanit'; font-size: 1.1rem; margin-left: 15px; background: transparent; }
+
+        /* 🏠 Property Grid */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        .card { 
+            background: white; border-radius: 25px; overflow: hidden; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.4s; 
+            position: relative; border: 1px solid #f1f5f9; display: flex; flex-direction: column;
+        }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
+        
+        /* รูปภาพพร้อมระบบ Skeleton Loading */
+        .card-img-wrapper { width: 100%; height: 240px; background: #e2e8f0; position: relative; overflow: hidden; }
+        .card-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card:hover .card-img { transform: scale(1.08); }
+
+        .card-body { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-project { color: var(--gold); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 8px; }
+        .card-title { font-size: 1.5rem; font-weight: 600; color: var(--navy); margin: 0; line-height: 1.2; }
+        .card-price { font-size: 1.4rem; font-weight: 700; color: var(--green); margin-top: 15px; }
+
+        /* Badge สถานะ */
+        .status-tag { 
+            position: absolute; top: 15px; left: 15px; padding: 6px 18px; 
+            border-radius: 50px; font-size: 0.75rem; font-weight: 600; 
+            color: white; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
         .st-available { background: var(--green); }
-        .st-sold { background: #e74c3c; }
+        .st-sold { background: #ef4444; }
 
-        .loading { text-align: center; padding: 50px; font-size: 1.2rem; color: #888; }
+        /* Loading & Error */
+        .loader { text-align: center; padding: 100px 20px; color: var(--navy); }
+        .empty-state { text-align: center; padding: 50px; color: #94a3b8; grid-column: 1 / -1; }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.5rem; }
+            .grid { grid-template-columns: 1fr; }
+            .search-box { padding: 15px; }
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <h2 style="margin:0; font-weight:500;">MASTER PROPERTY CATALOG</h2>
-    <p style="margin:5px 0 0 0; font-size:0.8rem; opacity:0.8;">คัดสรรบ้านคุณภาพเพื่อคุณ</p>
+    <h1>SMART PROPERTY HUA HIN</h1>
+    <p><i class="fas fa-map-marker-alt"></i> หัวหิน • ชะอำ • ปราณบุรี</p>
 </header>
 
 <div class="container">
-    <div class="search-box">
-        <i class="fas fa-search" style="color:#bbb;"></i>
-        <input type="text" id="searchInput" placeholder="ค้นหาตามชื่อโครงการ หรือรหัสบ้าน..." onkeyup="filterData()">
+    <div class="search-container">
+        <div class="search-box">
+            <i class="fas fa-search" style="color:var(--navy); font-size: 1.2rem;"></i>
+            <input type="text" id="searchInput" placeholder="ค้นหาโครงการ หรือรหัสบ้านที่ท่านสนใจ..." onkeyup="filterData()">
+        </div>
     </div>
 
-    <div id="loading" class="loading"><i class="fas fa-sync fa-spin"></i> กำลังดึงข้อมูลบ้านล่าสุด...</div>
+    <div id="loading" class="loader">
+        <i class="fas fa-circle-notch fa-spin fa-3x"></i>
+        <p style="margin-top:15px; font-weight:500;">กำลังรวบรวมรายการบ้านที่ดีที่สุดเพื่อคุณ...</p>
+    </div>
+
     <div id="property-grid" class="grid"></div>
 </div>
 
 <script>
-    const api = "https://script.google.com/macros/s/AKfycbxJPNgMnrqrDY9PyYZSkztrIxSmxHUiNc2JcSWlQu0CkIacyp5lGpjDzaCPIf3ab86e/exec";
+    // 🚩 สำคัญ: นำ URL ที่ได้จากการ Deploy สคริปต์ V88.0 มาวางที่นี่
+    const api = "https://script.google.com/macros/s/AKfycbzkweiEgczmmU_4FiqRffJ4exvgZl3RwGPIBWXssLgkUpdMArif9-eUEv6yP2Kvtzh1/exec";
     let properties = [];
 
     async function fetchData() {
         try {
-            const res = await fetch(api);
+            // เรียกข้อมูลด้วยสิทธิ์ PUBLIC (จะถูกกรองข้อมูลลับออกที่ Server อัตโนมัติ)
+            const res = await fetch(`${api}?role=PUBLIC`);
             properties = await res.json();
             document.getElementById('loading').style.display = 'none';
             renderGrid(properties);
         } catch (e) {
-            document.getElementById('loading').innerText = "ไม่สามารถโหลดข้อมูลได้ในขณะนี้";
+            document.getElementById('loading').innerHTML = `
+                <i class="fas fa-exclamation-triangle fa-2x" style="color:#ef4444;"></i>
+                <p>ขออภัย ไม่สามารถโหลดข้อมูลได้ในขณะนี้ กรุณาลองใหม่อีกครั้ง</p>
+            `;
         }
     }
 
     function renderGrid(data) {
         const grid = document.getElementById('property-grid');
+        if (data.length === 0) {
+            grid.innerHTML = '<div class="empty-state">ไม่พบรายการที่ท่านกำลังค้นหา</div>';
+            return;
+        }
+
         grid.innerHTML = data.map(i => {
-            const stClass = i.Status === 'Available' ? 'st-available' : 'st-sold';
-            // ✅ ระบบแปลงลิงก์ H3 เพื่อความเสถียรสูงสุด [cite: 2026-01-27]
-            const imgUrl = i.Thumbnail ? i.Thumbnail.replace('id=', 'export=view&id=') : 'https://via.placeholder.com/300x220';
+            const isAvailable = (i.Status || "").toLowerCase() === 'available';
+            const stClass = isAvailable ? 'st-available' : 'st-sold';
+            const stText = isAvailable ? 'พร้อมขาย' : 'ขายแล้ว';
             
             return `
                 <div class="card">
-                    <span class="status-tag ${stClass}">${i.Status}</span>
-                    <img src="${imgUrl}" class="card-img" onerror="this.src='https://via.placeholder.com/300x220'">
+                    <span class="status-tag ${stClass}">${stText}</span>
+                    <div class="card-img-wrapper">
+                        <img src="${i.Thumbnail || 'https://via.placeholder.com/400x300?text=Smart+Property'}" 
+                             class="card-img" 
+                             onerror="this.src='https://via.placeholder.com/400x300?text=Image+Not+Found'">
+                    </div>
                     <div class="card-body">
-                        <div class="card-project">${i.Project_Name}</div>
-                        <div class="card-title">${i.ID}</div>
-                        <div class="card-price">${Number(i.Price).toLocaleString()} บาท</div>
+                        <div class="card-project">${i.Project_Name || 'ทั่วไป'}</div>
+                        <h2 class="card-title">${i.ID || 'N/A'}</h2>
+                        <div class="card-price">${Number(i.Price || 0).toLocaleString()} <span style="font-size:0.9rem; font-weight:400;">บาท</span></div>
                     </div>
                 </div>`;
         }).join('');
@@ -84,7 +140,11 @@
 
     function filterData() {
         const val = document.getElementById('searchInput').value.toLowerCase();
-        renderGrid(properties.filter(p => p.ID.toLowerCase().includes(val) || p.Project_Name.toLowerCase().includes(val)));
+        const filtered = properties.filter(p => 
+            (p.ID && p.ID.toLowerCase().includes(val)) || 
+            (p.Project_Name && p.Project_Name.toLowerCase().includes(val))
+        );
+        renderGrid(filtered);
     }
 
     window.onload = fetchData;
