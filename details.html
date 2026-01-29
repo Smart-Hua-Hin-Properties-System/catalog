@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Details | HUAHIN.PROPERTIES</title>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    body { font-family:'Kanit',sans-serif; background:#9CBCE3; margin:0; overflow-x:hidden; width:100%; }
-    #loader { height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; color:white; text-align:center; }
-    .detail-card { background:white; width:92%; max-width:760px; margin:20px auto; border-radius:40px; padding:25px; display:none; box-shadow:0 10px 40px rgba(0,0,0,0.2); }
-    .btn-back{ background:#1a5276; color:white; border:none; padding:10px 25px; border-radius:50px; cursor:pointer; margin-bottom:20px; }
-    .img{ width:100%; border-radius:22px; margin:15px 0; object-fit:cover; max-height:520px; }
+    body{font-family:'Kanit',sans-serif;background:#9CBCE3;margin:0;overflow-x:hidden;width:100%}
+    #loader{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-align:center}
+    .detail-card{background:white;width:92%;max-width:700px;margin:20px auto;border-radius:40px;padding:25px;display:none;box-shadow:0 10px 40px rgba(0,0,0,.2)}
+    .back-btn{background:#1a5276;color:white;border:none;padding:10px 25px;border-radius:50px;cursor:pointer;margin-bottom:20px}
+    .img{width:100%;border-radius:25px;margin:15px 0;object-fit:cover}
   </style>
 </head>
 <body>
@@ -21,72 +21,59 @@
   </div>
 
   <div id="ui" class="detail-card">
-    <button class="btn-back" onclick="location.href='index.html'">⬅️ กลับหน้าหลัก</button>
+    <button class="back-btn" onclick="history.back()">⬅️ กลับหน้าหลัก</button>
     <div id="content"></div>
   </div>
 
-<script>
-  const api = "https://script.google.com/macros/s/AKfycbzkweiEgczmmU_4FiqRffJ4exvgZl3RwGPIBWXssLgkUpdMArif9-eUEv6yP2Kvtzh1/exec";
+  <script>
+    const api = "https://script.google.com/macros/s/AKfycbzkweiEgczmmU_4FiqRffJ4exvgZl3RwGPIBWXssLgkUpdMArif9-eUEv6yP2Kvtzh1/exec";
 
-  function formatToH3(url) {
-    if (!url || url.trim() === "") return "https://placehold.co/900x600";
-    if (url.includes("https://lh3.googleusercontent.com/d/")) return url;
+    function safeImg(url){
+      if(!url) return "https://placehold.co/600x800";
+      if(url.includes("lh3.googleusercontent.com/d/")) return url;
+      if(url.includes("id=")) return url.replace("id=","export=view&id=");
+      return url;
+    }
 
-    let fileId = "";
-    try {
-      if (url.includes("id=")) fileId = url.split("id=")[1].split("&")[0];
-      else if (url.includes("/file/d/")) fileId = url.split("/file/d/")[1].split("/")[0];
-    } catch(e) {}
-    return fileId ? ("https://lh3.googleusercontent.com/d/" + fileId) : url;
-  }
-
-  async function load() {
-    const id = new URLSearchParams(window.location.search).get('id');
-    if (!id) { document.getElementById('msg').innerText = "รหัสไม่ถูกต้อง"; return; }
-
-    try {
-      const res = await fetch(`${api}?action=getProperty&id=${encodeURIComponent(id)}`);
-      const payload = await res.json();
-
-      if (!payload || !payload.success || !payload.item) {
-        document.getElementById('msg').innerText = "PROPERTY NOT FOUND";
+    async function load(){
+      const id = new URLSearchParams(window.location.search).get("id");
+      if(!id){
+        document.getElementById("msg").innerText = "รหัสไม่ถูกต้อง";
         return;
       }
 
-      const item = payload.item;
+      try{
+        const res = await fetch(`${api}?action=getOne&role=PUBLIC&id=${encodeURIComponent(id)}`);
+        const out = await res.json();
 
-      document.getElementById('loader').style.display = 'none';
-      document.getElementById('ui').style.display = 'block';
+        if(!out.success || !out.item){
+          document.getElementById("msg").innerText = "PROPERTY NOT FOUND";
+          return;
+        }
 
-      const price = Number(item.Price || 0).toLocaleString();
-      const img = formatToH3(item.Thumbnail);
+        const item = out.item;
 
-      document.getElementById('content').innerHTML = `
-        <h2 style="color:#1a5276; margin:0;">CODE: ${escapeHtml(item.ID || '')}</h2>
-        <img class="img" src="${img}" onerror="this.src='https://placehold.co/900x600'">
-        <div style="font-size:1.05rem; line-height:1.9;">
-          <p>💰 <b>ราคา:</b> ฿${price}</p>
-          <p>🏡 <b>โครงการ:</b> ${escapeHtml(item.Project_Name || '')}</p>
-          <p>📍 <b>ทำเล:</b> ${escapeHtml(item.District || '')} / ${escapeHtml(item.SubDistrict || '')}</p>
-          <p>🛌 <b>ห้องนอน:</b> ${escapeHtml(item.Bedrooms || '')} &nbsp;&nbsp; 🛁 <b>ห้องน้ำ:</b> ${escapeHtml(item.Bathrooms || '')}</p>
-          ${item.Status ? `<p>✅ <b>สถานะ:</b> ${escapeHtml(item.Status)}</p>` : ``}
-        </div>
-      `;
-    } catch (e) {
-      document.getElementById('msg').innerText = "ERROR LOADING DATA";
+        document.getElementById("loader").style.display="none";
+        document.getElementById("ui").style.display="block";
+
+        document.getElementById("content").innerHTML = `
+          <h2 style="color:#1a5276;margin:0;">CODE: ${item.ID || "-"}</h2>
+          <img class="img" src="${safeImg(item.Thumbnail)}" decoding="async"
+               onerror="this.src='https://placehold.co/600x800'">
+          <div style="font-size:1.1rem;line-height:1.9;">
+            <p>💰 <b>ราคา:</b> ฿${Number(item.Price || 0).toLocaleString()}</p>
+            <p>🏘️ <b>โครงการ:</b> ${item.Project_Name || "-"}</p>
+            <p>📍 <b>ทำเล:</b> ${item.District || "-"} / ${item.SubDistrict || "-"}</p>
+            <p>🛌 <b>ห้องนอน:</b> ${item.Bedrooms || "-"}</p>
+            <p>📌 <b>สถานะ:</b> ${item.Status || "-"}</p>
+          </div>
+        `;
+      }catch(e){
+        document.getElementById("msg").innerText = "ERROR LOADING DATA";
+      }
     }
-  }
 
-  function escapeHtml(str){
-    return String(str || "")
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
-  }
-
-  window.onload = load;
-</script>
+    window.onload = load;
+  </script>
 </body>
 </html>
