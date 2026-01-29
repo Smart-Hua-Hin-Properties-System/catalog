@@ -3,28 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMART CONTROL | V81.0 FINAL FIX</title>
+    <title>SMART CONTROL | V85.0 FULL RECOVERY</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { --navy: #1a4361; --blue-btn: #1a5276; --gold-bg: #fff3cd; --gold-btn: #856404; --green: #27ae60; --red: #e74c3c; }
         body { font-family: 'Kanit', sans-serif; background: #f4f7f6; margin: 0; }
-        header { background: var(--navy); padding: 12px 15px; color: white; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        header { background: var(--navy); padding: 12px 15px; color: white; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .container { max-width: 950px; margin: 20px auto; padding: 0 15px; }
 
         /* แถบทอง Dashboard */
         .gold-section { background: var(--gold-bg); border: 1.5px solid #ffeeba; border-radius: 18px; padding: 18px; margin-bottom: 20px; text-align: center; }
         .btn-gold { background: var(--gold-btn); color: white; padding: 14px; border-radius: 12px; text-decoration: none; display: block; font-weight: 500; }
-        .btn-blue { background: var(--blue-btn); color: white; width: 100%; padding: 16px; border-radius: 15px; border: none; font-family: 'Kanit'; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 25px; font-size: 1.1rem; }
+        .btn-blue { background: var(--blue-btn); color: white; width: 100%; padding: 16px; border-radius: 15px; border: none; font-family: 'Kanit'; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 25px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(26, 82, 118, 0.2); }
+
+        /* 🔍 ช่อง Search ขนาดเต็มพื้นที่ (Full-Width) สวยงามบนมือถือ */
+        .search-container { width: 100%; margin-bottom: 25px; }
+        .search-box { 
+            background: white; border-radius: 15px; padding: 14px 20px; 
+            display: flex; align-items: center; border: 1.5px solid #eee; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02); width: 100%; box-sizing: border-box; 
+        }
+        .search-box input { border: none; outline: none; width: 100%; font-family: 'Kanit'; font-size: 1rem; margin-left: 12px; background: transparent; }
 
         /* รายการทรัพย์ */
-        .property-row { background: white; padding: 15px; border-radius: 22px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
+        .property-row { background: white; padding: 15px; border-radius: 22px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid #f9f9f9; }
         .item-left { display: flex; align-items: center; gap: 15px; }
         .item-img { width: 75px; height: 75px; border-radius: 15px; object-fit: cover; background: #eee; border: 1px solid #f0f0f0; }
         .main-id-text { font-weight: 600; font-size: 1.35rem; color: var(--navy); line-height: 1.1; }
         .sub-plot-text { font-size: 0.85rem; color: #666; margin-top: 4px; }
 
-        /* 🟢 ขวาสุด: สถานะสี และไอคอนแก้ไขที่ถูกต้อง */
+        /* 🟢 ขวาสุด: สถานะสี และไอคอนแก้ไขที่ถูกต้อง (ดินสอ) */
         .item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
         .status-badge { padding: 4px 12px; border-radius: 50px; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; }
         .st-available { background: #e8f5e9; color: var(--green); }
@@ -50,7 +59,7 @@
 </head>
 <body>
 
-<div id="loading-screen" class="loading-overlay"><i class="fas fa-sync fa-spin fa-3x" style="color:var(--navy); margin-bottom:15px;"></i><div>กำลังปฏิรูประบบมหาอำนาจ...</div></div>
+<div id="loading-screen" class="loading-overlay"><i class="fas fa-sync fa-spin fa-3x" style="color:var(--navy); margin-bottom:15px;"></i><div>กำลังทำงานตามมาตรฐานมหาอำนาจ...</div></div>
 
 <div id="login-ui">
     <div style="text-align:center; padding:50px; background:white; height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center;">
@@ -74,7 +83,14 @@
         </div>
 
         <button id="btn-add-property" class="btn-blue" onclick="openForm('add')"><i class="fas fa-plus-circle"></i> เพิ่มรายการบ้านหลังใหม่</button>
-        <div class="search-box"><i class="fas fa-search" style="color:#bbb;"></i><input type="text" id="searchInput" placeholder="ค้นชื่อเรียก หรือเลขที่บ้าน..." onkeyup="filterData()"></div>
+        
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search" style="color:#bbb;"></i>
+                <input type="text" id="searchInput" placeholder="ค้นหาชื่อเรียก หรือเลขที่บ้าน..." onkeyup="filterData()">
+            </div>
+        </div>
+
         <div id="list-container"></div>
     </div>
 </div>
@@ -90,7 +106,7 @@
                 <div onclick="if(admin.role !== 'FINANCE') document.getElementById('f_file').click()" style="cursor:pointer;">
                     <i class="fas fa-camera fa-2x" style="color:#ddd;"></i><p style="margin:8px 0; color:#888; font-size:0.8rem;">รูปหน้าปก</p>
                     <input type="file" id="f_file" hidden accept="image/*" onchange="previewImage(this)">
-                    <img id="preview-img" style="width:100%; max-height:220px; object-fit:cover; border-radius:15px; margin-top:10px; display:none; border:3.5px solid white;">
+                    <img id="preview-img" style="width:100%; max-height:220px; object-fit:cover; border-radius:15px; margin-top:10px; display:none; border:3.5px solid white; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
                 </div>
             </div>
             <div class="form-section" style="background:#f0f7ff; padding:20px; border-radius:20px; margin-bottom:15px;">
@@ -117,12 +133,13 @@
     // 🖼️ ระบบแปลงลิงก์เป็น H3 (Absolute Image Engine) [cite: 2026-01-27]
     function formatToH3(url) {
         if (!url || url.trim() === "") return 'https://via.placeholder.com/75';
+        if (url.includes("googleusercontent.com/profile/picture/1")) return url;
         let fileId = "";
         try {
             if (url.includes('id=')) fileId = url.split('id=')[1].split('&')[0];
             else if (url.includes('/file/d/')) fileId = url.split('/file/d/')[1].split('/')[0];
             else if (url.includes('picture/1')) fileId = url.split('picture/1')[1];
-            else if (url.length > 20 && !url.includes('/')) fileId = url; // assume it's just the ID
+            else if (url.length > 20 && !url.includes('/')) fileId = url; 
         } catch (e) { return url; }
         return fileId ? `https://lh3.googleusercontent.com/d/${fileId}` : url;
     }
@@ -152,7 +169,7 @@
         properties = res; renderList(properties);
     }
 
-    // 📄 แสดงรายการ: บังคับไอคอนแก้ไข และแปลงรูปเป็น H3 ทุกรายการ [cite: 2026-01-27]
+    // 📄 แสดงรายการ: กู้คืนไอคอนแก้ไขดินสอ และแปลงรูปเป็น H3 ทันที [cite: 2026-01-27]
     function renderList(data) {
         document.getElementById('list-container').innerHTML = data.map(i => {
             const stClass = "st-" + (i.Status || "Available").toLowerCase();
@@ -188,7 +205,7 @@
         const form = document.getElementById('propertyForm'); form.reset(); currentBase64 = ""; document.getElementById('preview-img').style.display = 'none';
         const isReadonly = admin.role === 'FINANCE';
         if (mode === 'edit') {
-            document.getElementById('formTitle').innerText = isReadonly ? "รายละเอียดข้อมูล" : "แก้ไขข้อมูลบ้าน: " + id;
+            document.getElementById('formTitle').innerText = isReadonly ? "รายละเอียดข้อมูล (อ่านอย่างเดียว)" : "แก้ไขข้อมูลบ้าน: " + id;
             const item = properties.find(p => p.HP_ID === id);
             if (item) {
                 document.getElementById('f_HP_ID').value = item.HP_ID;
@@ -201,6 +218,10 @@
                 currentOldThumb = item.Thumbnail || "";
                 if (currentOldThumb) { document.getElementById('preview-img').src = formatToH3(currentOldThumb); document.getElementById('preview-img').style.display = 'block'; }
             }
+        } else {
+            const res = await fetch(`${api}?action=getNextID`).then(r => r.json());
+            document.getElementById('f_HP_ID').value = res.nextID;
+            document.getElementById('formTitle').innerText = "เพิ่มรายการใหม่: " + res.nextID;
         }
         document.getElementById('formModal').classList.add('active');
     }
@@ -216,7 +237,7 @@
 
     function filterData() {
         const val = document.getElementById('searchInput').value.toLowerCase();
-        renderList(properties.filter(p => (p.ID && p.ID.toLowerCase().includes(val)) || (p.Plot && p.Plot.toLowerCase().includes(val))));
+        renderList(properties.filter(p => (p.ID && p.ID.toLowerCase().includes(val)) || (p.Plot && p.Plot.toLowerCase().includes(val)) || (p.Project_Name && p.Project_Name.toLowerCase().includes(val))));
     }
 
     function closeForm() { document.getElementById('formModal').classList.remove('active'); }
