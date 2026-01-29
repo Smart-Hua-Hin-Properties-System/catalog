@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMART CONTROL | MASTER ADMIN V57.1</title>
+    <title>SMART CONTROL | MASTER ADMIN V58.0</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -13,28 +13,21 @@
         .container { max-width: 950px; margin: 20px auto; padding: 0 15px; }
         .btn-blue { background: var(--blue-btn); color: white; width: 100%; padding: 16px; border-radius: 12px; border: none; font-family: 'Kanit'; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 25px; box-sizing: border-box; font-size: 1.1rem; }
         .gold-section { background: var(--gold-bg); border: 1px solid #ffeeba; border-radius: 15px; padding: 15px; margin-bottom: 20px; text-align: center; }
-        .btn-gold { background: var(--gold-btn); color: white; padding: 12px; border-radius: 10px; text-decoration: none; display: block; font-weight: 500; font-size: 0.95rem; }
-        
-        .search-container { background: white; border-radius: 15px; padding: 12px 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; border: 1px solid #eee; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .btn-gold { background: var(--gold-btn); color: white; padding: 12px; border-radius: 10px; text-decoration: none; display: block; font-weight: 500; }
+        .search-container { background: white; border-radius: 15px; padding: 12px 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; border: 1px solid #eee; }
         .search-container input { border: none; outline: none; width: 100%; font-family: 'Kanit'; font-size: 1rem; }
-
         .property-row { background: white; padding: 15px; border-radius: 20px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
         .edit-btn { color: var(--blue-btn); cursor: pointer; font-size: 1.8rem; transition: 0.2s; }
-        .edit-btn:hover { transform: scale(1.1); }
-
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: flex-end; justify-content: center; z-index: 2000; visibility: hidden; opacity: 0; transition: 0.3s; }
         .modal.active { visibility: visible; opacity: 1; }
         .modal-content { background: white; width: 100%; max-width: 650px; border-radius: 30px 30px 0 0; padding: 30px; max-height: 92vh; overflow-y: auto; transform: translateY(100%); transition: 0.4s; }
         .modal.active .modal-content { transform: translateY(0); }
-        
         .form-section { padding: 15px; border-radius: 15px; margin-bottom: 15px; border: 1px solid #eee; }
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; font-size: 0.85rem; color: #555; margin-bottom: 5px; font-weight: 500; }
-        .form-group input, .form-group select { width: 100%; padding: 12px; border-radius: 10px; border: 1.5px solid #eee; font-family: 'Kanit'; box-sizing: border-box; outline: none; }
-        
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border-radius: 10px; border: 1.5px solid #eee; font-family: 'Kanit'; box-sizing: border-box; outline: none; }
         .upload-area { border: 2px dashed #ddd; padding: 20px; border-radius: 15px; text-align: center; cursor: pointer; background: #fafafa; }
         #preview-img { width: 100%; max-height: 250px; object-fit: cover; border-radius: 10px; margin-top: 15px; display: none; }
-        
         .hidden { display: none !important; }
         .loading-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.9); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 4000; display: none; }
     </style>
@@ -71,7 +64,7 @@
         
         <div class="search-container">
             <i class="fas fa-search" style="color:#aaa;"></i>
-            <input type="text" id="searchInput" placeholder="ค้นหารหัส หรือโครงการ..." onkeyup="filterData()">
+            <input type="text" id="searchInput" placeholder="ค้นหาด้วยรหัส หรือโครงการ..." onkeyup="filterData()">
         </div>
 
         <div id="list-container"></div>
@@ -97,15 +90,24 @@
             </div>
 
             <div class="form-section" style="background:#f0f7ff;">
+                <p style="margin:0 0 10px 0; font-weight:600; color:var(--blue-btn);">ข้อมูลหลักและการขาย</p>
                 <div class="form-group"><label>รหัสทรัพย์ (Auto-ID)</label><input type="text" id="f_HP_ID" readonly style="background:#f0f0f0; font-weight:600;"></div>
                 <div class="form-group"><label>ชื่อโครงการ / ชื่อบ้าน *</label><input type="text" id="f_Project_Name" required></div>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
                     <div class="form-group"><label>ราคาขาย (บาท)</label><input type="number" id="f_Price" required></div>
-                    <div class="form-group"><label>สถานะ</label><select id="f_Status"><option value="Available">Available</option><option value="Sold">Sold</option><option value="Pending">Pending</option><option value="Hidden">Hidden (ซ่อนจากลูกค้า)</option></select></div>
+                    <div class="form-group"><label>สถานะ</label>
+                        <select id="f_Status">
+                            <option value="Available">Available</option>
+                            <option value="Sold">Sold</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Hidden">Hidden (ซ่อน)</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
             <div class="form-section" style="background:#fff4e5;">
+                <p style="margin:0 0 10px 0; font-weight:600; color:#d35400;">ทำเลที่ตั้ง</p>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
                     <div class="form-group">
                         <label>อำเภอ</label>
@@ -115,14 +117,32 @@
                             <option value="Pranburi">ปราณบุรี</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>ตำบล</label>
-                        <select id="f_Tambon"></select>
-                    </div>
+                    <div class="form-group"><label>ตำบล</label><select id="f_Tambon"></select></div>
                 </div>
             </div>
 
-            <button type="submit" class="btn-blue"><i class="fas fa-save"></i> บันทึกข้อมูลทั้งหมด</button>
+            <div class="form-section" style="background:#f1f8e9;">
+                <p style="margin:0 0 10px 0; font-weight:600; color:#2e7d32;">พื้นที่และสเปคบ้าน</p>
+                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px;">
+                    <div class="form-group"><label>นอน</label><input type="number" id="f_Bedroom"></div>
+                    <div class="form-group"><label>น้ำ</label><input type="number" id="f_Bathroom"></div>
+                    <div class="form-group"><label>จอด</label><input type="number" id="f_Parking"></div>
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                    <div class="form-group"><label>ที่ดิน (ตร.ว.)</label><input type="text" id="f_Land_Size"></div>
+                    <div class="form-group"><label>พื้นที่ใช้สอย (ตร.ม.)</label><input type="text" id="f_Living_Area"></div>
+                </div>
+                <div class="form-group"><label>สระว่ายน้ำ / เฟอร์นิเจอร์</label><input type="text" id="f_Pool"></div>
+            </div>
+
+            <div class="form-section" style="background:#f3e5f5;">
+                <p style="margin:0 0 10px 0; font-weight:600; color:#7b1fa2;">รายละเอียดและลิงก์สื่อ</p>
+                <div class="form-group"><label>รายละเอียดจุดเด่น</label><textarea id="f_Description" rows="3"></textarea></div>
+                <div class="form-group"><label>ลิงก์อัลบั้มรูป</label><input type="url" id="f_Gallery_URL"></div>
+                <div class="form-group"><label>ลิงก์วิดีโอ</label><input type="url" id="f_Video_URL"></div>
+            </div>
+
+            <button type="submit" class="btn-blue"><i class="fas fa-save"></i> บันทึกข้อมูลและแจ้งเตือน</button>
         </form>
     </div>
 </div>
@@ -145,7 +165,7 @@
         const pin = document.getElementById('pinInput').value;
         const res = await fetch(`${api}?action=universalLogin&key=${pin}`).then(r => r.json());
         if (res.success) { admin = res; localStorage.setItem('session', JSON.stringify(res)); renderUI(); }
-        else { alert("รหัส PIN ไม่ถูกต้อง"); }
+        else { alert("PIN ไม่ถูกต้อง"); }
     }
 
     function renderUI() {
@@ -164,6 +184,7 @@
         renderList(properties);
     }
 
+    // 📄 กู้คืนไอคอน Edit ท้ายบรรทัด
     function renderList(data) {
         document.getElementById('list-container').innerHTML = data.map(i => `
             <div class="property-row">
@@ -195,7 +216,7 @@
         form.reset(); currentBase64 = ""; document.getElementById('preview-img').style.display = 'none';
         
         if (mode === 'edit') {
-            document.getElementById('formTitle').innerText = "แก้ไขข้อมูลรหัส: " + id;
+            document.getElementById('formTitle').innerText = "แก้ไขข้อมูลทรัพย์: " + id;
             const item = properties.find(p => p.HP_ID === id);
             if (item) {
                 document.getElementById('f_HP_ID').value = item.HP_ID;
@@ -204,6 +225,15 @@
                 document.getElementById('f_Status').value = item.Status || "Available";
                 document.getElementById('f_District').value = item.District || "Hua Hin";
                 updateTambonOptions(item.Tambon);
+                document.getElementById('f_Bedroom').value = item.Bedroom;
+                document.getElementById('f_Bathroom').value = item.Bathroom;
+                document.getElementById('f_Parking').value = item.Parking;
+                document.getElementById('f_Land_Size').value = item.Land_Size;
+                document.getElementById('f_Living_Area').value = item.Living_Area;
+                document.getElementById('f_Pool').value = item.Pool;
+                document.getElementById('f_Description').value = item.Description;
+                document.getElementById('f_Gallery_URL').value = item.Gallery_URL;
+                document.getElementById('f_Video_URL').value = item.Video_URL;
                 currentOldThumb = item.Thumbnail || "";
                 if (currentOldThumb) { const img = document.getElementById('preview-img'); img.src = currentOldThumb; img.style.display = 'block'; }
             }
@@ -227,6 +257,15 @@
             Status: document.getElementById('f_Status').value,
             District: document.getElementById('f_District').value,
             Tambon: document.getElementById('f_Tambon').value,
+            Bedroom: document.getElementById('f_Bedroom').value,
+            Bathroom: document.getElementById('f_Bathroom').value,
+            Parking: document.getElementById('f_Parking').value,
+            Land_Size: document.getElementById('f_Land_Size').value,
+            Living_Area: document.getElementById('f_Living_Area').value,
+            Pool: document.getElementById('f_Pool').value,
+            Description: document.getElementById('f_Description').value,
+            Gallery_URL: document.getElementById('f_Gallery_URL').value,
+            Video_URL: document.getElementById('f_Video_URL').value,
             Updated_By: admin.name,
             imageRaw: currentBase64,
             oldThumbnailUrl: currentOldThumb 
