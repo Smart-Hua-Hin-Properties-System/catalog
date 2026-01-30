@@ -1,519 +1,149 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>HUAHIN.PROPERTIES | SMART CATALOG</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HUAHIN.PROPERTIES | SMART CATALOG</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --primary: #1a5276; --bg: #9CBCE3; --white: #ffffff; --green: #00d44b; --badge-navy: #154360; }
+        html, body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; padding: 0; overflow-x: hidden; width: 100%; position: relative; }
+        * { box-sizing: border-box; }
 
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        /* 🎨 Loader */
+        #loader { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 9999; transition: 0.5s; }
+        
+        /* 🚩 Header */
+        header { background: #fff; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 100%; }
+        .header-left { display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--primary); }
+        .flag-list { display: flex; gap: 5px; }
+        .flag-btn { border: none; background: none; padding: 0; cursor: pointer; }
+        .flag-btn img { width: 24px; height: 16px; border-radius: 2px; }
 
-  <style>
-    :root{
-      --primary:#1a5276;
-      --bg:#9CBCE3;
-      --white:#ffffff;
-      --badge-navy:#154360;
-      --shadow: 0 15px 35px rgba(0,0,0,0.10);
-    }
+        /* 🔍 Filter Area */
+        .filter-area { padding: 15px; width: 100%; max-width: 1200px; margin: 0 auto; }
+        .filter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: rgba(255,255,255,0.9); padding: 15px; border-radius: 25px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+        @media (min-width: 768px) { .filter-grid { grid-template-columns: repeat(4, 1fr); } }
+        .select-box { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ddd; font-family: 'Kanit'; color: var(--primary); font-size: 0.85rem; background: white; outline: none; }
 
-    html,body{
-      font-family:'Kanit',sans-serif;
-      background:var(--bg);
-      margin:0;
-      padding:0;
-      overflow-x:hidden;
-      width:100%;
-    }
-    *{ box-sizing:border-box; }
+        /* 🏠 Cards Layout */
+        .property-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 0 15px 40px; max-width: 1200px; margin: 0 auto; }
+        .card { background: var(--white); border-radius: 40px; overflow: hidden; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.1); transition: 0.3s; cursor: pointer; }
+        
+        /* 📍 HP-ID บนซ้าย */
+        .badge-hp { position: absolute; top: 15px; left: 15px; background: var(--badge-navy); color: white; padding: 5px 15px; border-radius: 10px; font-size: 0.75rem; font-weight: 600; z-index: 10; }
 
-    /* Loader */
-    #loader{
-      position:fixed;
-      inset:0;
-      background:var(--bg);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      z-index:9999;
-    }
-    #loader .wrap{
-      text-align:center;
-      color:#fff;
-      font-weight:900;
-      letter-spacing:0.5px;
-    }
-    #loader .emo{ font-size:56px; margin-bottom:10px; }
-
-    /* Header (เหมือนรูปที่ 2) */
-    header{
-      background:#fff;
-      padding:12px 15px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      position:sticky;
-      top:0;
-      z-index:1000;
-      box-shadow:0 2px 10px rgba(0,0,0,0.10);
-    }
-    .header-left{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      cursor:pointer;
-      color:var(--primary);
-      min-width:90px;
-    }
-    .header-left .txt{
-      font-size:0.85rem;
-      font-weight:500;
-      margin-left:5px;
-    }
-    .brand-center{
-      font-weight:900;
-      color:var(--primary);
-      font-size:1.05rem;
-      letter-spacing:-0.5px;
-      text-transform:uppercase;
-      text-align:center;
-      flex:1;
-    }
-    .flag-list{
-      display:flex;
-      gap:5px;
-      align-items:center;
-      justify-content:flex-end;
-      min-width:90px;
-    }
-    .flag-btn{
-      border:none;
-      background:none;
-      padding:0;
-      cursor:pointer;
-      transition:0.2s;
-    }
-    .flag-btn:hover{ transform:scale(1.05); }
-    .flag-btn img{
-      width:24px;
-      height:16px;
-      border-radius:2px;
-      box-shadow:0 1px 3px rgba(0,0,0,0.12);
-      display:block;
-    }
-
-    /* Filter Area (4 ช่องแบบรูปที่ 2) */
-    .filter-area{
-      padding:15px;
-      width:100%;
-      max-width:1200px;
-      margin:0 auto;
-    }
-    .filter-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-      background:rgba(255,255,255,0.92);
-      padding:15px;
-      border-radius:25px;
-      box-shadow:0 8px 20px rgba(0,0,0,0.05);
-    }
-    @media (min-width: 768px){
-      .filter-grid{ grid-template-columns:repeat(4, 1fr); }
-    }
-    .select-box{
-      width:100%;
-      padding:12px 12px;
-      border-radius:12px;
-      border:1px solid #ddd;
-      font-family:'Kanit',sans-serif;
-      color:var(--primary);
-      font-size:0.90rem;
-      background:#fff;
-      outline:none;
-    }
-
-    /* Cards Layout (เหมือนรูปที่ 2) */
-    .property-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
-      gap:20px;
-      padding:0 15px 40px;
-      max-width:1200px;
-      margin:0 auto;
-    }
-    .card{
-      background:var(--white);
-      border-radius:40px;
-      overflow:hidden;
-      position:relative;
-      box-shadow:var(--shadow);
-      transition:transform .15s ease, box-shadow .15s ease;
-    }
-    .card:hover{
-      transform:translateY(-2px);
-      box-shadow:0 18px 40px rgba(0,0,0,0.12);
-    }
-
-    /* HP-ID badge บนซ้าย */
-    .badge-hp{
-      position:absolute;
-      top:15px;
-      left:15px;
-      background:var(--badge-navy);
-      color:#fff;
-      padding:6px 14px;
-      border-radius:10px;
-      font-size:0.78rem;
-      font-weight:600;
-      z-index:10;
-    }
-
-    .card-img{
-      width:100%;
-      height:350px;
-      object-fit:cover;
-      background:#e9e9e9;
-      display:block;
-    }
-    .card-body{
-      padding:25px;
-      text-align:left;
-    }
-    .house-id-text{
-      font-size:1.9rem;
-      font-weight:900;
-      color:var(--primary);
-      margin-bottom:2px;
-      text-transform:uppercase;
-      line-height:1.05;
-    }
-    .project-name{
-      font-size:0.85rem;
-      color:#888;
-      margin-bottom:12px;
-      font-weight:500;
-      text-transform:uppercase;
-    }
-    .price-text{
-      font-size:1.7rem;
-      color:var(--primary);
-      font-weight:800;
-      margin-bottom:15px;
-      display:block;
-    }
-    .btn-detail{
-      display:block;
-      width:100%;
-      padding:14px;
-      background:var(--primary);
-      color:#fff;
-      text-align:center;
-      border-radius:50px;
-      text-decoration:none;
-      font-weight:600;
-      user-select:none;
-    }
-
-    /* Empty state */
-    .empty{
-      max-width:1200px;
-      margin:10px auto 30px;
-      padding:0 15px;
-      color:#fff;
-      font-weight:600;
-      opacity:0.9;
-    }
-  </style>
+        .card-img { width: 100%; height: 350px; object-fit: cover; background: #eee; }
+        .card-body { padding: 25px; text-align: left; } 
+        
+        /* 📍 HOUSE_ID ล่างซ้าย (M16) */
+        .house-id-text { font-size: 1.8rem; font-weight: 900; color: var(--primary); margin-bottom: 2px; text-transform: uppercase; }
+        .project-name { font-size: 0.85rem; color: #888; margin-bottom: 12px; font-weight: 500; }
+        .price-text { font-size: 1.6rem; color: var(--primary); font-weight: 700; margin-bottom: 15px; display: block; }
+        .btn-detail { display: block; width: 100%; padding: 12px; background: var(--primary); color: white; text-align: center; border-radius: 50px; text-decoration: none; font-weight: 500; }
+    </style>
 </head>
-
 <body>
-  <div id="loader">
-    <div class="wrap">
-      <div class="emo">🏠 ✨ 🌴</div>
-      <div>SMART PROPERTIES...</div>
+
+<div id="loader"><h2 style="color:white; font-weight:900;">🏠 กำลังโหลดข้อมูล...</h2></div>
+
+<header>
+    <div class="header-left">
+        <i class="fas fa-bars fa-lg"></i> <span style="font-size:0.85rem; font-weight:500; margin-left:5px;">เมนู</span>
     </div>
-  </div>
-
-  <header>
-    <div class="header-left" onclick="void(0)">
-      <i class="fas fa-bars fa-lg"></i>
-      <span class="txt" id="txtMenu">เมนู</span>
-    </div>
-
-    <div class="brand-center">HUAHIN.PROPERTIES</div>
-
+    <div style="font-weight:900; color:var(--primary); font-size:1.1rem; letter-spacing:-0.5px;">HUAHIN.PROPERTIES</div>
     <div class="flag-list">
-      <button class="flag-btn" onclick="setLanguage('th')" title="ไทย"><img src="https://flagcdn.com/w40/th.png" alt="TH"></button>
-      <button class="flag-btn" onclick="setLanguage('en')" title="English"><img src="https://flagcdn.com/w40/us.png" alt="US"></button>
-      <button class="flag-btn" onclick="setLanguage('cn')" title="中文"><img src="https://flagcdn.com/w40/cn.png" alt="CN"></button>
-      <button class="flag-btn" onclick="setLanguage('ru')" title="Русский"><img src="https://flagcdn.com/w40/ru.png" alt="RU"></button>
-      <button class="flag-btn" onclick="setLanguage('de')" title="Deutsch"><img src="https://flagcdn.com/w40/de.png" alt="DE"></button>
-      <button class="flag-btn" onclick="setLanguage('fr')" title="Français"><img src="https://flagcdn.com/w40/fr.png" alt="FR"></button>
+        <button class="flag-btn" onclick="setLanguage('th')"><img src="https://flagcdn.com/w40/th.png"></button>
+        <button class="flag-btn" onclick="setLanguage('en')"><img src="https://flagcdn.com/w40/us.png"></button>
     </div>
-  </header>
+</header>
 
-  <div class="filter-area">
+<div class="filter-area">
     <div class="filter-grid">
-      <select class="select-box" id="distFilter" onchange="updateSubDistricts()">
-        <option value="" data-lang="fDist">📍 อำเภอทั้งหมด</option>
-      </select>
-
-      <select class="select-box" id="subDistFilter" onchange="applyFilters()">
-        <option value="" data-lang="fSub">🏘️ ตำบลทั้งหมด</option>
-      </select>
-
-      <select class="select-box" id="bedFilter" onchange="applyFilters()">
-        <option value="" data-lang="fBed">🛌 ห้องนอนทั้งหมด</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4+</option>
-      </select>
-
-      <select class="select-box" id="priceSort" onchange="applyFilters()">
-        <option value="" data-lang="fPrice">💰 เรียงตามราคา</option>
-        <option value="low" data-lang="pLow">น้อยไปมาก</option>
-        <option value="high" data-lang="pHigh">มากไปน้อย</option>
-      </select>
+        <select class="select-box" id="distFilter" onchange="updateSubDistricts()">
+            <option value="">📍 อำเภอทั้งหมด</option>
+            <option value="หัวหิน">หัวหิน</option>
+            <option value="ชะอำ">ชะอำ</option>
+            <option value="ปราณบุรี">ปราณบุรี</option>
+        </select>
+        <select class="select-box" id="subDistFilter" onchange="applyFilters()">
+            <option value="">🏘️ ตำบลทั้งหมด</option>
+        </select>
+        <select class="select-box" id="bedFilter" onchange="applyFilters()">
+            <option value="">🛌 ห้องนอนทั้งหมด</option>
+            <option value="1">1 Bed</option><option value="2">2 Beds</option><option value="3">3 Beds</option><option value="4">4+ Beds</option>
+        </select>
+        <select class="select-box" id="priceSort" onchange="applyFilters()">
+            <option value="">💰 เรียงตามราคา</option>
+            <option value="low">น้อยไปมาก</option><option value="high">มากไปน้อย</option>
+        </select>
     </div>
-  </div>
+</div>
 
-  <div class="empty" id="emptyBox" style="display:none;">ไม่พบรายการที่ตรงกับเงื่อนไข</div>
-  <div class="property-grid" id="grid"></div>
+<div class="property-grid" id="grid"></div>
 
-  <script>
-    /* ✅ ใช้ API เดิมของคุณ */
+<script>
+    // 🚩 เปลี่ยนเป็น URL ของคุณให้ถูกต้อง
     const api = "https://script.google.com/macros/s/AKfycbyS8rGtSnhVS8RdWje7icXZVCw5iBBJoWkEpOYm649OC6FOhnrVi87dD9GsJl_m_FVw/exec";
-
     let allData = [];
-    let currentLang = localStorage.getItem("smartLang") || "th";
 
-    const i18n = {
-      th: {
-        menu: "เมนู",
-        fDist: "📍 อำเภอทั้งหมด",
-        fSub: "🏘️ ตำบลทั้งหมด",
-        fBed: "🛌 ห้องนอนทั้งหมด",
-        fPrice: "💰 เรียงตามราคา",
-        pLow: "น้อยไปมาก",
-        pHigh: "มากไปน้อย",
-        view: "ดูรายละเอียด",
-        empty: "ไม่พบรายการที่ตรงกับเงื่อนไข"
-      },
-      en: {
-        menu: "MENU",
-        fDist: "📍 All Districts",
-        fSub: "🏘️ All Sub-districts",
-        fBed: "🛌 Bedrooms",
-        fPrice: "💰 Sort by Price",
-        pLow: "Low to High",
-        pHigh: "High to Low",
-        view: "View Details",
-        empty: "No results found."
-      },
-      cn: { menu:"菜单", fDist:"📍 所有区域", fSub:"🏘️ 所有分区", fBed:"🛌 卧室", fPrice:"💰 价格排序", pLow:"从低到高", pHigh:"从高到低", view:"查看详情", empty:"未找到结果" },
-      ru: { menu:"МЕНЮ", fDist:"📍 Все районы", fSub:"🏘️ Все подрайоны", fBed:"🛌 Спальни", fPrice:"💰 Сортировка", pLow:"По возрастанию", pHigh:"По убыванию", view:"Подробнее", empty:"Ничего не найдено" },
-      de: { menu:"MENÜ", fDist:"📍 Alle Bezirke", fSub:"🏘️ Alle Ortsteile", fBed:"🛌 Schlafzimmer", fPrice:"💰 Sortieren", pLow:"Aufsteigend", pHigh:"Absteigend", view:"Details", empty:"Keine Ergebnisse" },
-      fr: { menu:"MENU", fDist:"📍 Tous les districts", fSub:"🏘️ Tous les quartiers", fBed:"🛌 Chambres", fPrice:"💰 Trier par prix", pLow:"Croissant", pHigh:"Décroissant", view:"Voir détails", empty:"Aucun résultat" }
-    };
-
-    /* ✅ สำคัญมาก: แก้ปัญหารูปไม่ขึ้น (รองรับลิงก์ Google Drive หลายแบบ) */
-    function normalizeImageUrl(url) {
-      if (!url) return "";
-      const u = String(url).trim();
-
-      // already good (lh3)
-      if (u.includes("https://lh3.googleusercontent.com/d/")) return u;
-
-      // fileId from various drive formats
-      let fileId = "";
-
-      try {
-        if (u.includes("id=")) {
-          fileId = u.split("id=")[1].split("&")[0];
-        } else if (u.includes("/file/d/")) {
-          fileId = u.split("/file/d/")[1].split("/")[0];
-        } else if (u.includes("drive.google.com/open?")) {
-          // handled by id= above usually
-        } else if (u.includes("drive.google.com/uc?export=view")) {
-          // uc?export=view&id=...
-          if (u.includes("id=")) fileId = u.split("id=")[1].split("&")[0];
-        }
-      } catch (e) {}
-
-      if (fileId) return "https://lh3.googleusercontent.com/d/" + fileId;
-      return u; // fallback (maybe already direct image)
-    }
-
-    function safeText(v) {
-      return String(v ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
-    }
-
-    function num(v){
-      const n = Number(String(v ?? "").toString().replace(/[, ]+/g,""));
-      return isNaN(n) ? 0 : n;
+    async function init() {
+        try {
+            const res = await fetch(api);
+            allData = await res.json();
+            applyFilters();
+            document.getElementById('loader').style.display = 'none';
+        } catch (e) { document.getElementById('grid').innerHTML = "Connection Error"; }
     }
 
     function setLanguage(l) {
-      currentLang = l;
-      localStorage.setItem("smartLang", l);
-
-      const t = i18n[l] || i18n.en;
-
-      document.getElementById("txtMenu").innerText = t.menu;
-      document.querySelectorAll("[data-lang]").forEach(el => {
-        const k = el.getAttribute("data-lang");
-        if (t[k]) el.innerText = t[k];
-      });
-
-      // reset labels for subdistrict default option (ต้องอัปเดตหลัง innerHTML)
-      updateSubDistricts(true);
-      applyFilters();
+        localStorage.setItem('smartLang', l);
+        location.reload(); 
     }
 
-    function fillDistrictOptions(){
-      const distSel = document.getElementById("distFilter");
-      const current = distSel.value;
-
-      const districts = [...new Set(allData.map(x => x.District).filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b)));
-      distSel.innerHTML = `<option value="" data-lang="fDist">📍 อำเภอทั้งหมด</option>` + districts.map(d => `<option value="${safeText(d)}">${safeText(d)}</option>`).join("");
-
-      // restore if still exists
-      if (current && districts.includes(current)) distSel.value = current;
-    }
-
-    function updateSubDistricts(skipApply=false) {
-      const dist = document.getElementById("distFilter").value;
-      const subSel = document.getElementById("subDistFilter");
-
-      const t = i18n[currentLang] || i18n.en;
-
-      subSel.innerHTML = `<option value="" data-lang="fSub">${t.fSub}</option>`;
-
-      if (dist) {
-        const subs = [...new Set(allData
-          .filter(it => String(it.District||"") === String(dist))
-          .map(it => it.SubDistrict)
-          .filter(Boolean)
-        )].sort((a,b)=>String(a).localeCompare(String(b)));
-
-        subs.forEach(s => {
-          subSel.innerHTML += `<option value="${safeText(s)}">${safeText(s)}</option>`;
-        });
-      }
-
-      if (!skipApply) applyFilters();
+    function updateSubDistricts() {
+        const selectedDist = document.getElementById('distFilter').value;
+        const subDistSelect = document.getElementById('subDistFilter');
+        subDistSelect.innerHTML = '<option value="">🏘️ ตำบลทั้งหมด</option>';
+        if (selectedDist) {
+            const subs = [...new Set(allData.filter(it => it.District === selectedDist).map(it => it.SubDistrict))].filter(Boolean).sort();
+            subs.forEach(s => { const opt = document.createElement('option'); opt.value = s; opt.innerText = s; subDistSelect.appendChild(opt); });
+        }
+        applyFilters();
     }
 
     function renderGrid(items) {
-      const grid = document.getElementById("grid");
-      const emptyBox = document.getElementById("emptyBox");
-      const t = i18n[currentLang] || i18n.en;
-
-      if (!items || items.length === 0) {
-        grid.innerHTML = "";
-        emptyBox.innerText = t.empty;
-        emptyBox.style.display = "block";
-        return;
-      }
-      emptyBox.style.display = "none";
-
-      grid.innerHTML = items.map(it => {
-        const hp = safeText(it.HP_ID || it.hp_id || "");
-        const houseId = safeText(it.HOUSE_ID || it.ID || it.House_ID || "");
-        const project = safeText(it.Project_Name || it.Project || "");
-        const price = num(it.Price);
-        const img = normalizeImageUrl(it.Thumbnail || it.Image || it.Photo || "");
-
-        // ✅ ปุ่ม “ดูรายละเอียด” + คลิกเข้า details.html?id=HP-xxxx เหมือนเดิม
-        const link = `details.html?id=${encodeURIComponent(it.HP_ID || it.hp_id || "")}`;
-
-        return `
-          <div class="card">
-            <div class="badge-hp">${hp || "-"}</div>
-            <img class="card-img"
-              src="${safeText(img)}"
-              alt="${houseId}"
-              onerror="this.onerror=null;this.src='https://placehold.co/600x800?text=SMART+PROPERTY';">
-            <div class="card-body">
-              <div class="house-id-text">${houseId || "-"}</div>
-              <div class="project-name">${project || "-"}</div>
-              <span class="price-text">฿${price.toLocaleString()}</span>
-              <a class="btn-detail" href="${link}">${t.view}</a>
-            </div>
-          </div>
-        `;
-      }).join("");
-
-      // ✅ ทำให้ “คลิกที่รูป” เข้าได้ด้วย (ตามที่คุณบอกว่าเดิมคลิกที่รูปเข้าได้)
-      grid.querySelectorAll(".card").forEach((cardEl, idx) => {
-        const it = items[idx];
-        const link = `details.html?id=${encodeURIComponent(it.HP_ID || it.hp_id || "")}`;
-        const img = cardEl.querySelector("img.card-img");
-        if (img) img.style.cursor = "pointer";
-        if (img) img.addEventListener("click", () => window.location.href = link);
-      });
+        const grid = document.getElementById('grid'); grid.innerHTML = "";
+        items.forEach(it => {
+            grid.innerHTML += `
+                <div class="card" onclick="window.location.href='details.html?id=${it.HP_ID}'">
+                    <div class="badge-hp">${it.HP_ID}</div>
+                    <img src="${it.Thumbnail}" class="card-img" onerror="this.src='https://placehold.co/600x800'">
+                    <div class="card-body">
+                        <div class="house-id-text">${it.HOUSE_ID || it.ID}</div>
+                        <div class="project-name">${it.Project_Name}</div>
+                        <span class="price-text">฿${Number(it.Price).toLocaleString()}</span>
+                        <div class="btn-detail">ดูรายละเอียด</div>
+                    </div>
+                </div>`;
+        });
     }
 
     function applyFilters() {
-      let data = [...allData];
-
-      const dist = document.getElementById("distFilter").value;
-      const sub = document.getElementById("subDistFilter").value;
-      const bed = document.getElementById("bedFilter").value;
-      const sort = document.getElementById("priceSort").value;
-
-      if (dist) data = data.filter(it => String(it.District||"") === String(dist));
-      if (sub) data = data.filter(it => String(it.SubDistrict||"") === String(sub));
-
-      if (bed) {
-        const b = Number(bed);
-        data = data.filter(it => {
-          const bb = Number(it.Bedrooms || it.Bed || 0);
-          if (b >= 4) return bb >= 4;
-          return bb === b; // ✅ ให้เหมือนหน้าดีเดิม: เลือก 3 = 3 ห้องนอน
-        });
-      }
-
-      if (sort === "low") data.sort((a,b) => num(a.Price) - num(b.Price));
-      if (sort === "high") data.sort((a,b) => num(b.Price) - num(a.Price));
-
-      renderGrid(data);
+        let data = [...allData];
+        const d = document.getElementById('distFilter').value;
+        const s = document.getElementById('subDistFilter').value;
+        const b = document.getElementById('bedFilter').value;
+        const sort = document.getElementById('priceSort').value;
+        if (d) data = data.filter(it => it.District === d);
+        if (s) data = data.filter(it => it.SubDistrict === s);
+        if (b) data = data.filter(it => Number(it.Bedrooms) >= Number(b));
+        if (sort === "low") data.sort((a,b) => a.Price - b.Price); 
+        else if (sort === "high") data.sort((a,b) => b.Price - a.Price);
+        renderGrid(data);
     }
-
-    async function init() {
-      try {
-        // ✅ รองรับทั้งแบบ api ส่ง array ตรง ๆ หรือห่อด้วย field อื่น
-        const res = await fetch(`${api}?role=PUBLIC`, { cache: "no-store" });
-        const payload = await res.json();
-
-        let arr = [];
-        if (Array.isArray(payload)) arr = payload;
-        else if (Array.isArray(payload.data)) arr = payload.data;
-        else if (Array.isArray(payload.items)) arr = payload.items;
-        else arr = [];
-
-        // ✅ กันพัง: ต้องมี HP_ID ถึงจะไปหน้า details ได้
-        allData = arr.filter(x => (x.HP_ID || x.hp_id));
-
-        // เติม option อำเภอจากข้อมูลจริง
-        fillDistrictOptions();
-
-        // ตั้งภาษา + render
-        setLanguage(currentLang);
-
-        // ซ่อน loader
-        document.getElementById("loader").style.display = "none";
-      } catch (e) {
-        document.getElementById("loader").style.display = "none";
-        document.getElementById("emptyBox").style.display = "block";
-        document.getElementById("emptyBox").innerText = "Connection Error / โหลดข้อมูลไม่สำเร็จ";
-        console.error(e);
-      }
-    }
-
     window.onload = init;
-  </script>
+</script>
 </body>
 </html>
