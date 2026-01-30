@@ -84,17 +84,128 @@
 <div class="property-grid" id="grid"></div>
 
 <script>
-    const api = "https://script.google.com/macros/s/AKfycbyS8rGtSnhVS8RdWje7icXZVCw5iBBJoWkEpOYm649OC6FOhnrVi87dD9GsJl_m_FVw/exec";
-    let allData = [];
+  const api = "https://script.google.com/macros/s/AKfycbyS8rGtSnhVS8RdWje7icXZVCw5iBBJoWkEpOYm649OC6FOhnrVi87dD9GsJl_m_FVw/exec";
+  let allData = [];
 
-    async function init() {
-        try {
-            const res = await fetch(`${api}?role=PUBLIC`);
-            allData = await res.json();
-            applyFilters();
-            document.getElementById('loader').style.display = 'none';
-        } catch (e) { document.getElementById('grid').innerHTML = "Connection Error"; }
+  async function init() {
+    try {
+      const res = await fetch(`${api}?role=PUBLIC`);
+      allData = await res.json();
+
+      // เริ่มต้น: เติมตำบลตาม "อำเภอทั้งหมด" (ว่าง) แล้วแสดงทั้งหมด
+      updateSubDistricts(true);
+
+      document.getElementById('loader').style.display = 'none';
+    } catch (e) {
+      document.getElementById('grid').innerHTML = "Connection Error";
     }
+  }
+
+  // ✅ แปลงค่าจาก dropdown (ไทย) ให้ตรงกับค่าจริงในฐานข้อมูล (อังกฤษ)
+  function normalizeDistrict(selected) {
+    const map = {
+      "หัวหิน": "Hua Hin",
+      "ชะอำ": "Cha-am",
+      "ปราณบุรี": "Pranburi"
+    };
+    // ถ้าเลือกเป็นไทย -> แปลงเป็นอังกฤษ
+    // ถ้าคุณแก้ dropdown ให้เป็นอังกฤษในอนาคต ก็ยังใช้ได้ (จะคืนค่าเดิม)
+    return map[selected] || selected || "";
+  }
+
+  // ✅ อัปเดตตำบลตามอำเภอที่เลือก + รีเซ็ตตำบล (กันค้างค่าเดิม)
+  //    พารามิเตอร์ keepCurrentSub = true ใช้ตอน init เพื่อไม่ต้องรีเซ็ตซ้ำ
+  function updateSubDistricts(keepCurrentSub = false) {
+    const distSelect = document.getElementById('distFilter');
+    const subDistSelect = document.getElementById('subDistFilter');
+
+    const selectedDistRaw = distSelect.value;
+    const selectedDist = normalizeDistrict(selectedDistRaw);
+
+    const currentSub = subDistSelect.value;
+
+    // ล้างรายการตำบล
+    subDistSelect.innerHTML = '<option value="">🏘️ ตำบลทั้งหมด</option>';
+
+    // หา “ตำบล” จากข้อมูลจริง (กรณีเลือกอำเภอ)
+    let dataForSub = [...allData];
+    if (selectedDist) {
+      dataForSub = dataForSub.filter(it => (it.District || "").trim() === selectedDist);
+    }
+
+    const subDistricts = [...new Set(
+      dataForSub.map(it => (it.SubDistrict || "").trim())
+    )].filter(Boolean).sort((a,b)=>a.localeCompare(b,'th'));
+
+    subDistricts.forEach(sub => {
+      const opt = document.createElement('option');
+      opt.value = sub;
+      opt.innerText = sub;
+      subDistSelect.appendChild(opt);
+    });
+
+    // รีเซ็ตตำบลเมื่อเปลี่ยนอำเภอ (กันเลือกค้างจากอำเภออื่น)
+    if (!keepCurrentSub) {
+      subDistSelect.value = "";
+    } else {
+      // ถ้า init และตำบลเดิมยังมีอยู่ ก็คืนค่าเดิม
+      if (currentSub && subDistricts.includes(currentSub)) subDistSelect.value = currentSub;
+    }
+
+    // แสดงผลทันที: เลือกอำเภอแล้วต้องโชว์ทั้งหมดของอำเภอนั้น
+    applyFilters();
+  }
+
+  function renderGrid(items) {
+    const grid = document.getElementById('grid');
+    grid.innerHTML = "";
+
+    items.forEach(it => {
+      grid.innerHTML += `
+        <div class="card" onclick="window.location.href='details.html?id=${it.HP_ID}'">
+          <div class="badge-hp">${it.HP_ID}</div>
+          <img src="${it.Thumbnail}" class="card-img" onerror="this.src='https://placehold.co/600x800'">
+          <div class="card-body">
+            <div class="house-id-text">${it.ID || it.HOUSE_ID || ""}</div>
+            <div class="project-name">${it.Project_Name || ""}</div>
+            <span class="price-text">฿${Number(String(it.Price||"0").toString().replace(/,/g,'') || 0).toLocaleString()}</span>
+            <div class="btn-detail">ดูรายละเอียด</div>
+          </div>
+        </div>`;
+    });
+  }
+
+  // ✅ ฟิลเตอร์รวม: อำเภอ -> ตำบล -> ห้องนอน -> เรียงราคา
+  function applyFilters() {
+    let data = [...allData];
+
+    const dRaw = document.getElementById('distFilter').value;
+    const d = normalizeDistrict(dRaw);
+    const s = document.getElementById('subDistFilter').value;
+    const b = document.getElementById('bedFilter').value;
+    const sort = document.getElementById('priceSort').value;
+
+    // กรองตามอำเภอ
+    if (d) data = data.filter(it => (it.District || "").trim() === d);
+
+    // กรองตามตำบล
+    if (s) data = data.filter(it => (it.SubDistrict || "").trim() === s);
+
+    // กรองตามห้องนอน (ตัวเลข)
+    if (b) data = data.filter(it => Number(it.Bedrooms || 0) >= Number(b));
+
+    // เรียงราคา (กัน Price เป็น "7,500,000")
+    const priceNum = (x) => Number(String(x || "0").replace(/,/g, "")) || 0;
+
+    if (sort === "low") data.sort((a,b) => priceNum(a.Price) - priceNum(b.Price));
+    else if (sort === "high") data.sort((a,b) => priceNum(b.Price) - priceNum(a.Price));
+
+    renderGrid(data);
+  }
+
+  window.onload = init;
+</script>
+
 
     /** 🛠️ แก้ไข: ฟังก์ชันอัปเดตตำบลตามอำเภอที่เลือก [cite: 2026-01-27] */
     function updateSubDistricts() {
@@ -167,3 +278,4 @@
 </script>
 </body>
 </html>
+
