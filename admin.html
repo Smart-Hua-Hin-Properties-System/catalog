@@ -11,9 +11,22 @@
         body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; overflow-x: hidden; }
 
         /* 🔒 Login UI */
-        .login-box { background: white; padding: 40px; border-radius: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); width: 90%; max-width: 380px; text-align: center; transition: 0.5s; }
-        .pin-field { width: 100%; padding: 15px; font-size: 32px; text-align: center; border: 2px solid #eee; border-radius: 20px; letter-spacing: 8px; margin: 25px 0; outline: none; background: #f9f9f9; }
-        .pin-field:focus { border-color: var(--primary); background: #fff; }
+        .login-box { background: white; padding: 40px; border-radius: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); width: 90%; max-width: 420px; text-align: center; }
+        
+        /* ช่องกรอกรหัสพร้อมปุ่มดวงตา */
+        .pin-wrapper { position: relative; margin: 25px 0; }
+        .pin-field { 
+            width: 100%; padding: 15px 50px 15px 15px; font-size: 28px; text-align: center; 
+            border: 2px solid #eee; border-radius: 20px; letter-spacing: 5px; outline: none; 
+            background: #f9f9f9; box-sizing: border-box; transition: 0.3s;
+        }
+        .pin-field:focus { border-color: var(--primary); background: #fff; box-shadow: 0 0 0 4px rgba(26, 82, 118, 0.1); }
+        
+        .toggle-password { 
+            position: absolute; right: 20px; top: 50%; transform: translateY(-50%); 
+            cursor: pointer; color: #aaa; font-size: 1.2rem; transition: 0.3s; 
+        }
+        .toggle-password:hover { color: var(--primary); }
 
         /* 📊 Dashboard UI (Hidden by default) */
         #dashboard { display: none; background: #f0f2f5; position: fixed; inset: 0; z-index: 10000; overflow-y: auto; padding: 20px; }
@@ -21,14 +34,15 @@
         .user-info { display: flex; align-items: center; gap: 12px; }
         .user-info img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid white; }
         
-        /* Menu Grid based on Role */
+        /* Menu Grid */
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .menu-card { background: white; padding: 25px; border-radius: 25px; text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,0.05); cursor: pointer; transition: 0.3s; }
         .menu-card:hover { transform: translateY(-5px); background: var(--primary); color: white; }
         .menu-card i { font-size: 2.5rem; margin-bottom: 12px; }
 
         .btn { width: 100%; padding: 15px; border-radius: 20px; border: none; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: 0.3s; }
-        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary { background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-primary:active { transform: scale(0.98); }
         .btn-logout { background: #e74c3c; color: white; width: auto; padding: 8px 20px; font-size: 0.9rem; }
         
         .hidden { display: none; }
@@ -41,7 +55,10 @@
         <h2 style="color: var(--primary); margin: 10px 0;">ADMIN ACCESS</h2>
         <p style="color: #666;">กรุณากรอกรหัส PIN 6 หลักเพื่อเข้าใช้งาน</p>
         
-        <input type="password" id="pinInput" class="pin-field" maxlength="6" inputmode="numeric" placeholder="••••••">
+        <div class="pin-wrapper">
+            <input type="password" id="pinInput" class="pin-field" maxlength="6" inputmode="numeric" placeholder="••••••">
+            <i class="fas fa-eye toggle-password" id="eyeIcon" onclick="togglePinVisibility()"></i>
+        </div>
         
         <button class="btn btn-primary" id="loginBtn" onclick="doLogin()">
             <i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ
@@ -66,20 +83,39 @@
     </div>
 
 <script>
+    // 🚩 เปลี่ยนเป็น URL ของ Apps Script ตัวล่าสุดของคุณ
     const API_URL = "https://script.google.com/macros/s/AKfycbyS8rGtSnhVS8RdWje7icXZVCw5iBBJoWkEpOYm649OC6FOhnrVi87dD9GsJl_m_FVw/exec";
 
-    // ตรวจสอบการพิมพ์รหัส 6 หลัก (Auto Login)
-    document.getElementById('pinInput').addEventListener('input', function(e) {
-        if(this.value.length === 6) doLogin();
-    });
+    /** 👁️ ฟังก์ชันเปิด-ปิดดวงตาเพื่อดูรหัส PIN */
+    function togglePinVisibility() {
+        const pinInput = document.getElementById('pinInput');
+        const eyeIcon = document.getElementById('eyeIcon');
+        
+        if (pinInput.type === "password") {
+            pinInput.type = "text";
+            eyeIcon.classList.remove('fa-eye');
+            eyeIcon.classList.add('fa-eye-slash');
+        } else {
+            pinInput.type = "password";
+            eyeIcon.classList.remove('fa-eye-slash');
+            eyeIcon.classList.add('fa-eye');
+        }
+    }
 
+    /** 🔒 ฟังก์ชันส่งคำขอ Login (ต้องกดปุ่มเท่านั้น) */
     async function doLogin() {
         const pin = document.getElementById('pinInput').value;
-        if(pin.length < 6) return;
-
+        const errMsg = document.getElementById('errMsg');
         const btn = document.getElementById('loginBtn');
+
+        if (pin.length < 6) {
+            errMsg.innerText = "กรุณากรอกรหัส PIN ให้ครบ 6 หลัก";
+            return;
+        }
+
         btn.disabled = true;
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังตรวจสอบ...';
+        errMsg.innerText = "";
 
         try {
             const res = await fetch(API_URL, {
@@ -91,23 +127,25 @@
             if (data.success) {
                 showDashboard(data.userData);
             } else {
-                document.getElementById('errMsg').innerText = data.message;
+                errMsg.innerText = data.message;
                 btn.disabled = false;
-                btn.innerHTML = 'เข้าสู่ระบบ';
+                btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ';
             }
         } catch (e) {
-            document.getElementById('errMsg').innerText = "การเชื่อมต่อขัดข้อง";
+            errMsg.innerText = "การเชื่อมต่อขัดข้อง กรุณาลองใหม่";
             btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ';
         }
     }
 
+    /** 📊 ฟังก์ชันแสดง Dashboard ตามสิทธิ์ */
     function showDashboard(user) {
         document.getElementById('loginPortal').classList.add('hidden');
         document.getElementById('dashboard').style.display = 'block';
         document.body.style.background = "#f0f2f5";
 
         document.getElementById('userName').innerText = user.name;
-        document.getElementById('userRole').innerText = user.role + " | Access: " + user.project;
+        document.getElementById('userRole').innerText = user.role + " | " + (user.project || "ALL");
         document.getElementById('userPhoto').src = user.photo;
 
         renderMenu(user.role);
@@ -116,40 +154,29 @@
     function renderMenu(role) {
         const menu = document.getElementById('roleMenu');
         let items = "";
-
-        // สิทธิ์สำหรับ SUPER_ADMIN (ดูได้ทุกอย่าง)
+        
+        // กรองเมนูตาม Role ที่ได้รับมา [cite: 2026-01-27]
         if (role === "SUPER_ADMIN") {
-            items += createMenuItem("fas fa-database", "จัดการข้อมูลทั้งหมด");
-            items += createMenuItem("fas fa-users-cog", "จัดการสมาชิกทีม");
-            items += createMenuItem("fas fa-chart-line", "สรุปยอดขายรวม");
-            items += createMenuItem("fas fa-file-invoice-dollar", "การบัญชี");
-        } 
-        // สิทธิ์สำหรับ PROJECT_ADMIN
-        else if (role === "PROJECT_ADMIN") {
-            items += createMenuItem("fas fa-home", "อัปเดตสถานะบ้าน");
-            items += createMenuItem("fas fa-user-friends", "รายชื่อลูกค้า");
+            items += createMenuItem("fas fa-database", "จัดการทรัพย์ทั้งหมด");
+            items += createMenuItem("fas fa-user-check", "จัดการ Agent");
+            items += createMenuItem("fas fa-file-invoice-dollar", "การเงิน/บัญชี");
+            items += createMenuItem("fas fa-chart-pie", "สถิติภาพรวม");
+        } else if (role === "PROJECT_ADMIN") {
+            items += createMenuItem("fas fa-house-user", "จัดการโครงการ");
+            items += createMenuItem("fas fa-users", "ลูกค้ามุ่งหวัง");
+        } else {
+            items += createMenuItem("fas fa-search", "ค้นหารายการ");
+            items += createMenuItem("fas fa-history", "ประวัติการจอง");
         }
-        // สิทธิ์สำหรับ FINANCE
-        else if (role === "FINANCE") {
-            items += createMenuItem("fas fa-wallet", "ตรวจสอบการชำระ");
-            items += createMenuItem("fas fa-history", "ประวัติธุรกรรม");
-        }
-        // สิทธิ์สำหรับ AGENT
-        else if (role === "AGENT") {
-            items += createMenuItem("fas fa-plus-circle", "ส่งรายการจอง");
-            items += createMenuItem("fas fa-id-card", "ข้อมูลคอมมิชชัน");
-        }
-
         menu.innerHTML = items;
     }
 
     function createMenuItem(icon, label) {
         return `
-            <div class="menu-card" onclick="alert('กำลังเข้าสู่ระบบ${label}')">
+            <div class="menu-card" onclick="alert('ระบบกำลังพัฒนาส่วนของ ${label}')">
                 <i class="${icon}"></i>
                 <div style="font-weight:500;">${label}</div>
-            </div>
-        `;
+            </div>`;
     }
 </script>
 </body>
