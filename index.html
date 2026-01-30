@@ -6,192 +6,223 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --navy: #1a4361;
-      --gold: #856404;
-      --bg: #a9c0df;
+      --bg: #a9c3e5;
       --card: #ffffff;
-      --green: #1aa35f;
+      --primary: #1a4361;
+      --accent: #1e88e5;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Kanit', sans-serif;
     }
 
     body {
       margin: 0;
-      font-family: 'Kanit', sans-serif;
       background: var(--bg);
     }
 
     header {
-      padding: 20px;
-      font-size: 22px;
+      padding: 16px 24px;
+      font-size: 20px;
       font-weight: 600;
-      color: var(--navy);
+      color: var(--primary);
     }
 
     /* FILTER BAR */
-    .filter-bar {
-      display: flex;
-      gap: 10px;
-      padding: 0 20px 20px;
-      flex-wrap: wrap;
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      padding: 0 24px 20px;
     }
 
-    .filter-bar input,
-    .filter-bar select {
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-family: 'Kanit', sans-serif;
+    select {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: none;
+      font-size: 15px;
     }
 
     /* GRID */
     .grid {
+      padding: 0 24px 40px;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 20px;
-      padding: 20px;
     }
 
     .card {
       background: var(--card);
-      border-radius: 18px;
+      border-radius: 22px;
       overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
       display: flex;
       flex-direction: column;
     }
 
     .card img {
       width: 100%;
-      height: 170px;
+      height: 190px;
       object-fit: cover;
-      cursor: pointer;
+      background: #eee;
     }
 
     .card-body {
-      padding: 14px;
+      padding: 14px 16px 18px;
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 6px;
     }
 
-    .house-id {
+    .code {
       font-weight: 600;
+      font-size: 16px;
     }
 
     .project {
       font-size: 14px;
-      color: #555;
+      color: #666;
+      margin-top: 2px;
     }
 
     .price {
+      margin: 10px 0 14px;
       font-size: 18px;
       font-weight: 600;
-      color: var(--green);
+      color: var(--primary);
     }
 
-    .status {
-      font-size: 14px;
-    }
-
-    .detail-btn {
-      margin-top: 10px;
+    .btn {
+      margin-top: auto;
       padding: 10px;
-      text-align: center;
-      background: var(--navy);
+      border-radius: 30px;
+      border: none;
+      background: var(--primary);
       color: #fff;
-      border-radius: 10px;
-      text-decoration: none;
-      font-size: 14px;
+      font-size: 15px;
+      cursor: pointer;
     }
 
-    .detail-btn:hover {
-      background: #12344d;
+    .btn:hover {
+      background: var(--accent);
+    }
+
+    @media (max-width: 768px) {
+      .filters {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <header>SMART PROPERTIES SYSTEM</header>
+<header>SMART PROPERTIES SYSTEM</header>
 
-  <!-- FILTER BAR -->
-  <div class="filter-bar">
-    <input type="text" id="searchInput" placeholder="ค้นหา House ID / โครงการ">
-    <select id="statusFilter">
-      <option value="">ทุกสถานะ</option>
-      <option value="Available">Available</option>
-      <option value="Pending">Pending</option>
-      <option value="Sold">Sold</option>
-    </select>
-  </div>
+<!-- FILTER BAR -->
+<div class="filters">
+  <select id="districtFilter">
+    <option value="">อำเภอทั้งหมด</option>
+  </select>
 
-  <!-- PROPERTY GRID -->
-  <div class="grid" id="propertyGrid"></div>
+  <select id="subFilter">
+    <option value="">ตำบลทั้งหมด</option>
+  </select>
 
-  <script>
-    const API_URL = "PUT_YOUR_API_URL_HERE"; // 🔴 ใส่ URL API เดิมของคุณ
+  <select id="bedFilter">
+    <option value="">ห้องนอนทั้งหมด</option>
+    <option value="2">2+</option>
+    <option value="3">3+</option>
+    <option value="4">4+</option>
+  </select>
 
-    let properties = [];
+  <select id="sortFilter">
+    <option value="">เรียงราคา</option>
+    <option value="asc">น้อย → มาก</option>
+    <option value="desc">มาก → น้อย</option>
+  </select>
+</div>
 
-    fetch(API_URL)
-      .then(res => res.json())
-      .then(data => {
-        properties = data;
-        render(properties);
-      });
+<!-- CARD GRID -->
+<div class="grid" id="propertyGrid"></div>
 
-    const grid = document.getElementById("propertyGrid");
-    const searchInput = document.getElementById("searchInput");
-    const statusFilter = document.getElementById("statusFilter");
+<script>
+const API_URL = "YOUR_APPS_SCRIPT_API_URL";
 
-    function render(list) {
-      grid.innerHTML = "";
-      list.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "card";
+let allData = [];
 
-        card.innerHTML = `
-          <img src="${item.Thumbnail}" onclick="goDetail('${item.HP_ID}')">
-          <div class="card-body">
-            <div class="house-id">${item.HOUSE_ID}</div>
-            <div class="project">${item.Project_Name}</div>
-            <div class="price">฿${Number(item.Price).toLocaleString()}</div>
-            <div class="status">สถานะ: ${item.Status}</div>
-            <a class="detail-btn" href="details.html?id=${item.HP_ID}">
-              ดูรายละเอียด
-            </a>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-    }
+fetch(API_URL)
+  .then(r => r.json())
+  .then(data => {
+    allData = data;
+    initFilters(data);
+    render(data);
+  });
 
-    function goDetail(id) {
-      window.location.href = `details.html?id=${id}`;
-    }
+function initFilters(data) {
+  const district = [...new Set(data.map(d => d.District).filter(Boolean))];
+  district.forEach(v => districtFilter.innerHTML += `<option>${v}</option>`);
 
-    function applyFilter() {
-      const keyword = searchInput.value.toLowerCase();
-      const status = statusFilter.value;
+  districtFilter.onchange = () => {
+    subFilter.innerHTML = '<option value="">ตำบลทั้งหมด</option>';
+    [...new Set(
+      allData
+        .filter(d => d.District === districtFilter.value)
+        .map(d => d.SubDistrict)
+    )].forEach(v => subFilter.innerHTML += `<option>${v}</option>`);
+    apply();
+  };
 
-      const filtered = properties.filter(p => {
-        const matchText =
-          p.HOUSE_ID.toLowerCase().includes(keyword) ||
-          p.Project_Name.toLowerCase().includes(keyword);
+  [subFilter, bedFilter, sortFilter].forEach(el => el.onchange = apply);
+}
 
-        const matchStatus = status === "" || p.Status === status;
+function apply() {
+  let list = [...allData];
 
-        return matchText && matchStatus;
-      });
+  if (districtFilter.value)
+    list = list.filter(d => d.District === districtFilter.value);
 
-      render(filtered);
-    }
+  if (subFilter.value)
+    list = list.filter(d => d.SubDistrict === subFilter.value);
 
-    searchInput.addEventListener("keyup", applyFilter);
-    statusFilter.addEventListener("change", applyFilter);
-  </script>
+  if (bedFilter.value)
+    list = list.filter(d => Number(d.Bedrooms) >= Number(bedFilter.value));
+
+  if (sortFilter.value === "asc")
+    list.sort((a,b)=>a.Price-b.Price);
+
+  if (sortFilter.value === "desc")
+    list.sort((a,b)=>b.Price-a.Price);
+
+  render(list);
+}
+
+function render(data) {
+  propertyGrid.innerHTML = "";
+  data.forEach(d => {
+    propertyGrid.innerHTML += `
+      <div class="card">
+        <img src="${d.Thumbnail || 'https://via.placeholder.com/400x300'}">
+        <div class="card-body">
+          <div class="code">${d.HOUSE_ID}</div>
+          <div class="project">${d.Project_Name}</div>
+          <div class="price">฿${Number(d.Price).toLocaleString()}</div>
+          <button class="btn" onclick="go('${d.HP_ID}')">ดูรายละเอียด</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function go(id){
+  location.href = `details.html?id=${id}`;
+}
+</script>
 
 </body>
 </html>
