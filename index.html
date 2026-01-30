@@ -205,40 +205,6 @@
 
   window.onload = init;
 </script>
-
-
-    /** 🛠️ แก้ไข: ฟังก์ชันอัปเดตตำบลตามอำเภอที่เลือก [cite: 2026-01-27] */
-    function updateSubDistricts() {
-        const selectedDist = document.getElementById('distFilter').value;
-        const subDistSelect = document.getElementById('subDistFilter');
-        
-        // ล้างค่าเดิมในช่องตำบล
-        subDistSelect.innerHTML = '<option value="">🏘️ ตำบลทั้งหมด</option>';
-        
-        if (selectedDist) {
-            // ค้นหาตำบลที่มีอยู่จริงในอำเภอนั้นจากฐานข้อมูล [cite: 2026-01-27]
-            const subDistricts = [...new Set(
-                allData.filter(it => it.District === selectedDist)
-                       .map(it => it.SubDistrict)
-            )].filter(Boolean).sort();
-            
-            // เพิ่มตำบลที่ค้นพบลงในตัวเลือก
-            subDistricts.forEach(sub => {
-                const opt = document.createElement('option');
-                opt.value = sub;
-                opt.innerText = sub;
-                subDistSelect.appendChild(opt);
-            });
-        }
-        
-        // รันฟิลเตอร์เพื่อโชว์บ้านทั้งหมดในอำเภอนั้นทันที [cite: 2026-01-27]
-        applyFilters();
-    }
-
-    function renderGrid(items) {
-        const grid = document.getElementById('grid'); grid.innerHTML = "";
-        items.forEach(it => {
-            grid.innerHTML += `
                 <div class="card" onclick="window.location.href='details.html?id=${it.HP_ID}'">
                     <div class="badge-hp">${it.HP_ID}</div>
                     <img src="${it.Thumbnail}" class="card-img" onerror="this.src='https://placehold.co/600x800'">
@@ -278,4 +244,5 @@
 </script>
 </body>
 </html>
+
 
