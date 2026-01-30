@@ -3,181 +3,433 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ADMIN ACCESS | SMART PROPERTIES SYSTEM</title>
+    <title>ADMIN | SMART PROPERTIES SYSTEM</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --primary: #1a5276; --bg: #9fb8dc; --white: #ffffff; --navy: #154360; }
-        body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; overflow-x: hidden; }
+        :root { --primary: #1a5276; --navy: #154360; --bg: #9fb8dc; --white: #ffffff; --green: #27ae60; --red: #e74c3c; }
+        body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; min-height: 100vh; overflow-x: hidden; }
 
-        /* 🔒 Login UI */
-        .login-box { background: white; padding: 40px; border-radius: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); width: 90%; max-width: 420px; text-align: center; }
-        
-        /* ช่องกรอกรหัสพร้อมปุ่มดวงตา */
+        /* 🔒 Login Portal */
+        #loginPortal { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; box-sizing: border-box; }
+        .login-box { background: white; padding: 45px; border-radius: 45px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); width: 100%; max-width: 420px; text-align: center; }
         .pin-wrapper { position: relative; margin: 25px 0; }
-        .pin-field { 
-            width: 100%; padding: 15px 50px 15px 15px; font-size: 28px; text-align: center; 
-            border: 2px solid #eee; border-radius: 20px; letter-spacing: 5px; outline: none; 
-            background: #f9f9f9; box-sizing: border-box; transition: 0.3s;
-        }
-        .pin-field:focus { border-color: var(--primary); background: #fff; box-shadow: 0 0 0 4px rgba(26, 82, 118, 0.1); }
+        .pin-field { width: 100%; padding: 15px; font-size: 28px; text-align: center; border: 2px solid #eee; border-radius: 20px; letter-spacing: 5px; outline: none; background: #f9f9f9; box-sizing: border-box; }
         
-        .toggle-password { 
-            position: absolute; right: 20px; top: 50%; transform: translateY(-50%); 
-            cursor: pointer; color: #aaa; font-size: 1.2rem; transition: 0.3s; 
-        }
-        .toggle-password:hover { color: var(--primary); }
-
-        /* 📊 Dashboard UI (Hidden by default) */
-        #dashboard { display: none; background: #f0f2f5; position: fixed; inset: 0; z-index: 10000; overflow-y: auto; padding: 20px; }
-        .top-nav { background: var(--navy); color: white; padding: 15px 25px; border-radius: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-        .user-info { display: flex; align-items: center; gap: 12px; }
-        .user-info img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid white; }
+        /* 📊 Dashboard UI */
+        #dashboard { display: none; background: #f0f2f5; position: fixed; inset: 0; z-index: 1000; overflow-y: auto; padding-bottom: 50px; }
+        .top-nav { background: var(--navy); color: white; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1100; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        
+        .profile-banner { background: var(--primary); color: white; padding: 40px 20px; text-align: center; border-radius: 0 0 50px 50px; margin-bottom: 20px; }
+        .profile-img { width: 110px; height: 110px; border-radius: 50%; border: 4px solid white; object-fit: cover; background: #eee; margin-bottom: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        
+        .main-container { max-width: 700px; margin: 0 auto; padding: 0 15px; }
+        .card { background: white; padding: 30px; border-radius: 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 20px; }
         
         /* Menu Grid */
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .menu-card { background: white; padding: 25px; border-radius: 25px; text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,0.05); cursor: pointer; transition: 0.3s; }
-        .menu-card:hover { transform: translateY(-5px); background: var(--primary); color: white; }
-        .menu-card i { font-size: 2.5rem; margin-bottom: 12px; }
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        .menu-btn { background: white; padding: 25px 15px; border-radius: 25px; text-align: center; border: 1.5px solid #f0f0f0; transition: 0.3s; cursor: pointer; }
+        .menu-btn:hover { border-color: var(--primary); background: #f0f7ff; transform: translateY(-3px); }
+        .menu-btn i { font-size: 2rem; color: var(--primary); margin-bottom: 10px; }
 
-        .btn { width: 100%; padding: 15px; border-radius: 20px; border: none; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: 0.3s; }
-        .btn-primary { background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .btn-primary:active { transform: scale(0.98); }
-        .btn-logout { background: #e74c3c; color: white; width: auto; padding: 8px 20px; font-size: 0.9rem; }
+        /* Form Styling */
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 0.75rem; font-weight: 700; color: #888; text-transform: uppercase; margin-bottom: 5px; margin-left: 5px; }
+        input { width: 100%; padding: 12px 15px; border-radius: 12px; border: 1.5px solid #eee; box-sizing: border-box; font-family: 'Kanit'; font-size: 0.95rem; }
+        input[readonly] { background: #f9f9f9; color: #aaa; border-color: #f0f0f0; cursor: not-allowed; }
         
-        .hidden { display: none; }
+        .btn { width: 100%; padding: 16px; border-radius: 20px; border: none; font-weight: 600; cursor: pointer; transition: 0.3s; font-size: 1rem; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-logout { background: var(--red); color: white; width: auto; padding: 8px 18px; font-size: 0.85rem; }
     </style>
 </head>
 <body>
 
-    <div class="login-box" id="loginPortal">
-        <div style="font-size: 60px;">🛡️</div>
-        <h2 style="color: var(--primary); margin: 10px 0;">ADMIN ACCESS</h2>
-        <p style="color: #666;">กรุณากรอกรหัส PIN 6 หลักเพื่อเข้าใช้งาน</p>
-        
-        <div class="pin-wrapper">
-            <input type="password" id="pinInput" class="pin-field" maxlength="6" inputmode="numeric" placeholder="••••••">
-            <i class="fas fa-eye toggle-password" id="eyeIcon" onclick="togglePinVisibility()"></i>
+    <div id="loginPortal">
+        <div class="login-box">
+            <div style="font-size: 60px;">🛡️</div>
+            <h2 style="color: var(--primary); margin-bottom: 5px;">ADMIN ACCESS</h2>
+            <p style="color: #666; margin-bottom: 25px;">กรุณากรอกรหัส PIN 6 หลักเพื่อเข้าใช้งาน</p>
+            
+            <div class="pin-wrapper">
+                <input type="password" id="pinInput" class="pin-field" maxlength="6" placeholder="••••••">
+                <i class="fas fa-eye" style="position:absolute; right:20px; top:50%; transform:translateY(-50%); cursor:pointer; color:#ccc;" id="eyeBtn" onclick="togglePin()"></i>
+            </div>
+            
+            <button class="btn btn-primary" id="loginBtn" onclick="handleLogin()">เข้าสู่ระบบ</button>
+            <div id="loginMsg" style="color: var(--red); margin-top: 15px; font-weight: 500;"></div>
         </div>
-        
-        <button class="btn btn-primary" id="loginBtn" onclick="doLogin()">
-            <i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ
-        </button>
-        <div id="errMsg" style="color: #e74c3c; margin-top: 15px; font-weight: 500;"></div>
     </div>
 
     <div id="dashboard">
         <div class="top-nav">
-            <div class="user-info">
-                <img id="userPhoto" src="" alt="Profile">
-                <div>
-                    <div id="userName" style="font-weight: 600; font-size: 1.1rem;">-</div>
-                    <div id="userRole" style="font-size: 0.75rem; opacity: 0.8; text-transform: uppercase;">-</div>
-                </div>
-            </div>
+            <span style="font-weight: 900; letter-spacing: 1px;">SMART DASHBOARD</span>
             <button class="btn btn-logout" onclick="location.reload()">ออกจากระบบ</button>
         </div>
 
-        <div id="roleMenu" class="menu-grid">
+        <div class="profile-banner">
+            <img id="userPhoto" src="" class="profile-img">
+            <h2 id="userName" style="margin: 5px 0;">-</h2>
+            <div id="userRoleBadge" style="font-size: 0.8rem; text-transform: uppercase; opacity: 0.8;">-</div>
+        </div>
+
+        <div class="main-container">
+            <h3 style="color: var(--navy);"><i class="fas fa-th-large"></i> เมนูการใช้งานของคุณ</h3>
+            <div id="menuContainer" class="menu-grid"></div>
+
+            <div class="card">
+                <h3 style="color: var(--primary); margin-top: 0;"><i class="fas fa-user-edit"></i> ข้อมูลโปรไฟล์และบัญชี</h3>
+                <form id="profileForm">
+                    <div class="form-row">
+                        <div class="form-group"><label>รหัสพนักงาน (PIN)</label><input type="text" id="Agent_PIN" readonly></div>
+                        <div class="form-group"><label>สิทธิ์การใช้งาน (Role)</label><input type="text" id="Role" readonly></div>
+                    </div>
+                    <div class="form-group"><label>ชื่อ-นามสกุล</label><input type="text" id="Full_Name" required></div>
+                    <div class="form-row">
+                        <div class="form-group"><label>เบอร์โทรศัพท์</label><input type="text" id="Phone"></div>
+                        <div class="form-group"><label>Line ID</label><input type="text" id="Line_ID"></div>
+                    </div>
+                    <div class="form-group"><label>อีเมลติดต่อ</label><input type="email" id="Email"></div>
+                    
+                    <h4 style="border-top: 1px solid #f0f0f0; padding-top: 20px; color: var(--navy);">ข้อมูลการเงิน (เพื่อรับคอมมิชชัน)</h4>
+                    <div class="form-group"><label>ธนาคาร</label><input type="text" id="Bank_Name"></div>
+                    <div class="form-row">
+                        <div class="form-group"><label>เลขที่บัญชี</label><input type="text" id="Bank_Account_Number"></div>
+                        <div class="form-group"><label>ชื่อบัญชี</label><input type="text" id="Bank_Account_Name"></div>
+                    </div>
+
+                    <div class="form-group"><label>ลิงก์รูปโปรไฟล์ (URL)</label><input type="text" id="Profile_Photo_URL" oninput="document.getElementById('userPhoto').src = this.value"></div>
+                    
+                    <button type="submit" class="btn btn-primary" id="saveBtn" style="margin-top: 10px;">
+                        <i class="fas fa-save"></i> บันทึกการเปลี่ยนแปลง
+                    </button>
+                </form>
+                <div id="saveStatus" style="text-align: center; margin-top: 15px; font-weight: 600;"></div>
             </div>
+        </div>
     </div>
 
 <script>
-    // 🚩 เปลี่ยนเป็น URL ของ Apps Script ตัวล่าสุดของคุณ
-    const API_URL = "https://script.google.com/macros/s/AKfycbyS8rGtSnhVS8RdWje7icXZVCw5iBBJoWkEpOYm649OC6FOhnrVi87dD9GsJl_m_FVw/exec";
+    const API_URL = "<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADMIN | SMART PROPERTIES SYSTEM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --primary: #1a5276; --navy: #154360; --bg: #9fb8dc; --white: #ffffff; --green: #27ae60; --red: #e74c3c; }
+        body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; min-height: 100vh; overflow-x: hidden; }
 
-    /** 👁️ ฟังก์ชันเปิด-ปิดดวงตาเพื่อดูรหัส PIN */
-    function togglePinVisibility() {
-        const pinInput = document.getElementById('pinInput');
-        const eyeIcon = document.getElementById('eyeIcon');
+        /* 🔒 Login Portal */
+        #loginPortal { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; box-sizing: border-box; }
+        .login-box { background: white; padding: 45px; border-radius: 45px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); width: 100%; max-width: 420px; text-align: center; }
+        .pin-wrapper { position: relative; margin: 25px 0; }
+        .pin-field { width: 100%; padding: 15px; font-size: 28px; text-align: center; border: 2px solid #eee; border-radius: 20px; letter-spacing: 5px; outline: none; background: #f9f9f9; box-sizing: border-box; }
         
-        if (pinInput.type === "password") {
-            pinInput.type = "text";
-            eyeIcon.classList.remove('fa-eye');
-            eyeIcon.classList.add('fa-eye-slash');
-        } else {
-            pinInput.type = "password";
-            eyeIcon.classList.remove('fa-eye-slash');
-            eyeIcon.classList.add('fa-eye');
-        }
+        /* 📊 Dashboard UI */
+        #dashboard { display: none; background: #f0f2f5; position: fixed; inset: 0; z-index: 1000; overflow-y: auto; padding-bottom: 50px; }
+        .top-nav { background: var(--navy); color: white; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1100; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        
+        .profile-banner { background: var(--primary); color: white; padding: 40px 20px; text-align: center; border-radius: 0 0 50px 50px; margin-bottom: 20px; }
+        .profile-img { width: 110px; height: 110px; border-radius: 50%; border: 4px solid white; object-fit: cover; background: #eee; margin-bottom: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        
+        .main-container { max-width: 700px; margin: 0 auto; padding: 0 15px; }
+        .card { background: white; padding: 30px; border-radius: 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        
+        /* Menu Grid */
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        .menu-btn { background: white; padding: 25px 15px; border-radius: 25px; text-align: center; border: 1.5px solid #f0f0f0; transition: 0.3s; cursor: pointer; }
+        .menu-btn:hover { border-color: var(--primary); background: #f0f7ff; transform: translateY(-3px); }
+        .menu-btn i { font-size: 2rem; color: var(--primary); margin-bottom: 10px; }
+
+        /* Form Styling */
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 0.75rem; font-weight: 700; color: #888; text-transform: uppercase; margin-bottom: 5px; margin-left: 5px; }
+        input { width: 100%; padding: 12px 15px; border-radius: 12px; border: 1.5px solid #eee; box-sizing: border-box; font-family: 'Kanit'; font-size: 0.95rem; }
+        input[readonly] { background: #f9f9f9; color: #aaa; border-color: #f0f0f0; cursor: not-allowed; }
+        
+        .btn { width: 100%; padding: 16px; border-radius: 20px; border: none; font-weight: 600; cursor: pointer; transition: 0.3s; font-size: 1rem; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-logout { background: var(--red); color: white; width: auto; padding: 8px 18px; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+    <div id="loginPortal">
+        <div class="login-box">
+            <div style="font-size: 60px;">🛡️</div>
+            <h2 style="color: var(--primary); margin-bottom: 5px;">ADMIN ACCESS</h2>
+            <p style="color: #666; margin-bottom: 25px;">กรุณากรอกรหัส PIN 6 หลักเพื่อเข้าใช้งาน</p>
+            
+            <div class="pin-wrapper">
+                <input type="password" id="pinInput" class="pin-field" maxlength="6" placeholder="••••••">
+                <i class="fas fa-eye" style="position:absolute; right:20px; top:50%; transform:translateY(-50%); cursor:pointer; color:#ccc;" id="eyeBtn" onclick="togglePin()"></i>
+            </div>
+            
+            <button class="btn btn-primary" id="loginBtn" onclick="handleLogin()">เข้าสู่ระบบ</button>
+            <div id="loginMsg" style="color: var(--red); margin-top: 15px; font-weight: 500;"></div>
+        </div>
+    </div>
+
+    <div id="dashboard">
+        <div class="top-nav">
+            <span style="font-weight: 900; letter-spacing: 1px;">SMART DASHBOARD</span>
+            <button class="btn btn-logout" onclick="location.reload()">ออกจากระบบ</button>
+        </div>
+
+        <div class="profile-banner">
+            <img id="userPhoto" src="" class="profile-img">
+            <h2 id="userName" style="margin: 5px 0;">-</h2>
+            <div id="userRoleBadge" style="font-size: 0.8rem; text-transform: uppercase; opacity: 0.8;">-</div>
+        </div>
+
+        <div class="main-container">
+            <h3 style="color: var(--navy);"><i class="fas fa-th-large"></i> เมนูการใช้งานของคุณ</h3>
+            <div id="menuContainer" class="menu-grid"></div>
+
+            <div class="card">
+                <h3 style="color: var(--primary); margin-top: 0;"><i class="fas fa-user-edit"></i> ข้อมูลโปรไฟล์และบัญชี</h3>
+                <form id="profileForm">
+                    <div class="form-row">
+                        <div class="form-group"><label>รหัสพนักงาน (PIN)</label><input type="text" id="Agent_PIN" readonly></div>
+                        <div class="form-group"><label>สิทธิ์การใช้งาน (Role)</label><input type="text" id="Role" readonly></div>
+                    </div>
+                    <div class="form-group"><label>ชื่อ-นามสกุล</label><input type="text" id="Full_Name" required></div>
+                    <div class="form-row">
+                        <div class="form-group"><label>เบอร์โทรศัพท์</label><input type="text" id="Phone"></div>
+                        <div class="form-group"><label>Line ID</label><input type="text" id="Line_ID"></div>
+                    </div>
+                    <div class="form-group"><label>อีเมลติดต่อ</label><input type="email" id="Email"></div>
+                    
+                    <h4 style="border-top: 1px solid #f0f0f0; padding-top: 20px; color: var(--navy);">ข้อมูลการเงิน (เพื่อรับคอมมิชชัน)</h4>
+                    <div class="form-group"><label>ธนาคาร</label><input type="text" id="Bank_Name"></div>
+                    <div class="form-row">
+                        <div class="form-group"><label>เลขที่บัญชี</label><input type="text" id="Bank_Account_Number"></div>
+                        <div class="form-group"><label>ชื่อบัญชี</label><input type="text" id="Bank_Account_Name"></div>
+                    </div>
+
+                    <div class="form-group"><label>ลิงก์รูปโปรไฟล์ (URL)</label><input type="text" id="Profile_Photo_URL" oninput="document.getElementById('userPhoto').src = this.value"></div>
+                    
+                    <button type="submit" class="btn btn-primary" id="saveBtn" style="margin-top: 10px;">
+                        <i class="fas fa-save"></i> บันทึกการเปลี่ยนแปลง
+                    </button>
+                </form>
+                <div id="saveStatus" style="text-align: center; margin-top: 15px; font-weight: 600;"></div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbzkweiEgczmmU_4FiqRffJ4exvgZl3RwGPIBWXssLgkUpdMArif9-eUEv6yP2Kvtzh1/exec";
+    let myProfile = null;
+
+    function togglePin() {
+        const pin = document.getElementById('pinInput');
+        const eye = document.getElementById('eyeBtn');
+        pin.type = pin.type === 'password' ? 'text' : 'password';
+        eye.className = pin.type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
     }
 
-    /** 🔒 ฟังก์ชันส่งคำขอ Login (ต้องกดปุ่มเท่านั้น) */
-    async function doLogin() {
+    async function handleLogin() {
         const pin = document.getElementById('pinInput').value;
-        const errMsg = document.getElementById('errMsg');
         const btn = document.getElementById('loginBtn');
+        if (pin.length < 6) return;
 
-        if (pin.length < 6) {
-            errMsg.innerText = "กรุณากรอกรหัส PIN ให้ครบ 6 หลัก";
-            return;
-        }
-
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังตรวจสอบ...';
-        errMsg.innerText = "";
+        btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ตรวจสอบสิทธิ์...';
 
         try {
-            const res = await fetch(API_URL, {
-                method: 'POST',
-                body: JSON.stringify({ action: "login", pin: pin })
-            });
+            const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "login", pin: pin }) });
             const data = await res.json();
-
             if (data.success) {
-                showDashboard(data.userData);
+                myProfile = data.profile;
+                setupDashboard();
             } else {
-                errMsg.innerText = data.message;
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ';
+                document.getElementById('loginMsg').innerText = data.message;
+                btn.disabled = false; btn.innerHTML = 'เข้าสู่ระบบ';
             }
         } catch (e) {
-            errMsg.innerText = "การเชื่อมต่อขัดข้อง กรุณาลองใหม่";
+            document.getElementById('loginMsg').innerText = "เกิดข้อผิดพลาดในการเชื่อมต่อ";
             btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ';
         }
     }
 
-    /** 📊 ฟังก์ชันแสดง Dashboard ตามสิทธิ์ */
-    function showDashboard(user) {
-        document.getElementById('loginPortal').classList.add('hidden');
+    function setupDashboard() {
+        document.getElementById('loginPortal').style.display = 'none';
         document.getElementById('dashboard').style.display = 'block';
-        document.body.style.background = "#f0f2f5";
+        
+        // 1. แสดงข้อมูล Header
+        document.getElementById('userName').innerText = myProfile.Full_Name;
+        document.getElementById('userRoleBadge').innerText = myProfile.Role + " | ACCESS: " + myProfile.Project_Access;
+        document.getElementById('userPhoto').src = myProfile.Profile_Photo_URL || "https://placehold.co/200x200?text=USER";
 
-        document.getElementById('userName').innerText = user.name;
-        document.getElementById('userRole').innerText = user.role + " | " + (user.project || "ALL");
-        document.getElementById('userPhoto').src = user.photo;
+        // 2. เติมข้อมูลลงฟอร์ม
+        for (let key in myProfile) {
+            const el = document.getElementById(key);
+            if (el) el.value = myProfile[key];
+        }
 
-        renderMenu(user.role);
+        // 3. สร้างเมนูตาม Role [cite: 2026-01-27]
+        renderMenu(myProfile.Role);
     }
 
     function renderMenu(role) {
-        const menu = document.getElementById('roleMenu');
-        let items = "";
+        const container = document.getElementById('menuContainer');
+        let html = "";
         
-        // กรองเมนูตาม Role ที่ได้รับมา [cite: 2026-01-27]
         if (role === "SUPER_ADMIN") {
-            items += createMenuItem("fas fa-database", "จัดการทรัพย์ทั้งหมด");
-            items += createMenuItem("fas fa-user-check", "จัดการ Agent");
-            items += createMenuItem("fas fa-file-invoice-dollar", "การเงิน/บัญชี");
-            items += createMenuItem("fas fa-chart-pie", "สถิติภาพรวม");
+            html += createMenuBtn("fas fa-database", "จัดการทรัพย์ทั้งหมด");
+            html += createMenuBtn("fas fa-users-cog", "บริหารทีมงาน");
+            html += createMenuBtn("fas fa-chart-line", "สรุปยอดขาย");
+            html += createMenuBtn("fas fa-receipt", "บัญชีส่วนกลาง");
         } else if (role === "PROJECT_ADMIN") {
-            items += createMenuItem("fas fa-house-user", "จัดการโครงการ");
-            items += createMenuItem("fas fa-users", "ลูกค้ามุ่งหวัง");
+            html += createMenuBtn("fas fa-home", "อัปเดตบ้านในโครงการ");
+            html += createMenuBtn("fas fa-user-tag", "รายชื่อลูกค้า");
+        } else if (role === "OWNER") {
+            html += createMenuBtn("fas fa-eye", "ดูสถานะบ้าน");
+            html += createMenuBtn("fas fa-history", "ประวัติโครงการ");
         } else {
-            items += createMenuItem("fas fa-search", "ค้นหารายการ");
-            items += createMenuItem("fas fa-history", "ประวัติการจอง");
+            html += createMenuBtn("fas fa-search", "ค้นหาบ้านว่าง");
+            html += createMenuBtn("fas fa-wallet", "เช็คค่าคอมฯ");
         }
-        menu.innerHTML = items;
+        container.innerHTML = html;
     }
 
-    function createMenuItem(icon, label) {
-        return `
-            <div class="menu-card" onclick="alert('ระบบกำลังพัฒนาส่วนของ ${label}')">
-                <i class="${icon}"></i>
-                <div style="font-weight:500;">${label}</div>
-            </div>`;
+    function createMenuBtn(icon, text) {
+        return `<div class="menu-btn" onclick="alert('ระบบกำลังเข้าสู่: ${text}')"><i class="${icon}"></i><div>${text}</div></div>`;
     }
+
+    // ระบบบันทึกการแก้ไขโปรไฟล์ [cite: 2026-01-27]
+    document.getElementById('profileForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('saveBtn');
+        const status = document.getElementById('saveStatus');
+        btn.disabled = true; status.style.color = "blue"; status.innerText = "⏳ กำลังบันทึกข้อมูล...";
+
+        const formData = { action: "updateProfile" };
+        const inputs = e.target.querySelectorAll('input');
+        inputs.forEach(inp => formData[inp.id] = inp.value);
+
+        try {
+            const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify(formData) });
+            const data = await res.json();
+            if (data.success) {
+                status.style.color = "green"; status.innerText = "✅ " + data.message;
+                setTimeout(() => status.innerText = "", 3000);
+            }
+        } catch (e) {
+            status.style.color = "red"; status.innerText = "❌ บันทึกไม่สำเร็จ";
+        }
+        btn.disabled = false;
+    };
+</script>
+</body>
+</html>";
+    let myProfile = null;
+
+    function togglePin() {
+        const pin = document.getElementById('pinInput');
+        const eye = document.getElementById('eyeBtn');
+        pin.type = pin.type === 'password' ? 'text' : 'password';
+        eye.className = pin.type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+    }
+
+    async function handleLogin() {
+        const pin = document.getElementById('pinInput').value;
+        const btn = document.getElementById('loginBtn');
+        if (pin.length < 6) return;
+
+        btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ตรวจสอบสิทธิ์...';
+
+        try {
+            const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "login", pin: pin }) });
+            const data = await res.json();
+            if (data.success) {
+                myProfile = data.profile;
+                setupDashboard();
+            } else {
+                document.getElementById('loginMsg').innerText = data.message;
+                btn.disabled = false; btn.innerHTML = 'เข้าสู่ระบบ';
+            }
+        } catch (e) {
+            document.getElementById('loginMsg').innerText = "เกิดข้อผิดพลาดในการเชื่อมต่อ";
+            btn.disabled = false;
+        }
+    }
+
+    function setupDashboard() {
+        document.getElementById('loginPortal').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        
+        // 1. แสดงข้อมูล Header
+        document.getElementById('userName').innerText = myProfile.Full_Name;
+        document.getElementById('userRoleBadge').innerText = myProfile.Role + " | ACCESS: " + myProfile.Project_Access;
+        document.getElementById('userPhoto').src = myProfile.Profile_Photo_URL || "https://placehold.co/200x200?text=USER";
+
+        // 2. เติมข้อมูลลงฟอร์ม
+        for (let key in myProfile) {
+            const el = document.getElementById(key);
+            if (el) el.value = myProfile[key];
+        }
+
+        // 3. สร้างเมนูตาม Role [cite: 2026-01-27]
+        renderMenu(myProfile.Role);
+    }
+
+    function renderMenu(role) {
+        const container = document.getElementById('menuContainer');
+        let html = "";
+        
+        if (role === "SUPER_ADMIN") {
+            html += createMenuBtn("fas fa-database", "จัดการทรัพย์ทั้งหมด");
+            html += createMenuBtn("fas fa-users-cog", "บริหารทีมงาน");
+            html += createMenuBtn("fas fa-chart-line", "สรุปยอดขาย");
+            html += createMenuBtn("fas fa-receipt", "บัญชีส่วนกลาง");
+        } else if (role === "PROJECT_ADMIN") {
+            html += createMenuBtn("fas fa-home", "อัปเดตบ้านในโครงการ");
+            html += createMenuBtn("fas fa-user-tag", "รายชื่อลูกค้า");
+        } else if (role === "OWNER") {
+            html += createMenuBtn("fas fa-eye", "ดูสถานะบ้าน");
+            html += createMenuBtn("fas fa-history", "ประวัติโครงการ");
+        } else {
+            html += createMenuBtn("fas fa-search", "ค้นหาบ้านว่าง");
+            html += createMenuBtn("fas fa-wallet", "เช็คค่าคอมฯ");
+        }
+        container.innerHTML = html;
+    }
+
+    function createMenuBtn(icon, text) {
+        return `<div class="menu-btn" onclick="alert('ระบบกำลังเข้าสู่: ${text}')"><i class="${icon}"></i><div>${text}</div></div>`;
+    }
+
+    // ระบบบันทึกการแก้ไขโปรไฟล์ [cite: 2026-01-27]
+    document.getElementById('profileForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('saveBtn');
+        const status = document.getElementById('saveStatus');
+        btn.disabled = true; status.style.color = "blue"; status.innerText = "⏳ กำลังบันทึกข้อมูล...";
+
+        const formData = { action: "updateProfile" };
+        const inputs = e.target.querySelectorAll('input');
+        inputs.forEach(inp => formData[inp.id] = inp.value);
+
+        try {
+            const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify(formData) });
+            const data = await res.json();
+            if (data.success) {
+                status.style.color = "green"; status.innerText = "✅ " + data.message;
+                setTimeout(() => status.innerText = "", 3000);
+            }
+        } catch (e) {
+            status.style.color = "red"; status.innerText = "❌ บันทึกไม่สำเร็จ";
+        }
+        btn.disabled = false;
+    };
 </script>
 </body>
 </html>
