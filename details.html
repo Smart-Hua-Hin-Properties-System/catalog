@@ -7,6 +7,48 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        <style>
+    /* =========================================
+       ส่วนที่ 1: แก้ไขป้าย CODE ด้านบน (จากเขียวเป็นน้ำเงิน)
+       ========================================= */
+    .badge {
+        /* ค้นหา class .badge เดิม แล้วตรวจสอบบรรทัด background */
+        /* เปลี่ยน background เดิมที่เป็นสีเขียว (#00d44b) ให้เป็น var(--primary) */
+        background: var(--primary) !important; /* ใช้สีน้ำเงินหลักของธีม */
+        
+        /* เพิ่มเติมเพื่อให้เหมือนหน้าแรกเป๊ะๆ */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    /* =========================================
+       ส่วนที่ 2: แก้ไขแบนเนอร์ปุ่ม LINE ด้านล่าง
+       (ให้เหมือนปุ่ม "ดูรายละเอียด" ของหน้าแรก)
+       ========================================= */
+    /* ใช้ ID #shareLine เจาะจงไปที่ปุ่ม LINE */
+    #shareLine.btn {
+        background: var(--primary) !important; /* บังคับเปลี่ยนจากสีเขียวเป็นสีน้ำเงิน */
+        border-radius: 50px; /* ความมนแบบแคปซูลเหมือนหน้าแรก */
+        padding: 14px; /* ความสูงของปุ่มเท่ากับหน้าแรก */
+        width: 100%; /* ความกว้างเต็มจอเหมือนเดิม */
+        
+        /* จัดสไตล์ตัวอักษรให้เหมือนปุ่มหน้าแรก */
+        text-align: center;
+        font-size: 1rem;
+        font-weight: 500;
+        text-decoration: none;
+        box-shadow: none; /* ปุ่มหน้าแรกมักไม่มีเงา หรือเงาน้อยมาก */
+        transition: 0.3s;
+        display: block; /* เพื่อให้ width 100% ทำงานและจัดกลาง */
+    }
+
+    /* เพิ่มเอฟเฟกต์ตอนเอาเมาส์ชี้เล็กน้อย */
+    #shareLine.btn:hover {
+        background-color: #154360 !important; /* สีน้ำเงินเข้มขึ้นเล็กน้อยเมื่อชี้ */
+        transform: translateY(-2px);
+    }
+</style>
         :root { --primary: #1a5276; --bg: #f4f7f6; --white: #ffffff; --green: #27ae60; --text: #2c3e50; --gold: #f1c40f; --red: #e74c3c; --border: #eee; --loader-bg: #9CBCE3; }
         body { font-family: 'Kanit', sans-serif; background: #fff; margin: 0; padding: 0; color: var(--text); overflow-x: hidden; }
 
