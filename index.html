@@ -2,83 +2,47 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SMART PROPERTIES SYSTEM</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
-body{margin:0;font-family:Kanit;background:#9cbce3}
-header{background:#fff;padding:12px 16px;font-weight:700;color:#1a5276}
-.filter{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:15px}
-select{padding:10px;border-radius:10px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;padding:16px}
-.card{background:#fff;border-radius:24px;overflow:hidden;cursor:pointer}
-.card img{width:100%;height:220px;object-fit:cover}
-.card .body{padding:15px}
-.price{font-weight:700;color:#1a5276}
+body{font-family:Kanit;background:#9fb8dc;margin:0}
+header{padding:15px;font-weight:700;color:#1a4361}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;padding:20px}
+.card{background:#fff;border-radius:20px;overflow:hidden;cursor:pointer;transition:.2s}
+.card:hover{transform:translateY(-4px)}
+.card img{width:100%;height:180px;object-fit:cover;background:#eee}
+.card .box{padding:15px}
+.price{color:#1a5276;font-weight:700}
 </style>
 </head>
 <body>
 
 <header>SMART PROPERTIES SYSTEM</header>
 
-<div class="filter">
-<select id="fDistrict" onchange="updateSub();apply()">
-<option value="">อำเภอทั้งหมด</option>
-<option value="Hua Hin">Hua Hin</option>
-<option value="Pranburi">Pranburi</option>
-<option value="Cha-am">Cha-am</option>
-</select>
-
-<select id="fSub" onchange="apply()">
-<option value="">ตำบลทั้งหมด</option>
-</select>
-
-<select id="fBed" onchange="apply()">
-<option value="">ห้องนอน</option>
-<option value="2">2+</option>
-<option value="3">3+</option>
-<option value="4">4+</option>
-</select>
-
-<select id="fSort" onchange="apply()">
-<option value="">เรียงราคา</option>
-<option value="low">น้อย → มาก</option>
-<option value="high">มาก → น้อย</option>
-</select>
-</div>
-
-<div id="grid" class="grid"></div>
+<div class="grid" id="grid"></div>
 
 <script>
-const API="https://script.google.com/macros/s/AKfycbyS8rGtSnhVS8RdWje7icXZVCw5iBBJoWkEpOYm649OC6FOhnrVi87dD9GsJl_m_FVw/exec";
-let DATA=[];
+const API="https://script.google.com/macros/s/AKfycbyS8rGtSnhVS8RdWje7icXZVCw5iBBJoWkEpOYm649OC6FOhnrVi87dD9GsJl_m_FVw/exec?role=PUBLIC";
 
-fetch(API+"?role=PUBLIC").then(r=>r.json()).then(d=>{DATA=d;updateSub();apply();});
-
-function updateSub(){
- const d=document.getElementById('fDistrict').value;
- const s=document.getElementById('fSub');
- s.innerHTML='<option value="">ตำบลทั้งหมด</option>';
- [...new Set(DATA.filter(x=>!d||x.District===d).map(x=>x.SubDistrict))].filter(Boolean)
- .forEach(v=>{let o=document.createElement('option');o.value=v;o.text=v;s.appendChild(o);});
-}
-
-function apply(){
- let d=[...DATA];
- const fd=fDistrict.value,fs=fSub.value,fb=fBed.value,fo=fSort.value;
- if(fd) d=d.filter(x=>x.District===fd);
- if(fs) d=d.filter(x=>x.SubDistrict===fs);
- if(fb) d=d.filter(x=>Number(x.Bedrooms||0)>=Number(fb));
- if(fo==='low') d.sort((a,b)=>a.Price-b.Price);
- if(fo==='high') d.sort((a,b)=>b.Price-a.Price);
- grid.innerHTML=d.map(x=>`
- <div class="card" onclick="location='details.html?id=${x.HP_ID}'">
- <img src="${x.Thumbnail}">
- <div class="body">
- <b>${x.HOUSE_ID}</b><br>${x.Project_Name}
- <div class="price">฿${Number(x.Price).toLocaleString()}</div>
- </div></div>`).join('');
-}
+fetch(API)
+.then(r=>r.json())
+.then(data=>{
+ const g=document.getElementById("grid");
+ data.forEach(d=>{
+  const c=document.createElement("div");
+  c.className="card";
+  c.onclick=()=>location.href=`details.html?id=${d.HP_ID}`;
+  c.innerHTML=`
+   <img src="${d.Thumbnail||'https://via.placeholder.com/600x400'}">
+   <div class="box">
+    <b>${d.HOUSE_ID}</b><br>
+    ${d.Project_Name}<br>
+    <span class="price">฿${Number(d.Price).toLocaleString()}</span>
+   </div>`;
+  g.appendChild(c);
+ });
+});
 </script>
 </body>
 </html>
